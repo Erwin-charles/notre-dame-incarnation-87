@@ -6,6 +6,8 @@ import CatechesePage from '../components/CatechesePage';
 import GroupesPage from '../components/GroupesPage';
 import ActivitesPage from '../components/ActivitesPage';
 import DashboardPage from '../components/DashboardPage';
+import Footer from '../components/Footer';
+import Chatbot from '../components/Chatbot';
 
 const Index = () => {
   const [currentPage, setCurrentPage] = useState('home');
@@ -35,6 +37,8 @@ const Index = () => {
     <div className="min-h-screen bg-white">
       <Navigation onNavigate={handleNavigate} currentPage={currentPage} />
       {renderPage()}
+      <Footer />
+      <Chatbot />
     </div>
   );
 };
