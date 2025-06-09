@@ -61,7 +61,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
+    --primary: 210 80% 60%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -79,6 +79,11 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
+    --church-blue: 210 80% 60%;
+    --church-gold: 45 90% 75%;
+    --church-light: 217.2 32.6% 17.5%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -96,7 +101,22 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+}
+
+/* Glassmorphisme utilities */
+@layer utilities {
+  .glass {
+    @apply bg-white/20 dark:bg-gray-900/20 backdrop-blur-md border border-white/20 dark:border-gray-700/20;
+  }
+  
+  .glass-card {
+    @apply bg-white/30 dark:bg-gray-900/30 backdrop-blur-lg border border-white/30 dark:border-gray-700/30 shadow-xl;
+  }
+  
+  .glass-button {
+    @apply bg-white/10 dark:bg-gray-800/10 backdrop-blur-sm border border-white/20 dark:border-gray-700/20 hover:bg-white/20 dark:hover:bg-gray-800/20;
   }
 }
 
@@ -139,6 +159,17 @@
   }
 }
 
+@keyframes glassMorph {
+  0%, 100% {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
@@ -155,6 +186,10 @@
   animation: crossRotate 20s linear infinite;
 }
 
+.animate-glass-morph {
+  animation: glassMorph 4s ease-in-out infinite;
+}
+
 /* 3D Cross styling */
 .cross-3d {
   position: relative;
@@ -165,6 +200,12 @@
 .cross-beam {
   background: linear-gradient(135deg, #3b82f6, #1d4ed8);
   box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Dark mode cross styling */
+.dark .cross-beam {
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  box-shadow: 0 4px 20px rgba(96, 165, 250, 0.4);
 }
 
 /* Particle animation */
@@ -191,9 +232,28 @@
   }
 }
 
+/* Enhanced glassmorphisme effects */
+.glass-navigation {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass-navigation {
+  background: rgba(17, 24, 39, 0.2);
+  border: 1px solid rgba(75, 85, 99, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
 /* Responsive utilities */
 @media (max-width: 768px) {
   .cross-3d {
     transform: scale(0.8);
   }
+}
+
+/* Smooth transitions for dark mode */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
