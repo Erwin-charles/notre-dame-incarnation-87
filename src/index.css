@@ -118,6 +118,10 @@
   .glass-button {
     @apply bg-white/10 dark:bg-gray-800/10 backdrop-blur-sm border border-white/20 dark:border-gray-700/20 hover:bg-white/20 dark:hover:bg-gray-800/20;
   }
+
+  .glass-navigation {
+    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-white/20 dark:border-gray-700/20 shadow-lg;
+  }
 }
 
 /* Custom animations for church theme */
@@ -135,7 +139,7 @@
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
   }
   50% {
-    box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.6), 0 0 60px rgba(253, 224, 71, 0.4);
   }
 }
 
@@ -152,10 +156,10 @@
 
 @keyframes crossRotate {
   from {
-    transform: rotateY(0deg);
+    transform: rotateZ(0deg);
   }
   to {
-    transform: rotateY(360deg);
+    transform: rotateZ(360deg);
   }
 }
 
@@ -170,12 +174,23 @@
   }
 }
 
+@keyframes shimmer {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
 
 .animate-glow {
-  animation: glow 2s ease-in-out infinite;
+  animation: glow 3s ease-in-out infinite;
 }
 
 .animate-fade-in-up {
@@ -188,6 +203,10 @@
 
 .animate-glass-morph {
   animation: glassMorph 4s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
 }
 
 /* 3D Cross styling */
@@ -206,6 +225,17 @@
 .dark .cross-beam {
   background: linear-gradient(135deg, #60a5fa, #3b82f6);
   box-shadow: 0 4px 20px rgba(96, 165, 250, 0.4);
+}
+
+/* Saint Sacrement styling */
+.saint-sacrement {
+  background: radial-gradient(circle, rgba(253, 224, 71, 0.9) 0%, rgba(252, 211, 77, 0.7) 50%, rgba(245, 158, 11, 0.5) 100%);
+  box-shadow: 0 0 30px rgba(253, 224, 71, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.dark .saint-sacrement {
+  background: radial-gradient(circle, rgba(253, 224, 71, 0.8) 0%, rgba(252, 211, 77, 0.6) 50%, rgba(245, 158, 11, 0.4) 100%);
+  box-shadow: 0 0 30px rgba(253, 224, 71, 0.7), inset 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 /* Particle animation */
@@ -232,20 +262,6 @@
   }
 }
 
-/* Enhanced glassmorphisme effects */
-.glass-navigation {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-}
-
-.dark .glass-navigation {
-  background: rgba(17, 24, 39, 0.2);
-  border: 1px solid rgba(75, 85, 99, 0.3);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
 /* Responsive utilities */
 @media (max-width: 768px) {
   .cross-3d {
@@ -255,5 +271,21 @@
 
 /* Smooth transitions for dark mode */
 * {
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Dropdown animations */
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-enter {
+  animation: dropdownSlide 0.2s ease-out;
 }
