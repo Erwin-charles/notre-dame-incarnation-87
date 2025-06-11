@@ -15,7 +15,7 @@ const Footer = () => {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-church-gold">Notre Dame de l'Incarnation</h3>
-                <p className="text-sm text-gray-300">Paroisse Catholique</p>
+                <p className="text-sm text-gray-300">Paroisse Catholique - Cocody</p>
               </div>
             </div>
             <p className="text-gray-300 mb-4">
@@ -35,15 +35,15 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <MapPin className="w-4 h-4 text-church-gold" />
-                <span className="text-sm text-gray-300">123 Rue de l'Église<br />75001 Paris</span>
+                <span className="text-sm text-gray-300">Cocody Palmeraie<br />Abidjan, Côte d'Ivoire</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-4 h-4 text-church-gold" />
-                <span className="text-sm text-gray-300">01 23 45 67 89</span>
+                <span className="text-sm text-gray-300">+225 27 22 44 55 66</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="w-4 h-4 text-church-gold" />
-                <span className="text-sm text-gray-300">contact@ndincarnation.fr</span>
+                <span className="text-sm text-gray-300">contact@ndincarnation-cocody.ci</span>
               </div>
             </div>
           </div>
@@ -58,15 +58,15 @@ const Footer = () => {
               </div>
               <div className="flex justify-between">
                 <span>Dimanche:</span>
-                <span>9h - 11h</span>
+                <span>7h - 9h - 18h</span>
               </div>
               <div className="flex justify-between">
                 <span>Semaine:</span>
-                <span>18h00</span>
+                <span>6h30 - 18h</span>
               </div>
               <div className="flex justify-between">
-                <span>Mercredi:</span>
-                <span>9h00</span>
+                <span>Permanences:</span>
+                <span>8h - 12h</span>
               </div>
             </div>
           </div>
@@ -74,7 +74,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-700 mt-8 pt-6 text-center">
           <p className="text-sm text-gray-400">
-            © 2024 Notre Dame de l'Incarnation. Tous droits réservés.
+            © 2024 Notre Dame de l'Incarnation - Cocody. Tous droits réservés.
           </p>
         </div>
       </div>

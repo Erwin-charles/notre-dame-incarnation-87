@@ -70,7 +70,7 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
             
             <Button 
               size="lg" 
-              className="animate-glow glass-button"
+              className="animate-glow glass-button bg-primary hover:bg-primary/90 text-primary-foreground"
               onClick={() => onNavigate('catechese')}
             >
               <Church className="w-5 h-5 mr-2" />

@@ -1,9 +1,9 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar } from '@/components/ui/calendar';
 import { Badge } from '@/components/ui/badge';
-import { CalendarIcon, Clock, MapPin, Users } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { CalendarIcon, Clock, MapPin, Users, Upload, Image as ImageIcon } from 'lucide-react';
 
 interface Event {
   id: string;
@@ -13,6 +13,7 @@ interface Event {
   location: string;
   type: 'messe' | 'formation' | 'celebration' | 'pelerinage' | 'reunion';
   description: string;
+  image?: string;
 }
 
 const EvenementsPage = () => {
@@ -21,12 +22,13 @@ const EvenementsPage = () => {
   const events: Event[] = [
     {
       id: '1',
-      title: 'Messe dominicale',
+      title: 'Messe dominicale avec chorale',
       date: new Date(2024, 11, 15),
       time: '9h00',
       location: 'Église principale',
       type: 'messe',
-      description: 'Messe dominicale avec chorale paroissiale'
+      description: 'Messe dominicale animée par la chorale paroissiale Saint-Cécile',
+      image: 'https://images.unsplash.com/photo-1473177104440-ffee2f376098?w=400&h=300&fit=crop'
     },
     {
       id: '2',
@@ -35,16 +37,18 @@ const EvenementsPage = () => {
       time: '18h00',
       location: 'Chapelle du Saint-Sacrement',
       type: 'celebration',
-      description: 'Heure d\'adoration silencieuse suivie de vêpres'
+      description: 'Heure d\'adoration silencieuse suivie de vêpres',
+      image: 'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=400&h=300&fit=crop'
     },
     {
       id: '3',
-      title: 'Formation catéchistes',
+      title: 'Formation des catéchistes',
       date: new Date(2024, 11, 18),
       time: '9h00',
       location: 'Salle paroissiale',
       type: 'formation',
-      description: 'Session de formation continue pour les catéchistes'
+      description: 'Session de formation continue pour les catéchistes - Thème: "L\'annonce de la Bonne Nouvelle aux enfants"',
+      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop'
     },
     {
       id: '4',
@@ -53,7 +57,8 @@ const EvenementsPage = () => {
       time: '5h00',
       location: 'Départ de la paroisse',
       type: 'pelerinage',
-      description: 'Pèlerinage à la Basilique Notre-Dame de la Paix'
+      description: 'Pèlerinage à la Basilique Notre-Dame de la Paix avec visite des lieux saints',
+      image: 'https://images.unsplash.com/photo-1551038247-3d9af20df552?w=400&h=300&fit=crop'
     },
     {
       id: '5',
@@ -62,7 +67,8 @@ const EvenementsPage = () => {
       time: '19h00',
       location: 'Bureau paroissial',
       type: 'reunion',
-      description: 'Réunion mensuelle du conseil pastoral paroissial'
+      description: 'Réunion mensuelle du conseil pastoral paroissial - Préparation de l\'Avent',
+      image: 'https://images.unsplash.com/photo-1494891848038-7bd202a2afeb?w=400&h=300&fit=crop'
     }
   ];
 
@@ -152,25 +158,38 @@ const EvenementsPage = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {selectedDate && getEventsForDate(selectedDate).length > 0 ? (
                     getEventsForDate(selectedDate).map(event => (
-                      <div key={event.id} className="p-4 border border-white/20 dark:border-gray-700/20 rounded-lg glass-button">
-                        <div className="flex items-start justify-between mb-2">
-                          <h3 className="font-semibold text-foreground">{event.title}</h3>
-                          <Badge className={getEventTypeColor(event.type)}>
-                            {getEventTypeLabel(event.type)}
-                          </Badge>
-                        </div>
-                        <p className="text-muted-foreground text-sm mb-3">{event.description}</p>
-                        <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                          <div className="flex items-center">
-                            <Clock className="w-4 h-4 mr-1" />
-                            {event.time}
-                          </div>
-                          <div className="flex items-center">
-                            <MapPin className="w-4 h-4 mr-1" />
-                            {event.location}
+                      <div key={event.id} className="p-6 border border-white/20 dark:border-gray-700/20 rounded-lg glass-button">
+                        <div className="flex flex-col md:flex-row gap-4">
+                          {event.image && (
+                            <div className="w-full md:w-32 h-24 rounded-lg overflow-hidden">
+                              <img 
+                                src={event.image} 
+                                alt={event.title}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          )}
+                          <div className="flex-1">
+                            <div className="flex items-start justify-between mb-2">
+                              <h3 className="font-semibold text-foreground">{event.title}</h3>
+                              <Badge className={getEventTypeColor(event.type)}>
+                                {getEventTypeLabel(event.type)}
+                              </Badge>
+                            </div>
+                            <p className="text-muted-foreground text-sm mb-3">{event.description}</p>
+                            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                              <div className="flex items-center">
+                                <Clock className="w-4 h-4 mr-1" />
+                                {event.time}
+                              </div>
+                              <div className="flex items-center">
+                                <MapPin className="w-4 h-4 mr-1" />
+                                {event.location}
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -182,7 +201,7 @@ const EvenementsPage = () => {
                   ) : (
                     // Afficher tous les événements à venir si aucune date n'est sélectionnée
                     events.map(event => (
-                      <div key={event.id} className="p-4 border border-white/20 dark:border-gray-700/20 rounded-lg glass-button">
+                      <div key={event.id} className="p-6 border border-white/20 dark:border-gray-700/20 rounded-lg glass-button">
                         <div className="flex items-start justify-between mb-2">
                           <h3 className="font-semibold text-foreground">{event.title}</h3>
                           <Badge className={getEventTypeColor(event.type)}>
@@ -211,6 +230,55 @@ const EvenementsPage = () => {
               </CardContent>
             </Card>
           </div>
+        </div>
+
+        {/* Galerie d'images */}
+        <div className="mt-12">
+          <Card className="glass-card border-white/20 dark:border-gray-700/20">
+            <CardHeader>
+              <CardTitle className="text-primary flex items-center">
+                <ImageIcon className="w-5 h-5 mr-2" />
+                Galerie d'Événements
+              </CardTitle>
+              <CardDescription>
+                Photos de nos dernières célébrations et activités
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                {[
+                  'https://images.unsplash.com/photo-1473177104440-ffee2f376098?w=400&h=300&fit=crop',
+                  'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=400&h=300&fit=crop',
+                  'https://images.unsplash.com/photo-1494891848038-7bd202a2afeb?w=400&h=300&fit=crop',
+                  'https://images.unsplash.com/photo-1551038247-3d9af20df552?w=400&h=300&fit=crop',
+                  'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&h=300&fit=crop',
+                  'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop'
+                ].map((src, index) => (
+                  <div key={index} className="aspect-video rounded-lg overflow-hidden group cursor-pointer">
+                    <img 
+                      src={src} 
+                      alt={`Événement ${index + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                ))}
+              </div>
+              
+              {/* Zone d'upload */}
+              <div className="border-2 border-dashed border-muted-foreground/20 rounded-lg p-8 text-center">
+                <Upload className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                <h3 className="text-lg font-semibold text-foreground mb-2">Ajoutez vos photos</h3>
+                <p className="text-muted-foreground mb-4">Partagez les moments forts de nos événements</p>
+                <Button variant="outline" className="glass-button">
+                  <Upload className="w-4 h-4 mr-2" />
+                  Choisir des fichiers
+                </Button>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Formats acceptés: JPG, PNG, GIF (max 5MB)
+                </p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Types d'événements */}
