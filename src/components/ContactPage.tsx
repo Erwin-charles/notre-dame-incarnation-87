@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -168,7 +169,7 @@ const ContactPage = () => {
                   width="100%"
                   height="450"
                   style={{ border: 0 }}
-                  allowFullScreen=""
+                  allowFullScreen={true}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
