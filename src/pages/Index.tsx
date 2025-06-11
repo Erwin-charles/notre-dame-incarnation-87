@@ -6,6 +6,9 @@ import CatechesePage from '../components/CatechesePage';
 import GroupesPage from '../components/GroupesPage';
 import ActivitesPage from '../components/ActivitesPage';
 import DashboardPage from '../components/DashboardPage';
+import ContactPage from '../components/ContactPage';
+import CatechistesPage from '../components/CatechistesPage';
+import EvenementsPage from '../components/EvenementsPage';
 import Footer from '../components/Footer';
 import Chatbot from '../components/Chatbot';
 
@@ -28,6 +31,12 @@ const Index = () => {
         return <ActivitesPage />;
       case 'dashboard':
         return <DashboardPage />;
+      case 'contact':
+        return <ContactPage />;
+      case 'catechistes':
+        return <CatechistesPage />;
+      case 'evenements':
+        return <EvenementsPage />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }

@@ -41,8 +41,8 @@ export const menuItems = [
         id: 'home-contact', 
         label: 'Contact', 
         icon: Heart,
-        description: 'Contactez notre équipe pastorale',
-        onClick: (onNavigate: (page: string) => void) => onNavigate('home') 
+        description: 'Contactez notre équipe pastorale à Cocody',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('contact') 
       },
     ]
   },
@@ -63,7 +63,7 @@ export const menuItems = [
         label: 'Catéchistes', 
         icon: GraduationCap,
         description: 'Équipe des catéchistes et formation',
-        onClick: (onNavigate: (page: string) => void) => onNavigate('catechese') 
+        onClick: (onNavigate: (page: string) => void) => onNavigate('catechistes') 
       },
       { 
         id: 'catechese-catechumenes', 
@@ -133,7 +133,7 @@ export const menuItems = [
         label: 'Événements', 
         icon: Calendar,
         description: 'Fêtes, pèlerinages et événements spéciaux',
-        onClick: (onNavigate: (page: string) => void) => onNavigate('activites') 
+        onClick: (onNavigate: (page: string) => void) => onNavigate('evenements') 
       },
       { 
         id: 'activites-sacrements', 
