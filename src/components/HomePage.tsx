@@ -1,5 +1,7 @@
+
 import React from 'react';
 import SaintSacrement from './SaintSacrement';
+import Cross3D from './Cross3D';
 import Particle from './Particle';
 import { Button } from '@/components/ui/button';
 
@@ -21,8 +23,16 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
         <div className="absolute inset-0 bg-gradient-radial from-church-blue/80 via-church-light/60 to-white/40 dark:from-church-blue/90 dark:via-church-light/70 dark:to-gray-900/50 z-0"></div>
 
         <div className="relative z-10 max-w-4xl mx-auto animate-fade-in-up">
-          {/* Saint Sacrement component */}
-          <SaintSacrement />
+          {/* Container pour Saint Sacrement et Cross3D côte à côte */}
+          <div className="flex items-center justify-center gap-8 mb-8">
+            {/* Saint Sacrement component */}
+            <SaintSacrement />
+            
+            {/* Croix 3D bleue */}
+            <div className="flex-shrink-0">
+              <Cross3D />
+            </div>
+          </div>
 
           {/* Titles and Description */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6 drop-shadow-lg">
