@@ -1,169 +1,109 @@
-
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import Cross3D from './Cross3D';
+import React from 'react';
 import SaintSacrement from './SaintSacrement';
-import { 
-  Church,
-  Users,
-  Calendar,
-  Book,
-  User
-} from 'lucide-react';
+import Particle from './Particle';
+import { Button } from '@/components/ui/button';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
 }
 
 const HomePage = ({ onNavigate }: HomePageProps) => {
-  const services = [
-    {
-      id: 'catechese',
-      title: 'Catéchèse',
-      description: 'Inscription et suivi de la formation religieuse',
-      icon: Book,
-      color: 'bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
-    },
-    {
-      id: 'groupes',
-      title: 'Groupes & Mouvements',
-      description: 'Rejoignez nos communautés paroissiales',
-      icon: Users,
-      color: 'bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-400'
-    },
-    {
-      id: 'activites',
-      title: 'Activités',
-      description: 'Calendrier et événements de la paroisse',
-      icon: Calendar,
-      color: 'bg-purple-50 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400'
-    },
-    {
-      id: 'dashboard',
-      title: 'Mon Espace',
-      description: 'Accédez à votre tableau de bord personnel',
-      icon: User,
-      color: 'bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400'
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-church-light via-background to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      {/* Hero Section */}
-      <section className="pt-20 pb-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="animate-fade-in-up">
-            <div className="flex justify-center items-center space-x-8 mb-8">
-              <Cross3D />
-              <SaintSacrement />
-            </div>
-            
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-4">
-              Notre Dame de l'
-              <span className="text-primary">Incarnation</span>
-            </h1>
-            
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Bienvenue dans notre communauté paroissiale. 
-              Découvrez la foi, partagez l'amour et grandissez ensemble dans l'esprit du Christ.
-            </p>
-            
+    <>
+      {/* Section Hero */}
+      <section className="relative min-h-screen flex items-center justify-center text-center px-4 overflow-hidden">
+        {/* Background particles */}
+        {[...Array(10)].map((_, i) => (
+          <Particle key={i} />
+        ))}
+
+        {/* Background image with radial gradient */}
+        <div className="absolute inset-0 bg-gradient-radial from-church-blue/80 via-church-light/60 to-white/40 dark:from-church-blue/90 dark:via-church-light/70 dark:to-gray-900/50 z-0"></div>
+
+        <div className="relative z-10 max-w-4xl mx-auto animate-fade-in-up">
+          {/* Saint Sacrement component */}
+          <SaintSacrement />
+
+          {/* Titles and Description */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6 drop-shadow-lg">
+            Bienvenue à Notre Dame de l'Incarnation
+          </h1>
+          <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 mb-8">
+            Une communauté de foi, d'amour et d'espérance au cœur de Cocody, Abidjan.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
             <Button 
               size="lg" 
-              className="animate-glow glass-button bg-primary hover:bg-primary/90 text-primary-foreground"
-              onClick={() => onNavigate('catechese')}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300"
+              onClick={() => onNavigate('activites')}
             >
-              <Church className="w-5 h-5 mr-2" />
               Découvrir nos services
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="px-8 py-3 rounded-lg transform hover:scale-105 transition-all duration-300"
+              onClick={() => onNavigate('contact')}
+            >
+              Nous contacter
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-16 bg-background/50 dark:bg-gray-800/30">
+      {/* Section Services (Example) */}
+      <section className="py-16 bg-white dark:bg-gray-800">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-12">
+          <h2 className="text-3xl font-semibold text-center text-gray-800 dark:text-white mb-8">
             Nos Services
           </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <Card 
-                  key={service.id}
-                  className="group glass-card hover:shadow-xl transition-all duration-300 cursor-pointer animate-fade-in-up border-white/20 dark:border-gray-700/20"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                  onClick={() => onNavigate(service.id)}
-                >
-                  <CardHeader className="text-center">
-                    <div className={`w-16 h-16 mx-auto rounded-full ${service.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform backdrop-blur-sm`}>
-                      <Icon className="w-8 h-8" />
-                    </div>
-                    <CardTitle className="text-lg text-foreground">{service.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-center text-muted-foreground">
-                      {service.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Horaires Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center text-foreground mb-12">
-              Horaires des Célébrations
-            </h2>
-            
-            <div className="grid md:grid-cols-2 gap-8">
-              <Card className="glass-card border-white/20 dark:border-gray-700/20">
-                <CardHeader>
-                  <CardTitle className="text-primary">Messes Dominicales</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Samedi</span>
-                      <span className="font-semibold text-foreground">18h30</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Dimanche</span>
-                      <span className="font-semibold text-foreground">9h00 - 11h00</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card className="glass-card border-white/20 dark:border-gray-700/20">
-                <CardHeader>
-                  <CardTitle className="text-primary">Messes en Semaine</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Mardi - Vendredi</span>
-                      <span className="font-semibold text-foreground">18h00</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Mercredi</span>
-                      <span className="font-semibold text-foreground">9h00</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Example Service Card */}
+            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md p-6 hover:scale-105 transition-transform duration-300">
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                Célébrations Eucharistiques
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Participez à nos messes et vivez un moment de communion et de prière.
+              </p>
+            </div>
+            {/* Add more service cards here */}
+            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md p-6 hover:scale-105 transition-transform duration-300">
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                Catéchèse
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Découvrez nos programmes de catéchèse pour enfants et adultes.
+              </p>
+            </div>
+            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md p-6 hover:scale-105 transition-transform duration-300">
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
+                Groupes de Prière
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Rejoignez nos groupes de prière pour partager votre foi et votre spiritualité.
+              </p>
             </div>
           </div>
         </div>
       </section>
-    </div>
+
+      {/* Section Contact (Example) */}
+      <section className="py-16 bg-church-light dark:bg-gray-900">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-semibold text-gray-800 dark:text-white mb-8">
+            Restons en Contact
+          </h2>
+          <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
+            Pour toute question ou information, n'hésitez pas à nous contacter.
+          </p>
+          <Button size="lg" onClick={() => onNavigate('contact')}>
+            Contactez-nous
+          </Button>
+        </div>
+      </section>
+    </>
   );
 };
 

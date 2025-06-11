@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import HomePage from '../components/HomePage';
 import CatechesePage from '../components/CatechesePage';
@@ -11,9 +10,19 @@ import CatechistesPage from '../components/CatechistesPage';
 import EvenementsPage from '../components/EvenementsPage';
 import Footer from '../components/Footer';
 import Chatbot from '../components/Chatbot';
+import ParishPreloader from '../components/ParishPreloader';
 
 const Index = () => {
   const [currentPage, setCurrentPage] = useState('home');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleNavigate = (page: string) => {
     setCurrentPage(page);
@@ -41,6 +50,10 @@ const Index = () => {
         return <HomePage onNavigate={handleNavigate} />;
     }
   };
+
+  if (isLoading) {
+    return <ParishPreloader />;
+  }
 
   return (
     <div className="min-h-screen bg-white">

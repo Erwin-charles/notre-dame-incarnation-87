@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,9 +9,12 @@ import {
   User
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import PaymentSection from './PaymentSection';
 
 const CatechesePage = () => {
   const [inscriptionType, setInscriptionType] = useState<'catechiste' | 'catechumene' | null>(null);
+  const [showPayment, setShowPayment] = useState(false);
+  const [selectedService, setSelectedService] = useState({ name: '', amount: 0 });
   const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,6 +24,23 @@ const CatechesePage = () => {
       description: "Votre demande d'inscription a été transmise. Nous vous contacterons bientôt.",
     });
     setInscriptionType(null);
+  };
+
+  const handleInscription = (parcours: string, amount: number) => {
+    setSelectedService({ name: parcours, amount });
+    setShowPayment(true);
+    toast({
+      title: "Inscription initiée",
+      description: `Procédez au paiement pour finaliser votre inscription à ${parcours}.`,
+    });
+  };
+
+  const handlePaymentSuccess = () => {
+    setShowPayment(false);
+    toast({
+      title: "Inscription confirmée !",
+      description: "Vous recevrez bientôt les détails de votre parcours par SMS ou email.",
+    });
   };
 
   return (
@@ -70,7 +89,7 @@ const CatechesePage = () => {
                 </div>
                 <Button 
                   className="w-full bg-green-600 hover:bg-green-700"
-                  onClick={() => setInscriptionType('catechiste')}
+                  onClick={() => handleInscription('Catéchiste', 100)}
                 >
                   S'inscrire comme Catéchiste
                 </Button>
@@ -105,7 +124,7 @@ const CatechesePage = () => {
                 </div>
                 <Button 
                   className="w-full"
-                  onClick={() => setInscriptionType('catechumene')}
+                  onClick={() => handleInscription('Catéchumène', 200)}
                 >
                   S'inscrire comme Catéchumène
                 </Button>
@@ -181,6 +200,17 @@ const CatechesePage = () => {
                 </form>
               </CardContent>
             </Card>
+          </div>
+        )}
+
+        {/* Section de paiement */}
+        {showPayment && (
+          <div className="max-w-2xl mx-auto mt-12">
+            <PaymentSection
+              amount={selectedService.amount}
+              service={selectedService.name}
+              onPaymentSuccess={handlePaymentSuccess}
+            />
           </div>
         )}
       </div>
