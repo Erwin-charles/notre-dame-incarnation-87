@@ -1,207 +1,206 @@
 
-import React from 'react';
-import SaintSacrement from './SaintSacrement';
-import Cross3D from './Cross3D';
-import PageParticles from './PageParticles';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calendar, Users, Heart, Book, MapPin, Clock } from 'lucide-react';
+import { Church, Users, Calendar, Book, Heart, Clock, MapPin, Phone, Mail } from 'lucide-react';
+import Cross3D from './Cross3D';
+import SaintSacrement from './SaintSacrement';
+import PageParticles from './PageParticles';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
 }
 
 const HomePage = ({ onNavigate }: HomePageProps) => {
+  const quickActions = [
+    {
+      title: "Inscriptions Catéchèse",
+      description: "Inscrivez-vous aux parcours de catéchèse",
+      icon: Book,
+      onClick: () => onNavigate('catechese'),
+      color: "bg-blue-50 hover:bg-blue-100 border-blue-200"
+    },
+    {
+      title: "Horaires des Messes",
+      description: "Consultez les horaires de célébration",
+      icon: Clock,
+      onClick: () => onNavigate('activites'),
+      color: "bg-green-50 hover:bg-green-100 border-green-200"
+    },
+    {
+      title: "Groupes Paroissiaux",
+      description: "Rejoignez nos communautés",
+      icon: Users,
+      onClick: () => onNavigate('groupes'),
+      color: "bg-purple-50 hover:bg-purple-100 border-purple-200"
+    },
+    {
+      title: "Événements",
+      description: "Découvrez nos prochains événements",
+      icon: Calendar,
+      onClick: () => onNavigate('evenements'),
+      color: "bg-orange-50 hover:bg-orange-100 border-orange-200"
+    }
+  ];
+
+  const parishInfo = [
+    {
+      icon: MapPin,
+      title: "Adresse",
+      content: "Rue des Jardins, Cocody Riviera Golf, Abidjan"
+    },
+    {
+      icon: Phone,
+      title: "Téléphone",
+      content: "+225 22 44 XX XX"
+    },
+    {
+      icon: Mail,
+      title: "Email",
+      content: "contact@paroisse-cocody.ci"
+    },
+    {
+      icon: Clock,
+      title: "Horaires du Secrétariat",
+      content: "Lundi - Vendredi: 8h - 17h"
+    }
+  ];
+
   return (
-    <>
-      <PageParticles count={12} />
+    <div className="min-h-screen pt-16 relative">
+      <PageParticles count={15} />
       
-      {/* Section Hero */}
-      <section className="relative min-h-screen flex items-center justify-center text-center px-4 overflow-hidden">
-        {/* Background image with radial gradient */}
-        <div className="absolute inset-0 bg-gradient-radial from-church-blue/80 via-church-light/60 to-white/40 dark:from-church-blue/90 dark:via-church-light/70 dark:to-gray-900/50 z-0"></div>
-
-        <div className="relative z-10 max-w-4xl mx-auto animate-fade-in-up">
-          {/* Container pour Saint Sacrement et Cross3D côte à côte */}
-          <div className="flex items-center justify-center gap-8 mb-8">
-            {/* Saint Sacrement component */}
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 py-20">
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="flex items-center justify-center mb-8 space-x-8">
             <SaintSacrement />
-            
-            {/* Croix 3D bleue */}
-            <div className="flex-shrink-0">
-              <Cross3D />
-            </div>
-          </div>
-
-          {/* Titles and Description */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-blue-400 mb-6 drop-shadow-lg">
-            Bienvenue à Notre Dame de l'Incarnation
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 mb-8">
-            Une communauté de foi, d'amour et d'espérance au cœur de Cocody, Abidjan.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-            <Button 
-              size="lg" 
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300"
-              onClick={() => onNavigate('activites')}
-            >
-              Découvrir nos services
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="px-8 py-3 rounded-lg transform hover:scale-105 transition-all duration-300"
-              onClick={() => onNavigate('contact')}
-            >
-              Nous contacter
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Section Horaires */}
-      <section className="py-16 bg-gradient-to-br from-blue-50 to-white dark:from-gray-800 dark:to-gray-900">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <Clock className="w-12 h-12 mx-auto mb-4 text-blue-600" />
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">
-              Horaires des Célébrations
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              Rejoignez-nous pour la prière et la communion
-            </p>
+            <Cross3D />
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6">
-              <h3 className="text-xl font-semibold mb-4 text-blue-600 dark:text-blue-400">
-                Messes Dominicales
-              </h3>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Samedi soir</span>
-                  <span className="font-medium">18h30</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Dimanche matin</span>
-                  <span className="font-medium">9h00</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Dimanche midi</span>
-                  <span className="font-medium">11h00</span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6">
-              <h3 className="text-xl font-semibold mb-4 text-blue-600 dark:text-blue-400">
-                Messes en Semaine
-              </h3>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Mardi - Vendredi</span>
-                  <span className="font-medium">18h00</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Mercredi matin</span>
-                  <span className="font-medium">9h00</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Adoration</span>
-                  <span className="font-medium">Jeudi 19h00</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section Services */}
-      <section className="py-16 bg-white dark:bg-gray-800">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-semibold text-center text-gray-800 dark:text-white mb-8">
-            Nos Services
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-800 dark:text-blue-400 mb-6">
+            Bienvenue
+          </h1>
+          <h2 className="text-2xl md:text-3xl font-semibold text-church-blue mb-4">
+            Paroisse Notre Dame de l'Incarnation
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md p-6 hover:scale-105 transition-transform duration-300">
-              <Heart className="w-8 h-8 text-blue-600 mb-3" />
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                Célébrations Eucharistiques
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Participez à nos messes et vivez un moment de communion et de prière.
-              </p>
-            </div>
-
-            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md p-6 hover:scale-105 transition-transform duration-300">
-              <Book className="w-8 h-8 text-blue-600 mb-3" />
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                Catéchèse
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Découvrez nos programmes de catéchèse pour enfants et adultes.
-              </p>
-            </div>
-
-            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md p-6 hover:scale-105 transition-transform duration-300">
-              <Users className="w-8 h-8 text-blue-600 mb-3" />
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                Groupes de Prière
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Rejoignez nos groupes de prière pour partager votre foi et votre spiritualité.
-              </p>
-            </div>
-
-            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md p-6 hover:scale-105 transition-transform duration-300">
-              <Calendar className="w-8 h-8 text-blue-600 mb-3" />
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                Événements Paroissiaux
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Participez à nos événements communautaires et festivités religieuses.
-              </p>
-            </div>
-
-            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md p-6 hover:scale-105 transition-transform duration-300">
-              <Heart className="w-8 h-8 text-blue-600 mb-3" />
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                Action Caritative
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Engagez-vous dans nos actions de solidarité et d'aide aux plus démunis.
-              </p>
-            </div>
-
-            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg shadow-md p-6 hover:scale-105 transition-transform duration-300">
-              <MapPin className="w-8 h-8 text-blue-600 mb-3" />
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                Visites et Accompagnement
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Demandez une visite pastorale ou un accompagnement spirituel.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section Contact */}
-      <section className="py-16 bg-church-light dark:bg-gray-900">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-semibold text-gray-800 dark:text-white mb-8">
-            Restons en Contact
-          </h2>
-          <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
-            Pour toute question ou information, n'hésitez pas à nous contacter.
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
+            Une communauté de foi vivante au cœur de Cocody, où chacun est accueilli avec amour et bienveillance.
           </p>
-          <Button size="lg" onClick={() => onNavigate('contact')}>
-            Contactez-nous
+          <Button 
+            onClick={() => onNavigate('contact')} 
+            size="lg"
+            className="bg-church-blue hover:bg-church-blue/90 text-white px-8 py-3"
+          >
+            <Heart className="w-5 h-5 mr-2" />
+            Rejoignez-nous
           </Button>
         </div>
       </section>
-    </>
+
+      {/* Histoire de la Paroisse */}
+      <section className="py-16 relative z-10">
+        <div className="container mx-auto px-4">
+          <Card className="mb-12">
+            <CardHeader className="text-center">
+              <CardTitle className="text-3xl mb-4 flex items-center justify-center">
+                <Church className="w-8 h-8 mr-3 text-church-blue" />
+                Histoire de Notre Paroisse
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="prose prose-lg mx-auto">
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+                La Paroisse Notre Dame de l'Incarnation de Cocody a été fondée en 1982 par Monseigneur Jean-Baptiste Kouassi. 
+                Née du désir de servir la communauté catholique grandissante du quartier de Riviera Golf, notre paroisse 
+                s'est rapidement développée pour devenir un pilier spirituel de la région.
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+                Au fil des décennies, nous avons accompagné des milliers de fidèles dans leur cheminement de foi, 
+                célébrant baptêmes, communions, confirmations et mariages. Notre mission demeure inchangée : 
+                être une famille spirituelle accueillante où chacun peut grandir dans la foi et l'amour du Christ.
+              </p>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                Aujourd'hui, sous la direction du Père Michel Adjoussou, notre communauté compte plus de 3000 fidèles 
+                et continue de rayonner par ses nombreuses activités pastorales, caritatives et éducatives.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Actions Rapides */}
+      <section className="py-16 bg-gray-50 dark:bg-gray-900 relative z-10">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-white">
+            Actions Rapides
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {quickActions.map((action, index) => (
+              <Card key={index} className={`cursor-pointer transition-all hover:scale-105 ${action.color}`}>
+                <CardHeader className="text-center pb-2">
+                  <action.icon className="w-12 h-12 mx-auto text-church-blue mb-4" />
+                  <CardTitle className="text-lg">{action.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <CardDescription className="mb-4">{action.description}</CardDescription>
+                  <Button 
+                    onClick={action.onClick}
+                    variant="outline"
+                    size="sm"
+                    className="w-full"
+                  >
+                    Accéder
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Informations Pratiques */}
+      <section className="py-16 relative z-10">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-white">
+            Informations Pratiques
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {parishInfo.map((info, index) => (
+              <Card key={index} className="text-center">
+                <CardContent className="pt-6">
+                  <info.icon className="w-8 h-8 mx-auto text-church-blue mb-3" />
+                  <h3 className="font-semibold text-lg mb-2">{info.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300">{info.content}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Horaires des Messes */}
+      <section className="py-16 bg-church-blue text-white relative z-10">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-8">Horaires des Célébrations</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="text-xl font-semibold mb-4">En Semaine</h3>
+              <p className="mb-2">Lundi - Vendredi</p>
+              <p className="text-lg">6h30 & 18h30</p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Samedi</h3>
+              <p className="mb-2">Messe du soir</p>
+              <p className="text-lg">18h30</p>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Dimanche</h3>
+              <p className="mb-2">Messes dominicales</p>
+              <p className="text-lg">7h, 9h & 18h30</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
 
