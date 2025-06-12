@@ -2,18 +2,14 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon, UserPlus } from 'lucide-react';
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { UserPlus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import PaymentSection from './PaymentSection';
 import PageParticles from './PageParticles';
+import PersonalInfoForm from './forms/PersonalInfoForm';
+import FamilyInfoForm from './forms/FamilyInfoForm';
+import BaptismInfoForm from './forms/BaptismInfoForm';
+import CourseInfoForm from './forms/CourseInfoForm';
 
 const PreInscriptionPage = () => {
   const [formData, setFormData] = useState({
@@ -101,194 +97,25 @@ const PreInscriptionPage = () => {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Informations personnelles */}
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="nom">Nom *</Label>
-                  <Input
-                    id="nom"
-                    value={formData.nom}
-                    onChange={(e) => handleInputChange('nom', e.target.value)}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="prenom">Prénom *</Label>
-                  <Input
-                    id="prenom"
-                    value={formData.prenom}
-                    onChange={(e) => handleInputChange('prenom', e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
+              <PersonalInfoForm 
+                formData={formData} 
+                onInputChange={handleInputChange} 
+              />
+              
+              <FamilyInfoForm 
+                formData={formData} 
+                onInputChange={handleInputChange} 
+              />
 
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="email">Email *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="telephone">Téléphone *</Label>
-                  <Input
-                    id="telephone"
-                    value={formData.telephone}
-                    onChange={(e) => handleInputChange('telephone', e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
+              <BaptismInfoForm 
+                formData={formData} 
+                onInputChange={handleInputChange} 
+              />
 
-              <div>
-                <Label htmlFor="lieuHabitation">Lieu d'habitation</Label>
-                <Input
-                  id="lieuHabitation"
-                  value={formData.lieuHabitation}
-                  onChange={(e) => handleInputChange('lieuHabitation', e.target.value)}
-                />
-              </div>
-
-              {/* Informations familiales */}
-              <div className="border-t pt-6">
-                <h3 className="text-lg font-semibold mb-4">Informations Familiales</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="nomPere">Nom du Père</Label>
-                    <Input
-                      id="nomPere"
-                      value={formData.nomPere}
-                      onChange={(e) => handleInputChange('nomPere', e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="nomMere">Nom de la Mère</Label>
-                    <Input
-                      id="nomMere"
-                      value={formData.nomMere}
-                      onChange={(e) => handleInputChange('nomMere', e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4 mt-4">
-                  <div>
-                    <Label htmlFor="nomParrain">Nom du Parrain</Label>
-                    <Input
-                      id="nomParrain"
-                      value={formData.nomParrain}
-                      onChange={(e) => handleInputChange('nomParrain', e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="nomMarraine">Nom de la Marraine</Label>
-                    <Input
-                      id="nomMarraine"
-                      value={formData.nomMarraine}
-                      onChange={(e) => handleInputChange('nomMarraine', e.target.value)}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Informations sur le baptême */}
-              <div className="border-t pt-6">
-                <h3 className="text-lg font-semibold mb-4">Informations sur le Baptême</h3>
-                <div className="flex items-center space-x-2 mb-4">
-                  <Checkbox
-                    id="estBaptise"
-                    checked={formData.estBaptise}
-                    onCheckedChange={(checked) => handleInputChange('estBaptise', checked)}
-                  />
-                  <Label htmlFor="estBaptise">J'ai été baptisé(e) enfant</Label>
-                </div>
-
-                {formData.estBaptise && (
-                  <div>
-                    <Label>Date de Baptême</Label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className="w-full justify-start text-left font-normal"
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {formData.dateBapteme ? (
-                            format(formData.dateBapteme, "PPP", { locale: fr })
-                          ) : (
-                            <span>Sélectionner une date</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0">
-                        <Calendar
-                          mode="single"
-                          selected={formData.dateBapteme}
-                          onSelect={(date) => handleInputChange('dateBapteme', date)}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                )}
-              </div>
-
-              {/* Informations sur les cours */}
-              <div className="border-t pt-6">
-                <h3 className="text-lg font-semibold mb-4">Informations sur les Cours</h3>
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div>
-                    <Label htmlFor="classe">Classe</Label>
-                    <Select onValueChange={(value) => handleInputChange('classe', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Sélectionner" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="eveil">Éveil à la foi (3-7 ans)</SelectItem>
-                        <SelectItem value="ce1">Catéchèse CE1</SelectItem>
-                        <SelectItem value="ce2">Catéchèse CE2</SelectItem>
-                        <SelectItem value="cm1">Catéchèse CM1</SelectItem>
-                        <SelectItem value="cm2">Catéchèse CM2</SelectItem>
-                        <SelectItem value="6eme">Catéchèse 6ème</SelectItem>
-                        <SelectItem value="aumonerie">Aumônerie (Collège/Lycée)</SelectItem>
-                        <SelectItem value="adulte">Catéchuménat Adulte</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label htmlFor="anneeSuivie">Année suivie</Label>
-                    <Select onValueChange={(value) => handleInputChange('anneeSuivie', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Sélectionner" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="1ere">1ère année</SelectItem>
-                        <SelectItem value="2eme">2ème année</SelectItem>
-                        <SelectItem value="3eme">3ème année</SelectItem>
-                        <SelectItem value="4eme">4ème année</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label htmlFor="jourCours">Jour de cours</Label>
-                    <Select onValueChange={(value) => handleInputChange('jourCours', value)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Sélectionner" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="mercredi">Mercredi</SelectItem>
-                        <SelectItem value="samedi">Samedi</SelectItem>
-                        <SelectItem value="dimanche">Dimanche</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </div>
+              <CourseInfoForm 
+                formData={formData} 
+                onInputChange={handleInputChange} 
+              />
 
               <Button type="submit" className="w-full bg-church-blue hover:bg-church-blue/90">
                 Valider l'inscription
