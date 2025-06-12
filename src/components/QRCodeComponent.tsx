@@ -9,6 +9,9 @@ interface QRCodeComponentProps {
 }
 
 const QRCodeComponent = ({ url, title = "Accès rapide", description = "Scannez pour ouvrir" }: QRCodeComponentProps) => {
+  // Générer l'URL du QR code avec un service en ligne
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+
   return (
     <Card className="text-center">
       <CardHeader>
@@ -17,8 +20,19 @@ const QRCodeComponent = ({ url, title = "Accès rapide", description = "Scannez 
       </CardHeader>
       <CardContent>
         <div className="bg-white p-4 rounded-lg border-2 border-gray-200 inline-block">
-          {/* Simulation d'un QR Code avec une grille */}
-          <div className="w-32 h-32 bg-black relative">
+          <img 
+            src={qrCodeUrl} 
+            alt={`QR Code pour ${url}`}
+            className="w-48 h-48 mx-auto"
+            onError={(e) => {
+              // Fallback en cas d'erreur de chargement
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+              target.nextElementSibling?.classList.remove('hidden');
+            }}
+          />
+          {/* Fallback QR code simulé */}
+          <div className="w-48 h-48 bg-black relative hidden">
             <div className="absolute inset-1 bg-white"></div>
             <div className="absolute inset-0 grid grid-cols-8 gap-0">
               {Array.from({ length: 64 }, (_, i) => (
