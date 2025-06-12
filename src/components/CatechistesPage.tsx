@@ -1,12 +1,14 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { GraduationCap, Users, BookOpen, Calendar, Award, Heart } from 'lucide-react';
+import PageParticles from './PageParticles';
 
 const CatechistesPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-church-light via-background to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pt-20">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-church-light via-background to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pt-20 relative">
+      <PageParticles />
+      
+      <div className="container mx-auto px-4 py-8 relative z-10">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-foreground mb-4">Équipe des Catéchistes</h1>
           <p className="text-xl text-muted-foreground">Serviteurs de la Parole au service de la communauté</p>

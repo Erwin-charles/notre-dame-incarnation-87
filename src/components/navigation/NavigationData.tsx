@@ -59,6 +59,13 @@ export const menuItems = [
         onClick: (onNavigate: (page: string) => void) => onNavigate('catechese') 
       },
       { 
+        id: 'catechese-pre-inscription', 
+        label: 'Pré-inscription', 
+        icon: UserPlus,
+        description: 'Formulaire de pré-inscription catéchumène',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('pre-inscription') 
+      },
+      { 
         id: 'catechese-catechistes', 
         label: 'Catéchistes', 
         icon: GraduationCap,
@@ -147,7 +154,7 @@ export const menuItems = [
         label: 'Bénédictions', 
         icon: Heart,
         description: 'Bénédictions et célébrations particulières',
-        onClick: (onNavigate: (page: string) => void) => onNavigate('activites') 
+        onClick: (onNavigate: (page: string) => void) => onNavigate('benedictions') 
       },
     ]
   },

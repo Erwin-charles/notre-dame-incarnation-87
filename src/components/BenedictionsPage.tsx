@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Heart, Home, Car, Gift, Baby, Ring, Cross, Calendar } from 'lucide-react';
+import { Heart, Home, Car, Gift, Baby, Circle, Cross, Calendar } from 'lucide-react';
 import PageParticles from './PageParticles';
 
 const BenedictionsPage = () => {
@@ -41,7 +41,7 @@ const BenedictionsPage = () => {
     {
       title: "Bénédiction d'Alliance",
       description: "Bénédiction des alliances avant le mariage",
-      icon: Ring,
+      icon: Circle,
       duree: "15 minutes",
       tarif: "2 000 FCFA",
       details: "Consécration des alliances qui symboliseront l'union des époux devant Dieu."
