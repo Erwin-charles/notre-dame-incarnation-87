@@ -11,6 +11,9 @@ import CatechistesPage from '../components/CatechistesPage';
 import EvenementsPage from '../components/EvenementsPage';
 import PreInscriptionPage from '../components/PreInscriptionPage';
 import BenedictionsPage from '../components/BenedictionsPage';
+import DenierCultePage from '../components/DenierCultePage';
+import LibrairieCaritasPage from '../components/LibrairieCaritasPage';
+import InscriptionCatechistePage from '../components/InscriptionCatechistePage';
 import Footer from '../components/Footer';
 import Chatbot from '../components/Chatbot';
 import ParishPreloader from '../components/ParishPreloader';
@@ -54,6 +57,12 @@ const Index = () => {
         return <PreInscriptionPage />;
       case 'benedictions':
         return <BenedictionsPage />;
+      case 'denier-culte':
+        return <DenierCultePage />;
+      case 'librairie-caritas':
+        return <LibrairieCaritasPage />;
+      case 'inscription-catechiste':
+        return <InscriptionCatechistePage />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }

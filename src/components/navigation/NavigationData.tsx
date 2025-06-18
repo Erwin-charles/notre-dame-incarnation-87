@@ -14,7 +14,9 @@ import {
   Clock,
   Gift,
   BookOpen,
-  Shield
+  Shield,
+  Calculator,
+  ShoppingCart
 } from 'lucide-react';
 
 export const menuItems = [
@@ -60,24 +62,24 @@ export const menuItems = [
       },
       { 
         id: 'catechese-pre-inscription', 
-        label: 'Pré-inscription', 
+        label: 'Pré-inscription Catéchumène', 
         icon: UserPlus,
-        description: 'Formulaire de pré-inscription catéchumène',
+        description: 'Formulaire complet de pré-inscription catéchumène',
         onClick: (onNavigate: (page: string) => void) => onNavigate('pre-inscription') 
       },
       { 
-        id: 'catechese-catechistes', 
-        label: 'Catéchistes', 
+        id: 'catechese-inscription-catechiste', 
+        label: 'Inscription Catéchiste', 
         icon: GraduationCap,
-        description: 'Équipe des catéchistes et formation',
-        onClick: (onNavigate: (page: string) => void) => onNavigate('catechistes') 
+        description: 'Devenir catéchiste dans notre paroisse',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('inscription-catechiste') 
       },
       { 
-        id: 'catechese-catechumenes', 
-        label: 'Catéchumènes', 
-        icon: UserCheck,
-        description: 'Parcours pour les adultes demandant le baptême',
-        onClick: (onNavigate: (page: string) => void) => onNavigate('catechese') 
+        id: 'catechese-catechistes', 
+        label: 'Équipe Catéchistes', 
+        icon: Users,
+        description: 'Équipe des catéchistes et responsables',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('catechistes') 
       },
       { 
         id: 'catechese-programme', 
@@ -125,7 +127,7 @@ export const menuItems = [
   },
   { 
     id: 'activites', 
-    label: 'Activités', 
+    label: 'Activités & Services', 
     icon: Calendar,
     subItems: [
       { 
@@ -155,6 +157,13 @@ export const menuItems = [
         icon: Heart,
         description: 'Bénédictions et célébrations particulières',
         onClick: (onNavigate: (page: string) => void) => onNavigate('benedictions') 
+      },
+      { 
+        id: 'activites-librairie', 
+        label: 'Librairie & Caritas', 
+        icon: ShoppingCart,
+        description: 'Articles religieux et dons pour la solidarité',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('librairie-caritas') 
       },
     ]
   },
@@ -190,6 +199,13 @@ export const menuItems = [
         icon: Shield,
         description: 'Administration paroissiale',
         onClick: (onNavigate: (page: string) => void) => onNavigate('dashboard') 
+      },
+      { 
+        id: 'dashboard-denier', 
+        label: 'Denier de Culte', 
+        icon: Calculator,
+        description: 'Carnet informatique - Réservé au clergé',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('denier-culte') 
       },
     ]
   },

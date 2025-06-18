@@ -1,6 +1,7 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { GraduationCap, Users, BookOpen, Calendar, Award, Heart } from 'lucide-react';
+import { GraduationCap, Users, BookOpen, Calendar, Award, Heart, Shield } from 'lucide-react';
 import PageParticles from './PageParticles';
 
 const CatechistesPage = () => {
@@ -67,6 +68,42 @@ const CatechistesPage = () => {
           </Card>
         </div>
 
+        {/* Responsables de la catéchèse */}
+        <Card className="glass-card border-white/20 dark:border-gray-700/20 mb-8">
+          <CardHeader>
+            <CardTitle className="text-primary">Responsables de la Catéchèse</CardTitle>
+            <CardDescription>L'équipe de direction pastorale</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="text-center p-4 bg-primary/5 rounded-lg border-2 border-primary/20">
+                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Shield className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-semibold text-foreground">Père Jean-Marie KOUASSI</h3>
+                <p className="text-sm text-primary font-medium">Curé de la Paroisse</p>
+                <p className="text-xs text-muted-foreground mt-1">Responsable général de la catéchèse</p>
+              </div>
+              <div className="text-center p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
+                <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <GraduationCap className="w-8 h-8 text-blue-600" />
+                </div>
+                <h3 className="font-semibold text-foreground">Père David KOFFI</h3>
+                <p className="text-sm text-blue-600 font-medium">Vicaire</p>
+                <p className="text-xs text-muted-foreground mt-1">Responsable adjoint - Formation des catéchistes</p>
+              </div>
+              <div className="text-center p-4 bg-green-50 rounded-lg border-2 border-green-200">
+                <div className="w-16 h-16 bg-green-200 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Users className="w-8 h-8 text-green-600" />
+                </div>
+                <h3 className="font-semibold text-foreground">Marie KONE</h3>
+                <p className="text-sm text-green-600 font-medium">Responsable Catéchistes</p>
+                <p className="text-xs text-muted-foreground mt-1">Coordination et suivi pédagogique</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Équipe des catéchistes */}
         <Card className="glass-card border-white/20 dark:border-gray-700/20 mb-8">
           <CardHeader>
@@ -75,14 +112,6 @@ const CatechistesPage = () => {
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-4 gap-6">
-              <div className="text-center p-4 bg-primary/5 rounded-lg">
-                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <GraduationCap className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="font-semibold text-foreground">Marie KONE</h3>
-                <p className="text-sm text-muted-foreground">Responsable Catéchèse</p>
-                <p className="text-xs text-muted-foreground mt-1">15 ans d'expérience</p>
-              </div>
               <div className="text-center p-4 bg-primary/5 rounded-lg">
                 <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3">
                   <Users className="w-8 h-8 text-primary" />
@@ -106,6 +135,14 @@ const CatechistesPage = () => {
                 <h3 className="font-semibold text-foreground">Emmanuel YAO</h3>
                 <p className="text-sm text-muted-foreground">Catéchiste Jeunes</p>
                 <p className="text-xs text-muted-foreground mt-1">5 ans d'expérience</p>
+              </div>
+              <div className="text-center p-4 bg-primary/5 rounded-lg">
+                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Heart className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="font-semibold text-foreground">Bénédicte TRAORE</h3>
+                <p className="text-sm text-muted-foreground">Catéchiste Éveil</p>
+                <p className="text-xs text-muted-foreground mt-1">6 ans d'expérience</p>
               </div>
             </div>
           </CardContent>
