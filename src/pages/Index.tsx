@@ -1,11 +1,13 @@
 
 import { useState, useEffect } from 'react';
+import { User } from '@supabase/supabase-js';
 import Navigation from '../components/Navigation';
 import HomePage from '../components/HomePage';
 import CatechesePage from '../components/CatechesePage';
 import GroupesPage from '../components/GroupesPage';
 import ActivitesPage from '../components/ActivitesPage';
 import DashboardPage from '../components/DashboardPage';
+import AdminDashboard from '../components/AdminDashboard';
 import ContactPage from '../components/ContactPage';
 import CatechistesPage from '../components/CatechistesPage';
 import EvenementsPage from '../components/EvenementsPage';
@@ -19,7 +21,12 @@ import Chatbot from '../components/Chatbot';
 import ParishPreloader from '../components/ParishPreloader';
 import PageParticles from '../components/PageParticles';
 
-const Index = () => {
+interface IndexProps {
+  user: User;
+  onLogout: () => void;
+}
+
+const Index = ({ user, onLogout }: IndexProps) => {
   const [currentPage, setCurrentPage] = useState('home');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -47,6 +54,8 @@ const Index = () => {
         return <ActivitesPage />;
       case 'dashboard':
         return <DashboardPage />;
+      case 'admin':
+        return <AdminDashboard />;
       case 'contact':
         return <ContactPage />;
       case 'catechistes':
@@ -75,7 +84,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white relative">
       {currentPage !== 'home' && <PageParticles />}
-      <Navigation onNavigate={handleNavigate} currentPage={currentPage} />
+      <Navigation onNavigate={handleNavigate} currentPage={currentPage} user={user} onLogout={onLogout} />
       {renderPage()}
       <Footer />
       <Chatbot />

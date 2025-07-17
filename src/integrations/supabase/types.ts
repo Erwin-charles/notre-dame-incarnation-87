@@ -14,16 +14,567 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      actualites: {
+        Row: {
+          auteur_id: string
+          contenu: string
+          created_at: string | null
+          date_publication: string | null
+          id: string
+          image_url: string | null
+          publie: boolean | null
+          titre: string
+          updated_at: string | null
+        }
+        Insert: {
+          auteur_id: string
+          contenu: string
+          created_at?: string | null
+          date_publication?: string | null
+          id?: string
+          image_url?: string | null
+          publie?: boolean | null
+          titre: string
+          updated_at?: string | null
+        }
+        Update: {
+          auteur_id?: string
+          contenu?: string
+          created_at?: string | null
+          date_publication?: string | null
+          id?: string
+          image_url?: string | null
+          publie?: boolean | null
+          titre?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      catechistes: {
+        Row: {
+          actif: boolean | null
+          created_at: string | null
+          date_inscription: string | null
+          experience: string | null
+          formation_complete: boolean | null
+          id: string
+          niveau_responsabilite:
+            | Database["public"]["Enums"]["catechese_level"][]
+            | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          actif?: boolean | null
+          created_at?: string | null
+          date_inscription?: string | null
+          experience?: string | null
+          formation_complete?: boolean | null
+          id?: string
+          niveau_responsabilite?:
+            | Database["public"]["Enums"]["catechese_level"][]
+            | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          actif?: boolean | null
+          created_at?: string | null
+          date_inscription?: string | null
+          experience?: string | null
+          formation_complete?: boolean | null
+          id?: string
+          niveau_responsabilite?:
+            | Database["public"]["Enums"]["catechese_level"][]
+            | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      catechumenes: {
+        Row: {
+          annee_suivie: string | null
+          catechiste_id: string | null
+          classe_scolaire: string | null
+          created_at: string | null
+          date_bapteme: string | null
+          est_baptise: boolean | null
+          id: string
+          jour_cours: string | null
+          lieu_bapteme: string | null
+          motivation: string | null
+          niveau: Database["public"]["Enums"]["catechese_level"]
+          nom_marraine: string | null
+          nom_mere: string | null
+          nom_parrain: string | null
+          nom_pere: string | null
+          status: Database["public"]["Enums"]["inscription_status"] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          annee_suivie?: string | null
+          catechiste_id?: string | null
+          classe_scolaire?: string | null
+          created_at?: string | null
+          date_bapteme?: string | null
+          est_baptise?: boolean | null
+          id?: string
+          jour_cours?: string | null
+          lieu_bapteme?: string | null
+          motivation?: string | null
+          niveau: Database["public"]["Enums"]["catechese_level"]
+          nom_marraine?: string | null
+          nom_mere?: string | null
+          nom_parrain?: string | null
+          nom_pere?: string | null
+          status?: Database["public"]["Enums"]["inscription_status"] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          annee_suivie?: string | null
+          catechiste_id?: string | null
+          classe_scolaire?: string | null
+          created_at?: string | null
+          date_bapteme?: string | null
+          est_baptise?: boolean | null
+          id?: string
+          jour_cours?: string | null
+          lieu_bapteme?: string | null
+          motivation?: string | null
+          niveau?: Database["public"]["Enums"]["catechese_level"]
+          nom_marraine?: string | null
+          nom_mere?: string | null
+          nom_parrain?: string | null
+          nom_pere?: string | null
+          status?: Database["public"]["Enums"]["inscription_status"] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "catechumenes_catechiste_id_fkey"
+            columns: ["catechiste_id"]
+            isOneToOne: false
+            referencedRelation: "catechistes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contact_messages: {
+        Row: {
+          created_at: string | null
+          date_traitement: string | null
+          email: string
+          id: string
+          message: string
+          nom: string
+          sujet: string
+          telephone: string | null
+          traite: boolean | null
+          traite_par: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          date_traitement?: string | null
+          email: string
+          id?: string
+          message: string
+          nom: string
+          sujet: string
+          telephone?: string | null
+          traite?: boolean | null
+          traite_par?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          date_traitement?: string | null
+          email?: string
+          id?: string
+          message?: string
+          nom?: string
+          sujet?: string
+          telephone?: string | null
+          traite?: boolean | null
+          traite_par?: string | null
+        }
+        Relationships: []
+      }
+      event_inscriptions: {
+        Row: {
+          commentaire: string | null
+          date_inscription: string | null
+          event_id: string
+          id: string
+          status: Database["public"]["Enums"]["inscription_status"] | null
+          user_id: string
+        }
+        Insert: {
+          commentaire?: string | null
+          date_inscription?: string | null
+          event_id: string
+          id?: string
+          status?: Database["public"]["Enums"]["inscription_status"] | null
+          user_id: string
+        }
+        Update: {
+          commentaire?: string | null
+          date_inscription?: string | null
+          event_id?: string
+          id?: string
+          status?: Database["public"]["Enums"]["inscription_status"] | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_inscriptions_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          actif: boolean | null
+          created_at: string | null
+          created_by: string
+          date_debut: string
+          date_fin: string | null
+          description: string | null
+          id: string
+          image_url: string | null
+          lieu: string | null
+          max_participants: number | null
+          prix: number | null
+          responsable_id: string | null
+          titre: string
+          type: Database["public"]["Enums"]["event_type"]
+          updated_at: string | null
+        }
+        Insert: {
+          actif?: boolean | null
+          created_at?: string | null
+          created_by: string
+          date_debut: string
+          date_fin?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          lieu?: string | null
+          max_participants?: number | null
+          prix?: number | null
+          responsable_id?: string | null
+          titre: string
+          type: Database["public"]["Enums"]["event_type"]
+          updated_at?: string | null
+        }
+        Update: {
+          actif?: boolean | null
+          created_at?: string | null
+          created_by?: string
+          date_debut?: string
+          date_fin?: string | null
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          lieu?: string | null
+          max_participants?: number | null
+          prix?: number | null
+          responsable_id?: string | null
+          titre?: string
+          type?: Database["public"]["Enums"]["event_type"]
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      groupe_membres: {
+        Row: {
+          actif: boolean | null
+          date_adhesion: string | null
+          groupe_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          actif?: boolean | null
+          date_adhesion?: string | null
+          groupe_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          actif?: boolean | null
+          date_adhesion?: string | null
+          groupe_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "groupe_membres_groupe_id_fkey"
+            columns: ["groupe_id"]
+            isOneToOne: false
+            referencedRelation: "groupes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      groupes: {
+        Row: {
+          actif: boolean | null
+          created_at: string | null
+          description: string | null
+          heure_reunion: string | null
+          id: string
+          jour_reunion: string | null
+          lieu_reunion: string | null
+          nom: string
+          responsable_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          actif?: boolean | null
+          created_at?: string | null
+          description?: string | null
+          heure_reunion?: string | null
+          id?: string
+          jour_reunion?: string | null
+          lieu_reunion?: string | null
+          nom: string
+          responsable_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          actif?: boolean | null
+          created_at?: string | null
+          description?: string | null
+          heure_reunion?: string | null
+          id?: string
+          jour_reunion?: string | null
+          lieu_reunion?: string | null
+          nom?: string
+          responsable_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          catechumene_id: string | null
+          created_at: string | null
+          event_id: string | null
+          id: string
+          methode_paiement: string | null
+          montant: number
+          reference_transaction: string | null
+          service: string
+          status: Database["public"]["Enums"]["payment_status"] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          catechumene_id?: string | null
+          created_at?: string | null
+          event_id?: string | null
+          id?: string
+          methode_paiement?: string | null
+          montant: number
+          reference_transaction?: string | null
+          service: string
+          status?: Database["public"]["Enums"]["payment_status"] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          catechumene_id?: string | null
+          created_at?: string | null
+          event_id?: string | null
+          id?: string
+          methode_paiement?: string | null
+          montant?: number
+          reference_transaction?: string | null
+          service?: string
+          status?: Database["public"]["Enums"]["payment_status"] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_catechumene_id_fkey"
+            columns: ["catechumene_id"]
+            isOneToOne: false
+            referencedRelation: "catechumenes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          adresse: string | null
+          avatar_url: string | null
+          created_at: string | null
+          date_naissance: string | null
+          email: string
+          id: string
+          lieu_naissance: string | null
+          nom: string
+          prenom: string
+          profession: string | null
+          telephone: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          adresse?: string | null
+          avatar_url?: string | null
+          created_at?: string | null
+          date_naissance?: string | null
+          email: string
+          id?: string
+          lieu_naissance?: string | null
+          nom: string
+          prenom: string
+          profession?: string | null
+          telephone?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          adresse?: string | null
+          avatar_url?: string | null
+          created_at?: string | null
+          date_naissance?: string | null
+          email?: string
+          id?: string
+          lieu_naissance?: string | null
+          nom?: string
+          prenom?: string
+          profession?: string | null
+          telephone?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      sacrements: {
+        Row: {
+          celebrant: string | null
+          created_at: string | null
+          date_sacrement: string
+          id: string
+          lieu: string | null
+          marraine: string | null
+          notes: string | null
+          parrain: string | null
+          type_sacrement: string
+          user_id: string
+        }
+        Insert: {
+          celebrant?: string | null
+          created_at?: string | null
+          date_sacrement: string
+          id?: string
+          lieu?: string | null
+          marraine?: string | null
+          notes?: string | null
+          parrain?: string | null
+          type_sacrement: string
+          user_id: string
+        }
+        Update: {
+          celebrant?: string | null
+          created_at?: string | null
+          date_sacrement?: string
+          id?: string
+          lieu?: string | null
+          marraine?: string | null
+          notes?: string | null
+          parrain?: string | null
+          type_sacrement?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          assigned_at: string | null
+          assigned_by: string | null
+          id: string
+          role: Database["public"]["Enums"]["user_role"]
+          user_id: string
+        }
+        Insert: {
+          assigned_at?: string | null
+          assigned_by?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["user_role"]
+          user_id: string
+        }
+        Update: {
+          assigned_at?: string | null
+          assigned_by?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["user_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _user_id: string
+          _role: Database["public"]["Enums"]["user_role"]
+        }
+        Returns: boolean
+      }
+      is_admin: {
+        Args: { _user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      catechese_level:
+        | "eveil_foi"
+        | "ce1_ce2"
+        | "cm1_cm2"
+        | "college"
+        | "lycee"
+        | "adulte"
+      event_type:
+        | "messe"
+        | "formation"
+        | "pelerinage"
+        | "fete"
+        | "reunion"
+        | "celebration"
+        | "autre"
+      inscription_status: "pending" | "approved" | "rejected" | "completed"
+      payment_status: "pending" | "completed" | "failed" | "cancelled"
+      user_role:
+        | "super_admin"
+        | "cure"
+        | "aumonier"
+        | "catechiste"
+        | "secretaire"
+        | "tresorier"
+        | "catechumene"
+        | "parent"
+        | "paroissien"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +701,37 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      catechese_level: [
+        "eveil_foi",
+        "ce1_ce2",
+        "cm1_cm2",
+        "college",
+        "lycee",
+        "adulte",
+      ],
+      event_type: [
+        "messe",
+        "formation",
+        "pelerinage",
+        "fete",
+        "reunion",
+        "celebration",
+        "autre",
+      ],
+      inscription_status: ["pending", "approved", "rejected", "completed"],
+      payment_status: ["pending", "completed", "failed", "cancelled"],
+      user_role: [
+        "super_admin",
+        "cure",
+        "aumonier",
+        "catechiste",
+        "secretaire",
+        "tresorier",
+        "catechumene",
+        "parent",
+        "paroissien",
+      ],
+    },
   },
 } as const
