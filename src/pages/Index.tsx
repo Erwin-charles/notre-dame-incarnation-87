@@ -16,6 +16,11 @@ import BenedictionsPage from '../components/BenedictionsPage';
 import DenierCultePage from '../components/DenierCultePage';
 import LibrairieCaritasPage from '../components/LibrairieCaritasPage';
 import InscriptionCatechistePage from '../components/InscriptionCatechistePage';
+import NewsletterPage from '../components/NewsletterPage';
+import IntentionsMessePage from '../components/IntentionsMessePage';
+import DonsEnLignePage from '../components/DonsEnLignePage';
+import ResourcesSpirituellesPage from '../components/ResourcesSpirituellesPage';
+import GalerieMediaPage from '../components/GalerieMediaPage';
 import Footer from '../components/Footer';
 import Chatbot from '../components/Chatbot';
 import ParishPreloader from '../components/ParishPreloader';
@@ -72,6 +77,16 @@ const Index = ({ user, onLogout }: IndexProps) => {
         return <LibrairieCaritasPage />;
       case 'inscription-catechiste':
         return <InscriptionCatechistePage />;
+      case 'newsletter':
+        return <NewsletterPage />;
+      case 'intentions-messe':
+        return <IntentionsMessePage />;
+      case 'dons-en-ligne':
+        return <DonsEnLignePage />;
+      case 'ressources-spirituelles':
+        return <ResourcesSpirituellesPage />;
+      case 'galerie-media':
+        return <GalerieMediaPage />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }

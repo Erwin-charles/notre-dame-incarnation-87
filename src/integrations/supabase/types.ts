@@ -202,6 +202,57 @@ export type Database = {
         }
         Relationships: []
       }
+      dons_ligne: {
+        Row: {
+          created_at: string | null
+          donateur_email: string
+          donateur_nom: string
+          donateur_telephone: string | null
+          id: string
+          message_donateur: string | null
+          methode_paiement: string | null
+          montant: number
+          reference_transaction: string | null
+          status: Database["public"]["Enums"]["payment_status"] | null
+          stripe_session_id: string | null
+          type_don: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          donateur_email: string
+          donateur_nom: string
+          donateur_telephone?: string | null
+          id?: string
+          message_donateur?: string | null
+          methode_paiement?: string | null
+          montant: number
+          reference_transaction?: string | null
+          status?: Database["public"]["Enums"]["payment_status"] | null
+          stripe_session_id?: string | null
+          type_don: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          donateur_email?: string
+          donateur_nom?: string
+          donateur_telephone?: string | null
+          id?: string
+          message_donateur?: string | null
+          methode_paiement?: string | null
+          montant?: number
+          reference_transaction?: string | null
+          status?: Database["public"]["Enums"]["payment_status"] | null
+          stripe_session_id?: string | null
+          type_don?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       event_inscriptions: {
         Row: {
           commentaire: string | null
@@ -291,6 +342,62 @@ export type Database = {
         }
         Relationships: []
       }
+      galerie_media: {
+        Row: {
+          auteur_id: string
+          created_at: string | null
+          date_prise: string | null
+          description: string | null
+          event_id: string | null
+          id: string
+          publie: boolean | null
+          tags: string[] | null
+          thumbnail_url: string | null
+          titre: string
+          type: string
+          updated_at: string | null
+          url: string
+        }
+        Insert: {
+          auteur_id: string
+          created_at?: string | null
+          date_prise?: string | null
+          description?: string | null
+          event_id?: string | null
+          id?: string
+          publie?: boolean | null
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          titre: string
+          type: string
+          updated_at?: string | null
+          url: string
+        }
+        Update: {
+          auteur_id?: string
+          created_at?: string | null
+          date_prise?: string | null
+          description?: string | null
+          event_id?: string | null
+          id?: string
+          publie?: boolean | null
+          tags?: string[] | null
+          thumbnail_url?: string | null
+          titre?: string
+          type?: string
+          updated_at?: string | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "galerie_media_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       groupe_membres: {
         Row: {
           actif: boolean | null
@@ -359,6 +466,96 @@ export type Database = {
           nom?: string
           responsable_id?: string | null
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      intentions_messe: {
+        Row: {
+          created_at: string | null
+          date_messe: string
+          date_traitement: string | null
+          don_montant: number | null
+          email: string
+          heure_messe: string | null
+          id: string
+          intention: string
+          nom: string
+          status: Database["public"]["Enums"]["inscription_status"] | null
+          telephone: string | null
+          traite: boolean | null
+          traite_par: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          date_messe: string
+          date_traitement?: string | null
+          don_montant?: number | null
+          email: string
+          heure_messe?: string | null
+          id?: string
+          intention: string
+          nom: string
+          status?: Database["public"]["Enums"]["inscription_status"] | null
+          telephone?: string | null
+          traite?: boolean | null
+          traite_par?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          date_messe?: string
+          date_traitement?: string | null
+          don_montant?: number | null
+          email?: string
+          heure_messe?: string | null
+          id?: string
+          intention?: string
+          nom?: string
+          status?: Database["public"]["Enums"]["inscription_status"] | null
+          telephone?: string | null
+          traite?: boolean | null
+          traite_par?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      newsletter_subscriptions: {
+        Row: {
+          created_at: string | null
+          date_inscription: string | null
+          email: string
+          id: string
+          nom: string | null
+          prenom: string | null
+          subscribed: boolean | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          date_inscription?: string | null
+          email: string
+          id?: string
+          nom?: string | null
+          prenom?: string | null
+          subscribed?: boolean | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          date_inscription?: string | null
+          email?: string
+          id?: string
+          nom?: string | null
+          prenom?: string | null
+          subscribed?: boolean | null
+          updated_at?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -464,6 +661,54 @@ export type Database = {
           telephone?: string | null
           updated_at?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      resources_spirituelles: {
+        Row: {
+          audio_url: string | null
+          auteur_id: string
+          contenu: string
+          created_at: string | null
+          date_publication: string | null
+          id: string
+          image_url: string | null
+          publie: boolean | null
+          tags: string[] | null
+          titre: string
+          type: string
+          updated_at: string | null
+          video_url: string | null
+        }
+        Insert: {
+          audio_url?: string | null
+          auteur_id: string
+          contenu: string
+          created_at?: string | null
+          date_publication?: string | null
+          id?: string
+          image_url?: string | null
+          publie?: boolean | null
+          tags?: string[] | null
+          titre: string
+          type: string
+          updated_at?: string | null
+          video_url?: string | null
+        }
+        Update: {
+          audio_url?: string | null
+          auteur_id?: string
+          contenu?: string
+          created_at?: string | null
+          date_publication?: string | null
+          id?: string
+          image_url?: string | null
+          publie?: boolean | null
+          tags?: string[] | null
+          titre?: string
+          type?: string
+          updated_at?: string | null
+          video_url?: string | null
         }
         Relationships: []
       }

@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { MapPin, Mail, Phone } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import QRCodeComponent from './QRCodeComponent';
 import PageParticles from './PageParticles';
 
@@ -16,15 +17,35 @@ const ContactPage = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message envoyé!",
-      description: "Votre message a été envoyé avec succès. Nous vous répondrons bientôt.",
-    });
-    setName('');
-    setEmail('');
-    setMessage('');
+    
+    try {
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert({
+          nom: name,
+          email,
+          message,
+          sujet: 'Contact depuis le site web'
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Message envoyé!",
+        description: "Votre message a été envoyé avec succès. Nous vous répondrons bientôt.",
+      });
+      setName('');
+      setEmail('');
+      setMessage('');
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'envoi. Veuillez réessayer.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
