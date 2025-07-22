@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AuthPage from "./components/AuthPage";
+import PasswordResetPage from "./components/PasswordResetPage";
 
 const queryClient = new QueryClient();
 
@@ -52,18 +53,6 @@ const App = () => {
     );
   }
 
-  if (!user) {
-    return (
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <AuthPage onAuthSuccess={() => {}} />
-        </TooltipProvider>
-      </QueryClientProvider>
-    );
-  }
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -71,8 +60,9 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index user={user} onLogout={handleLogout} />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            {!user && <Route path="/auth" element={<AuthPage onAuthSuccess={() => {}} />} />}
+            <Route path="/reset-password" element={<PasswordResetPage />} />
+            <Route path="/" element={user ? <Index user={user} onLogout={handleLogout} /> : <AuthPage onAuthSuccess={() => {}} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

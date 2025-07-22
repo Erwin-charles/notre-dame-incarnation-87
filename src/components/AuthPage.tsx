@@ -118,7 +118,7 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
     setError(null);
 
     const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-      redirectTo: `${window.location.origin}/`,
+      redirectTo: `${window.location.origin}/reset-password`,
     });
 
     if (error) {
