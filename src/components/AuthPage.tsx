@@ -229,122 +229,122 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
                 <TabsTrigger value="signup">Inscription</TabsTrigger>
               </TabsList>
 
-            <TabsContent value="login">
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={loginData.email}
-                    onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="password">Mot de passe</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    value={loginData.password}
-                    onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                    required
-                  />
-                </div>
-                <Button 
-                  type="submit" 
-                  className="w-full" 
-                  disabled={isLoading}
-                >
-                  <LogIn className="w-4 h-4 mr-2" />
-                  {isLoading ? 'Connexion...' : 'Se connecter'}
-                </Button>
-                
-                <div className="text-center mt-4">
-                  <Button
-                    type="button"
-                    variant="link"
-                    onClick={() => setShowResetForm(true)}
-                    className="text-sm text-muted-foreground hover:text-primary"
+              <TabsContent value="login">
+                <form onSubmit={handleLogin} className="space-y-4">
+                  <div>
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={loginData.email}
+                      onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="password">Mot de passe</Label>
+                    <Input
+                      id="password"
+                      type="password"
+                      value={loginData.password}
+                      onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <Button 
+                    type="submit" 
+                    className="w-full" 
+                    disabled={isLoading}
                   >
-                    Mot de passe oublié ?
+                    <LogIn className="w-4 h-4 mr-2" />
+                    {isLoading ? 'Connexion...' : 'Se connecter'}
                   </Button>
-                </div>
-              </form>
-            </TabsContent>
+                  
+                  <div className="text-center mt-4">
+                    <Button
+                      type="button"
+                      variant="link"
+                      onClick={() => setShowResetForm(true)}
+                      className="text-sm text-muted-foreground hover:text-primary"
+                    >
+                      Mot de passe oublié ?
+                    </Button>
+                  </div>
+                </form>
+              </TabsContent>
 
-            <TabsContent value="signup">
-              <form onSubmit={handleSignup} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+              <TabsContent value="signup">
+                <form onSubmit={handleSignup} className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="prenom">Prénom</Label>
+                      <Input
+                        id="prenom"
+                        value={signupData.prenom}
+                        onChange={(e) => setSignupData({ ...signupData, prenom: e.target.value })}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="nom">Nom</Label>
+                      <Input
+                        id="nom"
+                        value={signupData.nom}
+                        onChange={(e) => setSignupData({ ...signupData, nom: e.target.value })}
+                        required
+                      />
+                    </div>
+                  </div>
                   <div>
-                    <Label htmlFor="prenom">Prénom</Label>
+                    <Label htmlFor="signup-email">Email</Label>
                     <Input
-                      id="prenom"
-                      value={signupData.prenom}
-                      onChange={(e) => setSignupData({ ...signupData, prenom: e.target.value })}
+                      id="signup-email"
+                      type="email"
+                      value={signupData.email}
+                      onChange={(e) => setSignupData({ ...signupData, email: e.target.value })}
                       required
                     />
                   </div>
                   <div>
-                    <Label htmlFor="nom">Nom</Label>
+                    <Label htmlFor="telephone">Téléphone</Label>
                     <Input
-                      id="nom"
-                      value={signupData.nom}
-                      onChange={(e) => setSignupData({ ...signupData, nom: e.target.value })}
+                      id="telephone"
+                      type="tel"
+                      value={signupData.telephone}
+                      onChange={(e) => setSignupData({ ...signupData, telephone: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="signup-password">Mot de passe</Label>
+                    <Input
+                      id="signup-password"
+                      type="password"
+                      value={signupData.password}
+                      onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}
                       required
                     />
                   </div>
-                </div>
-                <div>
-                  <Label htmlFor="signup-email">Email</Label>
-                  <Input
-                    id="signup-email"
-                    type="email"
-                    value={signupData.email}
-                    onChange={(e) => setSignupData({ ...signupData, email: e.target.value })}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="telephone">Téléphone</Label>
-                  <Input
-                    id="telephone"
-                    type="tel"
-                    value={signupData.telephone}
-                    onChange={(e) => setSignupData({ ...signupData, telephone: e.target.value })}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="signup-password">Mot de passe</Label>
-                  <Input
-                    id="signup-password"
-                    type="password"
-                    value={signupData.password}
-                    onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="confirm-password">Confirmer le mot de passe</Label>
-                  <Input
-                    id="confirm-password"
-                    type="password"
-                    value={signupData.confirmPassword}
-                    onChange={(e) => setSignupData({ ...signupData, confirmPassword: e.target.value })}
-                    required
-                  />
-                </div>
-                <Button 
-                  type="submit" 
-                  className="w-full" 
-                  disabled={isLoading}
-                >
-                  <UserPlus className="w-4 h-4 mr-2" />
-                  {isLoading ? 'Inscription...' : "S'inscrire"}
-                </Button>
-              </form>
-            </TabsContent>
-          </Tabs>
+                  <div>
+                    <Label htmlFor="confirm-password">Confirmer le mot de passe</Label>
+                    <Input
+                      id="confirm-password"
+                      type="password"
+                      value={signupData.confirmPassword}
+                      onChange={(e) => setSignupData({ ...signupData, confirmPassword: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <Button 
+                    type="submit" 
+                    className="w-full" 
+                    disabled={isLoading}
+                  >
+                    <UserPlus className="w-4 h-4 mr-2" />
+                    {isLoading ? 'Inscription...' : "S'inscrire"}
+                  </Button>
+                </form>
+              </TabsContent>
+            </Tabs>
           )}
         </CardContent>
       </Card>
