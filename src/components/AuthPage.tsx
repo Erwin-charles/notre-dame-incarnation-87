@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AlertCircle, LogIn, UserPlus, Church } from 'lucide-react';
+import { AlertCircle, LogIn, UserPlus, Church, KeyRound } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -16,6 +16,9 @@ interface AuthPageProps {
 const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showResetForm, setShowResetForm] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetSent, setResetSent] = useState(false);
   const { toast } = useToast();
 
   const [loginData, setLoginData] = useState({
@@ -109,6 +112,33 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
     setIsLoading(false);
   };
 
+  const handlePasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
+    const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+      redirectTo: `${window.location.origin}/`,
+    });
+
+    if (error) {
+      setError(error.message);
+      toast({
+        title: "Erreur",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      setResetSent(true);
+      toast({
+        title: "Email envoyé",
+        description: "Vérifiez votre boîte mail pour réinitialiser votre mot de passe.",
+      });
+    }
+
+    setIsLoading(false);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center px-4">
       <Card className="w-full max-w-md">
@@ -129,11 +159,75 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
             </Alert>
           )}
 
-          <Tabs defaultValue="login" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="login">Connexion</TabsTrigger>
-              <TabsTrigger value="signup">Inscription</TabsTrigger>
-            </TabsList>
+          {showResetForm ? (
+            <div className="space-y-4">
+              <div className="text-center">
+                <KeyRound className="w-12 h-12 mx-auto mb-4 text-blue-600" />
+                <h3 className="text-lg font-semibold">Réinitialiser le mot de passe</h3>
+                <p className="text-sm text-muted-foreground">
+                  Entrez votre email pour recevoir un lien de réinitialisation
+                </p>
+              </div>
+              
+              {resetSent ? (
+                <div className="text-center space-y-4">
+                  <Alert>
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>
+                      Un email de réinitialisation a été envoyé à votre adresse.
+                    </AlertDescription>
+                  </Alert>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      setShowResetForm(false);
+                      setResetSent(false);
+                      setResetEmail('');
+                    }}
+                    className="w-full"
+                  >
+                    Retour à la connexion
+                  </Button>
+                </div>
+              ) : (
+                <form onSubmit={handlePasswordReset} className="space-y-4">
+                  <div>
+                    <Label htmlFor="reset-email">Email</Label>
+                    <Input
+                      id="reset-email"
+                      type="email"
+                      value={resetEmail}
+                      onChange={(e) => setResetEmail(e.target.value)}
+                      required
+                      placeholder="votre@email.com"
+                    />
+                  </div>
+                  <Button 
+                    type="submit" 
+                    className="w-full" 
+                    disabled={isLoading}
+                  >
+                    <KeyRound className="w-4 h-4 mr-2" />
+                    {isLoading ? 'Envoi...' : 'Envoyer le lien'}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setShowResetForm(false)}
+                    className="w-full"
+                  >
+                    Annuler
+                  </Button>
+                </form>
+              )}
+            </div>
+          ) : (
+            <Tabs defaultValue="login" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="login">Connexion</TabsTrigger>
+                <TabsTrigger value="signup">Inscription</TabsTrigger>
+              </TabsList>
 
             <TabsContent value="login">
               <form onSubmit={handleLogin} className="space-y-4">
@@ -165,6 +259,17 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
                   <LogIn className="w-4 h-4 mr-2" />
                   {isLoading ? 'Connexion...' : 'Se connecter'}
                 </Button>
+                
+                <div className="text-center mt-4">
+                  <Button
+                    type="button"
+                    variant="link"
+                    onClick={() => setShowResetForm(true)}
+                    className="text-sm text-muted-foreground hover:text-primary"
+                  >
+                    Mot de passe oublié ?
+                  </Button>
+                </div>
               </form>
             </TabsContent>
 
@@ -240,6 +345,7 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
               </form>
             </TabsContent>
           </Tabs>
+          )}
         </CardContent>
       </Card>
     </div>
