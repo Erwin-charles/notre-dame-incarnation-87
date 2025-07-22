@@ -50,6 +50,42 @@ export type Database = {
         }
         Relationships: []
       }
+      calendrier_liturgique: {
+        Row: {
+          couleur_liturgique: string | null
+          created_at: string | null
+          date_celebration: string
+          description: string | null
+          id: string
+          nom_celebration: string
+          readings: string[] | null
+          type_celebration: string
+          updated_at: string | null
+        }
+        Insert: {
+          couleur_liturgique?: string | null
+          created_at?: string | null
+          date_celebration: string
+          description?: string | null
+          id?: string
+          nom_celebration: string
+          readings?: string[] | null
+          type_celebration: string
+          updated_at?: string | null
+        }
+        Update: {
+          couleur_liturgique?: string | null
+          created_at?: string | null
+          date_celebration?: string
+          description?: string | null
+          id?: string
+          nom_celebration?: string
+          readings?: string[] | null
+          type_celebration?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       catechistes: {
         Row: {
           actif: boolean | null
@@ -109,6 +145,7 @@ export type Database = {
           nom_mere: string | null
           nom_parrain: string | null
           nom_pere: string | null
+          numero_ndi: string | null
           status: Database["public"]["Enums"]["inscription_status"] | null
           updated_at: string | null
           user_id: string
@@ -129,6 +166,7 @@ export type Database = {
           nom_mere?: string | null
           nom_parrain?: string | null
           nom_pere?: string | null
+          numero_ndi?: string | null
           status?: Database["public"]["Enums"]["inscription_status"] | null
           updated_at?: string | null
           user_id: string
@@ -149,6 +187,7 @@ export type Database = {
           nom_mere?: string | null
           nom_parrain?: string | null
           nom_pere?: string | null
+          numero_ndi?: string | null
           status?: Database["public"]["Enums"]["inscription_status"] | null
           updated_at?: string | null
           user_id?: string
@@ -202,6 +241,51 @@ export type Database = {
         }
         Relationships: []
       }
+      documents_cours: {
+        Row: {
+          auteur_id: string
+          created_at: string | null
+          description: string | null
+          fichier_url: string
+          id: string
+          niveau: string | null
+          taille_fichier: number | null
+          telechargeable: boolean | null
+          titre: string
+          type_document: string | null
+          type_mime: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          auteur_id: string
+          created_at?: string | null
+          description?: string | null
+          fichier_url: string
+          id?: string
+          niveau?: string | null
+          taille_fichier?: number | null
+          telechargeable?: boolean | null
+          titre: string
+          type_document?: string | null
+          type_mime?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          auteur_id?: string
+          created_at?: string | null
+          description?: string | null
+          fichier_url?: string
+          id?: string
+          niveau?: string | null
+          taille_fichier?: number | null
+          telechargeable?: boolean | null
+          titre?: string
+          type_document?: string | null
+          type_mime?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       dons_ligne: {
         Row: {
           created_at: string | null
@@ -252,6 +336,65 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: []
+      }
+      evaluations_catechumenes: {
+        Row: {
+          annee_scolaire: string
+          catechumene_id: string | null
+          commentaire: string | null
+          created_at: string | null
+          id: string
+          moyenne_generale: number | null
+          note_comportement: number | null
+          note_connaissance: number | null
+          note_participation: number | null
+          present_cours: number | null
+          taux_assiduite: number | null
+          total_cours: number | null
+          trimestre: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          annee_scolaire: string
+          catechumene_id?: string | null
+          commentaire?: string | null
+          created_at?: string | null
+          id?: string
+          moyenne_generale?: number | null
+          note_comportement?: number | null
+          note_connaissance?: number | null
+          note_participation?: number | null
+          present_cours?: number | null
+          taux_assiduite?: number | null
+          total_cours?: number | null
+          trimestre?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          annee_scolaire?: string
+          catechumene_id?: string | null
+          commentaire?: string | null
+          created_at?: string | null
+          id?: string
+          moyenne_generale?: number | null
+          note_comportement?: number | null
+          note_connaissance?: number | null
+          note_participation?: number | null
+          present_cours?: number | null
+          taux_assiduite?: number | null
+          total_cours?: number | null
+          trimestre?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "evaluations_catechumenes_catechumene_id_fkey"
+            columns: ["catechumene_id"]
+            isOneToOne: false
+            referencedRelation: "catechumenes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       event_inscriptions: {
         Row: {
@@ -616,6 +759,91 @@ export type Database = {
           },
         ]
       }
+      plannings_service: {
+        Row: {
+          created_at: string | null
+          date_service: string
+          heure_service: string
+          id: string
+          notes: string | null
+          servant_id: string | null
+          statut: string | null
+          type_service: string
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          date_service: string
+          heure_service: string
+          id?: string
+          notes?: string | null
+          servant_id?: string | null
+          statut?: string | null
+          type_service: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          date_service?: string
+          heure_service?: string
+          id?: string
+          notes?: string | null
+          servant_id?: string | null
+          statut?: string | null
+          type_service?: string
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "plannings_service_servant_id_fkey"
+            columns: ["servant_id"]
+            isOneToOne: false
+            referencedRelation: "servants_messe"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      presences_cours: {
+        Row: {
+          catechumene_id: string | null
+          created_at: string | null
+          date_cours: string
+          excuse: boolean | null
+          id: string
+          motif_absence: string | null
+          present: boolean | null
+        }
+        Insert: {
+          catechumene_id?: string | null
+          created_at?: string | null
+          date_cours: string
+          excuse?: boolean | null
+          id?: string
+          motif_absence?: string | null
+          present?: boolean | null
+        }
+        Update: {
+          catechumene_id?: string | null
+          created_at?: string | null
+          date_cours?: string
+          excuse?: boolean | null
+          id?: string
+          motif_absence?: string | null
+          present?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "presences_cours_catechumene_id_fkey"
+            columns: ["catechumene_id"]
+            isOneToOne: false
+            referencedRelation: "catechumenes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           adresse: string | null
@@ -663,6 +891,89 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      publications_quotidiennes: {
+        Row: {
+          auteur_id: string
+          contenu: string
+          created_at: string | null
+          date_publication: string
+          id: string
+          publie: boolean | null
+          titre: string
+          type_publication: string
+          updated_at: string | null
+        }
+        Insert: {
+          auteur_id: string
+          contenu: string
+          created_at?: string | null
+          date_publication: string
+          id?: string
+          publie?: boolean | null
+          titre: string
+          type_publication: string
+          updated_at?: string | null
+        }
+        Update: {
+          auteur_id?: string
+          contenu?: string
+          created_at?: string | null
+          date_publication?: string
+          id?: string
+          publie?: boolean | null
+          titre?: string
+          type_publication?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      recus_inscription: {
+        Row: {
+          catechumene_id: string | null
+          created_at: string | null
+          date_paiement: string
+          details_paiement: Json | null
+          fichier_recu_url: string | null
+          genere_le: string | null
+          id: string
+          methode_paiement: string | null
+          montant_paye: number
+          numero_recu: string
+        }
+        Insert: {
+          catechumene_id?: string | null
+          created_at?: string | null
+          date_paiement: string
+          details_paiement?: Json | null
+          fichier_recu_url?: string | null
+          genere_le?: string | null
+          id?: string
+          methode_paiement?: string | null
+          montant_paye: number
+          numero_recu: string
+        }
+        Update: {
+          catechumene_id?: string | null
+          created_at?: string | null
+          date_paiement?: string
+          details_paiement?: Json | null
+          fichier_recu_url?: string | null
+          genere_le?: string | null
+          id?: string
+          methode_paiement?: string | null
+          montant_paye?: number
+          numero_recu?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recus_inscription_catechumene_id_fkey"
+            columns: ["catechumene_id"]
+            isOneToOne: false
+            referencedRelation: "catechumenes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       resources_spirituelles: {
         Row: {
@@ -748,6 +1059,45 @@ export type Database = {
           parrain?: string | null
           type_sacrement?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      servants_messe: {
+        Row: {
+          actif: boolean | null
+          created_at: string | null
+          disponibilites: string[] | null
+          email: string | null
+          id: string
+          niveau_experience: string | null
+          nom: string
+          prenom: string
+          telephone: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          actif?: boolean | null
+          created_at?: string | null
+          disponibilites?: string[] | null
+          email?: string | null
+          id?: string
+          niveau_experience?: string | null
+          nom: string
+          prenom: string
+          telephone?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          actif?: boolean | null
+          created_at?: string | null
+          disponibilites?: string[] | null
+          email?: string | null
+          id?: string
+          niveau_experience?: string | null
+          nom?: string
+          prenom?: string
+          telephone?: string | null
+          updated_at?: string | null
         }
         Relationships: []
       }

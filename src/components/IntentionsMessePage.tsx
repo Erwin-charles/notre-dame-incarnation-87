@@ -28,10 +28,11 @@ const IntentionsMessePage = () => {
   const { toast } = useToast();
 
   const horairesMesses = [
-    '6h30 - Messe en semaine',
-    '7h00 - Messe dominicale',
-    '9h00 - Messe dominicale',
-    '18h30 - Messe du soir'
+    '6h30 - Messe du matin',
+    '8h00 - Messe matinale',
+    '9h30 - Messe dominicale',
+    '11h00 - Grand-messe',
+    '19h00 - Messe du soir'
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -270,15 +271,15 @@ const IntentionsMessePage = () => {
                   <div className="space-y-3 text-sm">
                     <div>
                       <p className="font-semibold">En semaine</p>
-                      <p className="text-gray-600">Lundi - Vendredi : 6h30 & 18h30</p>
+                      <p className="text-gray-600">Lundi - Vendredi : 6h30 & 19h00</p>
                     </div>
                     <div>
                       <p className="font-semibold">Samedi</p>
-                      <p className="text-gray-600">Messe du soir : 18h30</p>
+                      <p className="text-gray-600">Messe du soir : 19h00</p>
                     </div>
                     <div>
                       <p className="font-semibold">Dimanche</p>
-                      <p className="text-gray-600">Messes : 7h, 9h & 18h30</p>
+                      <p className="text-gray-600">Messes : 6h30, 8h00, 9h30, 11h00 & 19h00</p>
                     </div>
                   </div>
                 </CardContent>
