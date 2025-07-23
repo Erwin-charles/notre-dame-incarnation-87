@@ -185,17 +185,17 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
             <div>
               <h3 className="text-xl font-semibold mb-4">En Semaine</h3>
               <p className="mb-2">Lundi - Vendredi</p>
-              <p className="text-lg">6h30 & 18h30</p>
+              <p className="text-lg">6h30 & 19h</p>
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-4">Samedi</h3>
               <p className="mb-2">Messe du soir</p>
-              <p className="text-lg">18h30</p>
+              <p className="text-lg">6h30 & 19h</p>
             </div>
             <div>
               <h3 className="text-xl font-semibold mb-4">Dimanche</h3>
               <p className="mb-2">Messes dominicales</p>
-              <p className="text-lg">7h, 9h & 18h30</p>
+              <p className="text-lg">6h30, 8h, 9h30, 11h & 19h</p>
             </div>
           </div>
         </div>

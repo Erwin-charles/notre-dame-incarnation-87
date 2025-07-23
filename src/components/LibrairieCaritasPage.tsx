@@ -9,6 +9,8 @@ import { ShoppingCart, Heart, Book, Cross, Gift, Plus, Minus } from 'lucide-reac
 import PageParticles from './PageParticles';
 import PaymentSection from './PaymentSection';
 import { useToast } from '@/hooks/use-toast';
+import libraryHero from '@/assets/library-hero.jpg';
+import caritasHero from '@/assets/caritas-hero.jpg';
 
 const LibrairieCaritasPage = () => {
   const [cart, setCart] = useState<any[]>([]);
@@ -163,11 +165,18 @@ const LibrairieCaritasPage = () => {
                 {articles.map((article) => (
                   <Card key={article.id} className="glass-card border-white/20 dark:border-gray-700/20 hover:shadow-lg transition-shadow">
                     <CardHeader>
-                      <div className="w-full h-48 bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
+                      <div 
+                        className="w-full h-48 rounded-lg mb-4 bg-cover bg-center flex items-center justify-center"
+                        style={{
+                          backgroundImage: `url(${article.category === 'Livres' ? libraryHero : caritasHero})`,
+                          backgroundBlendMode: 'overlay',
+                          backgroundColor: 'rgba(0,0,0,0.3)'
+                        }}
+                      >
                         {article.category === 'Livres' ? (
-                          <Book className="w-16 h-16 text-gray-400" />
+                          <Book className="w-16 h-16 text-white" />
                         ) : (
-                          <Cross className="w-16 h-16 text-gray-400" />
+                          <Cross className="w-16 h-16 text-white" />
                         )}
                       </div>
                       <div className="flex justify-between items-start">
@@ -301,6 +310,14 @@ const LibrairieCaritasPage = () => {
 
                 <Card className="glass-card border-white/20 dark:border-gray-700/20">
                   <CardHeader>
+                    <div 
+                      className="w-full h-40 rounded-lg mb-4 bg-cover bg-center"
+                      style={{
+                        backgroundImage: `url(${caritasHero})`,
+                        backgroundBlendMode: 'overlay',
+                        backgroundColor: 'rgba(0,0,0,0.4)'
+                      }}
+                    />
                     <CardTitle className="text-primary">Actions de la Caritas</CardTitle>
                   </CardHeader>
                   <CardContent>

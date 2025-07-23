@@ -88,7 +88,7 @@ const Navigation = ({ onNavigate, currentPage, user, onLogout }: NavigationProps
                   <UserIcon className="mr-2 h-4 w-4" />
                   <span>Mon espace</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => onNavigate('parametres')}>
                   <Settings className="mr-2 h-4 w-4" />
                   <span>Paramètres</span>
                 </DropdownMenuItem>

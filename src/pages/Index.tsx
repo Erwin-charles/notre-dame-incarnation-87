@@ -21,6 +21,10 @@ import IntentionsMessePage from '../components/IntentionsMessePage';
 import DonsEnLignePage from '../components/DonsEnLignePage';
 import ResourcesSpirituellesPage from '../components/ResourcesSpirituellesPage';
 import GalerieMediaPage from '../components/GalerieMediaPage';
+import StatistiquesPage from '../components/StatistiquesPage';
+import CalendrierLiturgiquePage from '../components/CalendrierLiturgiquePage';
+import DocumentsCoursPage from '../components/DocumentsCoursPage';
+import ParametresPage from '../components/ParametresPage';
 import Footer from '../components/Footer';
 import Chatbot from '../components/Chatbot';
 import ParishPreloader from '../components/ParishPreloader';
@@ -87,6 +91,14 @@ const Index = ({ user, onLogout }: IndexProps) => {
         return <ResourcesSpirituellesPage />;
       case 'galerie-media':
         return <GalerieMediaPage />;
+      case 'statistiques':
+        return <StatistiquesPage />;
+      case 'calendrier-liturgique':
+        return <CalendrierLiturgiquePage />;
+      case 'documents-cours':
+        return <DocumentsCoursPage />;
+      case 'parametres':
+        return <ParametresPage />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }

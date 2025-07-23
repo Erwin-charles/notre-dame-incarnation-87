@@ -165,6 +165,13 @@ export const menuItems = [
         description: 'Articles religieux et dons pour la solidarité',
         onClick: (onNavigate: (page: string) => void) => onNavigate('librairie-caritas') 
       },
+      { 
+        id: 'activites-calendrier', 
+        label: 'Calendrier Liturgique', 
+        icon: Calendar,
+        description: 'Calendrier romain et célébrations spéciales',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('calendrier-liturgique') 
+      },
     ]
   },
   { 
@@ -178,6 +185,20 @@ export const menuItems = [
         icon: GraduationCap,
         description: 'Outils et ressources pour catéchistes',
         onClick: (onNavigate: (page: string) => void) => onNavigate('dashboard') 
+      },
+      { 
+        id: 'dashboard-documents', 
+        label: 'Documents de Cours', 
+        icon: BookOpen,
+        description: 'Téléchargement et téléversement de documents',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('documents-cours') 
+      },
+      { 
+        id: 'dashboard-statistiques', 
+        label: 'Statistiques', 
+        icon: Calculator,
+        description: 'Tableau de bord avec statistiques et résultats',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('statistiques') 
       },
       { 
         id: 'dashboard-catechumene', 
