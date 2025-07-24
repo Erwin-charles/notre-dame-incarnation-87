@@ -150,7 +150,17 @@ const StatistiquesPage = () => {
     };
   });
 
-  const COLORS = ['hsl(var(--chart-1))', 'hsl(var(--chart-2))', 'hsl(var(--chart-3))', 'hsl(var(--chart-4))', 'hsl(var(--chart-5))'];
+  // Couleurs du design system pour les diagrammes
+  const COLORS = [
+    'hsl(var(--primary))',           // Bleu principal de l'église
+    'hsl(var(--accent))',            // Or/jaune de l'église  
+    'hsl(210, 60%, 60%)',           // Bleu clair
+    'hsl(45, 80%, 70%)',            // Or clair
+    'hsl(210, 50%, 75%)',           // Bleu très clair
+    'hsl(0, 60%, 60%)',             // Rouge
+    'hsl(120, 60%, 60%)',           // Vert
+    'hsl(280, 60%, 60%)'            // Violet
+  ];
 
   const dataParNiveau = Object.entries(statsGenerales.parNiveau).map(([niveau, count], index) => ({
     name: niveau,

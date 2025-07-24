@@ -298,11 +298,23 @@ const AdminDashboard = () => {
                         fill="#8884d8"
                         dataKey="count"
                         label={({ niveau, percentage }) => `${niveau} (${percentage}%)`}
-                      >
-                        {statistiques.parNiveau.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={`hsl(${index * 60}, 70%, 50%)`} />
-                        ))}
-                      </Pie>
+                       >
+                        {statistiques.parNiveau.map((entry, index) => {
+                          const chartColors = [
+                            'hsl(var(--primary))',
+                            'hsl(var(--accent))', 
+                            'hsl(210, 60%, 60%)',
+                            'hsl(45, 80%, 70%)',
+                            'hsl(210, 50%, 75%)',
+                            'hsl(0, 60%, 60%)',
+                            'hsl(120, 60%, 60%)',
+                            'hsl(280, 60%, 60%)'
+                          ];
+                          return (
+                            <Cell key={`cell-${index}`} fill={chartColors[index % chartColors.length]} />
+                          );
+                        })}
+                       </Pie>
                       <ChartTooltip content={<ChartTooltipContent />} />
                     </PieChart>
                   </ResponsiveContainer>
@@ -424,9 +436,18 @@ const AdminDashboard = () => {
                   {statistiques.parStatut.map((stat, index) => (
                     <div key={stat.statut} className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div 
+                       <div 
                           className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: `hsl(${index * 120}, 70%, 50%)` }}
+                          style={{ 
+                            backgroundColor: [
+                              'hsl(var(--primary))',
+                              'hsl(var(--accent))', 
+                              'hsl(210, 60%, 60%)',
+                              'hsl(45, 80%, 70%)',
+                              'hsl(0, 60%, 60%)',
+                              'hsl(120, 60%, 60%)'
+                            ][index % 6]
+                          }}
                         />
                         <span className="capitalize">{stat.statut}</span>
                       </div>
