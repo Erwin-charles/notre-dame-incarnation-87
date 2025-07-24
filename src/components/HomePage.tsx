@@ -97,30 +97,29 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
         </div>
       </section>
 
-      {/* Histoire de la Paroisse */}
+      {/* Services et Missions de la Paroisse */}
       <section className="py-16 relative z-10">
         <div className="container mx-auto px-4">
           <Card className="mb-12">
             <CardHeader className="text-center">
               <CardTitle className="text-3xl mb-4 flex items-center justify-center">
                 <Church className="w-8 h-8 mr-3 text-church-blue" />
-                Histoire de Notre Paroisse
+                Nos Services et Missions
               </CardTitle>
             </CardHeader>
             <CardContent className="prose prose-lg mx-auto">
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-                La Paroisse Notre Dame de l'Incarnation de Cocody a été fondée en 1982 par Monseigneur Jean-Baptiste Kouassi. 
-                Née du désir de servir la communauté catholique grandissante du quartier de Riviera Golf, notre paroisse 
-                s'est rapidement développée pour devenir un pilier spirituel de la région.
+                La Paroisse Notre Dame de l'Incarnation de Cocody offre une gamme complète de services 
+                spirituels et sociaux pour accompagner nos fidèles dans leur cheminement de foi.
               </p>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-                Au fil des décennies, nous avons accompagné des milliers de fidèles dans leur cheminement de foi, 
-                célébrant baptêmes, communions, confirmations et mariages. Notre mission demeure inchangée : 
-                être une famille spirituelle accueillante où chacun peut grandir dans la foi et l'amour du Christ.
+                Nos catéchistes expérimentés dispensent une formation religieuse de qualité à travers 
+                nos programmes de catéchèse adaptés à tous les âges. Notre librairie paroissiale propose 
+                des ouvrages spirituels et notre service Caritas s'engage dans l'aide aux plus démunis.
               </p>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                Aujourd'hui, sous la direction du Père Michel Adjoussou, notre communauté compte plus de 3000 fidèles 
-                et continue de rayonner par ses nombreuses activités pastorales, caritatives et éducatives.
+                Nous organisons également des événements communautaires, des retraites spirituelles 
+                et des activités caritatives pour renforcer les liens fraternels au sein de notre communauté.
               </p>
             </CardContent>
           </Card>
