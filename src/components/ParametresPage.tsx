@@ -24,7 +24,8 @@ import {
   Upload,
   Download,
   Eye,
-  EyeOff
+  EyeOff,
+  ShoppingCart
 } from "lucide-react";
 
 const ParametresPage = () => {
@@ -89,6 +90,82 @@ const ParametresPage = () => {
       toast({
         title: "Erreur",
         description: "Impossible de mettre à jour votre profil",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}-${Math.random()}.${fileExt}`;
+      const filePath = `avatars/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      await updateProfile({ avatar_url: data.publicUrl });
+    } catch (error) {
+      console.error('Erreur upload:', error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de télécharger la photo",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const saveNotificationPreferences = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      // Ici vous pouvez sauvegarder les préférences en base ou localStorage
+      localStorage.setItem('notification_preferences', JSON.stringify(notifications));
+      
+      toast({
+        title: "Préférences sauvegardées",
+        description: "Vos préférences de notification ont été mises à jour",
+      });
+    } catch (error) {
+      console.error('Erreur:', error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de sauvegarder les préférences",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const savePrivacySettings = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      localStorage.setItem('privacy_settings', JSON.stringify(privacy));
+      
+      toast({
+        title: "Paramètres sauvegardés",
+        description: "Vos paramètres de confidentialité ont été mis à jour",
+      });
+    } catch (error) {
+      console.error('Erreur:', error);
+      toast({
+        title: "Erreur",
+        description: "Impossible de sauvegarder les paramètres",
         variant: "destructive",
       });
     }
@@ -161,10 +238,11 @@ const ParametresPage = () => {
       </div>
 
       <Tabs defaultValue="profile" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="profile">Profil</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
           <TabsTrigger value="privacy">Confidentialité</TabsTrigger>
+          <TabsTrigger value="panier">Panier</TabsTrigger>
           <TabsTrigger value="data">Mes Données</TabsTrigger>
           <TabsTrigger value="about">À Propos</TabsTrigger>
         </TabsList>
@@ -188,10 +266,21 @@ const ParametresPage = () => {
                     {profile?.prenom?.[0]}{profile?.nom?.[0]}
                   </AvatarFallback>
                 </Avatar>
-                <Button variant="outline">
-                  <Upload className="w-4 h-4 mr-2" />
-                  Changer la photo
-                </Button>
+                <div className="space-y-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAvatarUpload}
+                    className="hidden"
+                    id="avatar-upload"
+                  />
+                  <Button variant="outline" asChild>
+                    <label htmlFor="avatar-upload" className="cursor-pointer">
+                      <Upload className="w-4 h-4 mr-2" />
+                      Changer la photo
+                    </label>
+                  </Button>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -330,6 +419,12 @@ const ParametresPage = () => {
                   />
                 </div>
               </div>
+
+              <div className="flex justify-end">
+                <Button onClick={saveNotificationPreferences}>
+                  Sauvegarder les préférences
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
@@ -393,6 +488,78 @@ const ParametresPage = () => {
                       setPrivacy({...privacy, showPhone: checked})
                     }
                   />
+                </div>
+              </div>
+
+              <div className="flex justify-end">
+                <Button onClick={savePrivacySettings}>
+                  Sauvegarder les paramètres
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="panier" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <ShoppingCart className="w-5 h-5 mr-2" />
+                Mon Panier
+              </CardTitle>
+              <CardDescription>
+                Gérez vos articles et commandes
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="space-y-4">
+                <div className="p-4 border rounded-lg">
+                  <div className="flex justify-between items-center mb-4">
+                    <h4 className="font-medium">Articles dans le panier</h4>
+                    <Badge variant="secondary">3 articles</Badge>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
+                      <div>
+                        <span className="font-medium">Livre de catéchèse - Niveau 1</span>
+                        <p className="text-sm text-muted-foreground">Quantité: 1</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">5,000 FCFA</span>
+                        <Button variant="outline" size="sm">Modifier</Button>
+                        <Button variant="destructive" size="sm">Supprimer</Button>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
+                      <div>
+                        <span className="font-medium">Don pour les œuvres caritatives</span>
+                        <p className="text-sm text-muted-foreground">Montant personnalisé</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">10,000 FCFA</span>
+                        <Button variant="outline" size="sm">Modifier</Button>
+                        <Button variant="destructive" size="sm">Supprimer</Button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="border-t pt-4 mt-4">
+                    <div className="flex justify-between items-center text-lg font-semibold">
+                      <span>Total:</span>
+                      <span>15,000 FCFA</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-2 mt-4">
+                    <Button variant="outline" className="flex-1">
+                      Ajouter des articles
+                    </Button>
+                    <Button className="flex-1">
+                      Poursuivre l'achat
+                    </Button>
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -470,11 +637,11 @@ const ParametresPage = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-medium mb-2">Fonctionnalités</h4>
+                  <h4 className="font-medium mb-2">Services Disponibles</h4>
                   <div className="grid grid-cols-2 gap-2">
                     <Badge variant="secondary">Gestion des catéchumènes</Badge>
                     <Badge variant="secondary">Calendrier liturgique</Badge>
-                    <Badge variant="secondary">Statistiques et évaluations</Badge>
+                    <Badge variant="secondary">Librairie & Caritas</Badge>
                     <Badge variant="secondary">Dons en ligne</Badge>
                     <Badge variant="secondary">Planning des services</Badge>
                     <Badge variant="secondary">Documents de cours</Badge>
