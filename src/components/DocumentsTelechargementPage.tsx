@@ -20,7 +20,7 @@ import {
   Eye
 } from "lucide-react";
 
-interface Document {
+interface CourseDocument {
   id: string;
   titre: string;
   type_document: string;
@@ -33,7 +33,7 @@ interface Document {
 }
 
 const DocumentsTelechargementPage = () => {
-  const [documents, setDocuments] = useState<Document[]>([]);
+  const [documents, setDocuments] = useState<CourseDocument[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [newDocument, setNewDocument] = useState({
@@ -142,7 +142,7 @@ const DocumentsTelechargementPage = () => {
     }
   };
 
-  const handleDownload = async (document: Document) => {
+  const handleDownload = async (document: CourseDocument) => {
     try {
       const response = await fetch(document.fichier_url);
       const blob = await response.blob();
