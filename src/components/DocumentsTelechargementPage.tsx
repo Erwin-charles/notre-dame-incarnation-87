@@ -148,12 +148,12 @@ const DocumentsTelechargementPage = () => {
       const blob = await response.blob();
       
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
+      const link = window.document.createElement('a');
       link.href = url;
       link.download = document.titre;
-      document.body.appendChild(link);
+      window.document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
+      window.document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
 
       toast({
@@ -376,7 +376,7 @@ const DocumentsTelechargementPage = () => {
               </div>
 
               <Button 
-                onClick={() => document.getElementById('file-upload')?.click()}
+                onClick={() => window.document.getElementById('file-upload')?.click()}
                 disabled={uploading}
                 className="w-full"
               >

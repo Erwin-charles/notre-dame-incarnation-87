@@ -194,6 +194,13 @@ export const menuItems = [
         onClick: (onNavigate: (page: string) => void) => onNavigate('documents-cours') 
       },
       { 
+        id: 'dashboard-telechargements', 
+        label: 'Téléchargements', 
+        icon: Calculator,
+        description: 'Centre de téléchargement et téléversement',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('documents-telechargement') 
+      },
+      { 
         id: 'dashboard-statistiques', 
         label: 'Statistiques', 
         icon: Calculator,

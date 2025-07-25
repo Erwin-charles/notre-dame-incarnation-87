@@ -23,6 +23,7 @@ import ResourcesSpirituellesPage from '../components/ResourcesSpirituellesPage';
 import GalerieMediaPage from '../components/GalerieMediaPage';
 import StatistiquesPage from '../components/StatistiquesPage';
 import CalendrierLiturgiquePage from '../components/CalendrierLiturgiquePage';
+import DocumentsTelechargementPage from '../components/DocumentsTelechargementPage';
 import DocumentsCoursPage from '../components/DocumentsCoursPage';
 import ParametresPage from '../components/ParametresPage';
 import Footer from '../components/Footer';
@@ -95,6 +96,8 @@ const Index = ({ user, onLogout }: IndexProps) => {
         return <StatistiquesPage />;
       case 'calendrier-liturgique':
         return <CalendrierLiturgiquePage />;
+      case 'documents-telechargement':
+        return <DocumentsTelechargementPage />;
       case 'documents-cours':
         return <DocumentsCoursPage />;
       case 'parametres':
