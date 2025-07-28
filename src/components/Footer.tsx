@@ -32,11 +32,11 @@ const Footer = () => {
           {/* Contact */}
           <div>
             <h4 className="text-lg font-semibold text-church-gold mb-4">Contact</h4>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <MapPin className="w-4 h-4 text-church-gold" />
-                <span className="text-sm text-gray-300">Cocody Palmeraie<br />Abidjan, Côte d'Ivoire</span>
-              </div>
+          <div className="space-y-3">
+            <div className="flex items-center space-x-3">
+              <MapPin className="w-4 h-4 text-church-gold" />
+              <span className="text-sm text-gray-300">Riviera palmeraie non loin du rond point<br />Abidjan, Côte d'Ivoire</span>
+            </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-4 h-4 text-church-gold" />
                 <span className="text-sm text-gray-300">+225 27 22 44 55 66</span>
@@ -52,21 +52,20 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold text-church-gold mb-4">Horaires</h4>
             <div className="space-y-2 text-sm text-gray-300">
-              <div className="flex justify-between">
-                <span>Samedi:</span>
-                <span>18h30</span>
+              <div>
+                <div className="font-semibold text-church-gold mb-1">En Semaine</div>
+                <div className="text-xs text-gray-400">Lundi - Vendredi</div>
+                <div>6h30 & 19h</div>
               </div>
-              <div className="flex justify-between">
-                <span>Dimanche:</span>
-                <span>7h - 9h - 18h</span>
+              <div>
+                <div className="font-semibold text-church-gold mb-1">Samedi</div>
+                <div className="text-xs text-gray-400">Messe du soir</div>
+                <div>6h30 & 19h</div>
               </div>
-              <div className="flex justify-between">
-                <span>Semaine:</span>
-                <span>6h30 - 18h</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Permanences:</span>
-                <span>8h - 12h</span>
+              <div>
+                <div className="font-semibold text-church-gold mb-1">Dimanche</div>
+                <div className="text-xs text-gray-400">Messes dominicales</div>
+                <div>6h30, 8h, 9h30, 11h & 19h</div>
               </div>
             </div>
           </div>
@@ -74,7 +73,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-700 mt-8 pt-6 text-center">
           <p className="text-sm text-gray-400">
-            © 2024 Notre Dame de l'Incarnation - Cocody. Tous droits réservés.
+            © 2025 Notre Dame de l'Incarnation - Cocody. Tous droits réservés.
           </p>
         </div>
       </div>
