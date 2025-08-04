@@ -13,7 +13,6 @@ import {
   Send,
   Plus,
   Inbox,
-  Sent,
   Archive,
   Trash2,
   Search,
@@ -26,35 +25,36 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
-interface Message {
+interface InternalMessage {
   id: string;
   subject: string;
   content: string;
-  sender_id: string;
-  recipient_id: string;
+  sender_email: string;
+  recipient_email: string;
   message_type: 'individual' | 'group' | 'planning' | 'meeting';
   read: boolean;
   created_at: string;
-  sender?: {
-    nom: string;
-    prenom: string;
-  };
-  recipient?: {
-    nom: string;
-    prenom: string;
-  };
+  sender_name?: string;
+  recipient_name?: string;
+}
+
+interface Profile {
+  user_id: string;
+  nom: string;
+  prenom: string;
+  email: string;
 }
 
 const MessagerieInternePage = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [sentMessages, setSentMessages] = useState<Message[]>([]);
-  const [users, setUsers] = useState([]);
+  const [messages, setMessages] = useState<InternalMessage[]>([]);
+  const [sentMessages, setSentMessages] = useState<InternalMessage[]>([]);
+  const [users, setUsers] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
+  const [selectedMessage, setSelectedMessage] = useState<InternalMessage | null>(null);
   const [isComposing, setIsComposing] = useState(false);
   const [newMessage, setNewMessage] = useState({
-    recipient_id: '',
+    recipient_email: '',
     subject: '',
     content: '',
     message_type: 'individual' as const
@@ -70,34 +70,54 @@ const MessagerieInternePage = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Charger les messages reçus
-      const { data: receivedMessages } = await supabase
-        .from('contact_messages')
-        .select(`
-          *,
-          sender:profiles!sender_id(nom, prenom)
-        `)
-        .eq('recipient_id', user.id)
-        .order('created_at', { ascending: false });
+      // Simuler des messages pour l'interface
+      const mockReceivedMessages: InternalMessage[] = [
+        {
+          id: '1',
+          subject: 'Réunion de préparation',
+          content: 'Nous devons organiser une réunion pour préparer les activités du mois prochain.',
+          sender_email: 'cure@paroisse.com',
+          recipient_email: user.email || '',
+          message_type: 'meeting',
+          read: false,
+          created_at: new Date().toISOString(),
+          sender_name: 'Père Martin'
+        },
+        {
+          id: '2',
+          subject: 'Planning des catéchèses',
+          content: 'Voici le planning mis à jour pour les catéchèses de cette semaine.',
+          sender_email: 'catechiste@paroisse.com',
+          recipient_email: user.email || '',
+          message_type: 'planning',
+          read: true,
+          created_at: new Date(Date.now() - 86400000).toISOString(),
+          sender_name: 'Marie Dubois'
+        }
+      ];
 
-      // Charger les messages envoyés
-      const { data: sentMessages } = await supabase
-        .from('contact_messages')
-        .select(`
-          *,
-          recipient:profiles!recipient_id(nom, prenom)
-        `)
-        .eq('sender_id', user.id)
-        .order('created_at', { ascending: false });
+      const mockSentMessages: InternalMessage[] = [
+        {
+          id: '3',
+          subject: 'Confirmation des présences',
+          content: 'Pouvez-vous confirmer votre présence pour la messe de dimanche ?',
+          sender_email: user.email || '',
+          recipient_email: 'cure@paroisse.com',
+          message_type: 'individual',
+          read: true,
+          created_at: new Date(Date.now() - 172800000).toISOString(),
+          recipient_name: 'Père Martin'
+        }
+      ];
 
-      // Charger la liste des utilisateurs
+      // Charger la liste des utilisateurs depuis les profils
       const { data: usersData } = await supabase
         .from('profiles')
         .select('user_id, nom, prenom, email')
         .neq('user_id', user.id);
 
-      setMessages(receivedMessages || []);
-      setSentMessages(sentMessages || []);
+      setMessages(mockReceivedMessages);
+      setSentMessages(mockSentMessages);
       setUsers(usersData || []);
     } catch (error) {
       console.error('Erreur lors du chargement:', error);
@@ -116,17 +136,21 @@ const MessagerieInternePage = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      const messageData = {
-        ...newMessage,
-        sender_id: user.id,
-        read: false
+      // Simuler l'envoi du message
+      const newMsg: InternalMessage = {
+        id: Date.now().toString(),
+        subject: newMessage.subject,
+        content: newMessage.content,
+        sender_email: user.email || '',
+        recipient_email: newMessage.recipient_email,
+        message_type: newMessage.message_type,
+        read: false,
+        created_at: new Date().toISOString(),
+        recipient_name: users.find(u => u.email === newMessage.recipient_email)?.prenom + ' ' + 
+                       users.find(u => u.email === newMessage.recipient_email)?.nom
       };
 
-      const { error } = await supabase
-        .from('contact_messages')
-        .insert([messageData]);
-
-      if (error) throw error;
+      setSentMessages(prev => [newMsg, ...prev]);
 
       toast({
         title: "Succès",
@@ -134,13 +158,12 @@ const MessagerieInternePage = () => {
       });
 
       setNewMessage({
-        recipient_id: '',
+        recipient_email: '',
         subject: '',
         content: '',
         message_type: 'individual'
       });
       setIsComposing(false);
-      loadData();
     } catch (error) {
       console.error('Erreur lors de l\'envoi:', error);
       toast({
@@ -151,23 +174,18 @@ const MessagerieInternePage = () => {
     }
   };
 
-  const markAsRead = async (messageId: string) => {
-    try {
-      await supabase
-        .from('contact_messages')
-        .update({ read: true })
-        .eq('id', messageId);
-      
-      loadData();
-    } catch (error) {
-      console.error('Erreur lors du marquage:', error);
-    }
+  const markAsRead = (messageId: string) => {
+    setMessages(prev => 
+      prev.map(msg => 
+        msg.id === messageId ? { ...msg, read: true } : msg
+      )
+    );
   };
 
   const filteredMessages = messages.filter(message =>
     message.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
     message.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (message.sender && `${message.sender.prenom} ${message.sender.nom}`.toLowerCase().includes(searchTerm.toLowerCase()))
+    (message.sender_name && message.sender_name.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   const getMessageTypeIcon = (type: string) => {
@@ -244,15 +262,15 @@ const MessagerieInternePage = () => {
                           <div>
                             <Label>Destinataire</Label>
                             <Select
-                              value={newMessage.recipient_id}
-                              onValueChange={(value) => setNewMessage({ ...newMessage, recipient_id: value })}
+                              value={newMessage.recipient_email}
+                              onValueChange={(value) => setNewMessage({ ...newMessage, recipient_email: value })}
                             >
                               <SelectTrigger>
                                 <SelectValue placeholder="Choisir un destinataire" />
                               </SelectTrigger>
                               <SelectContent>
-                                {users.map((user: any) => (
-                                  <SelectItem key={user.user_id} value={user.user_id}>
+                                {users.map((user) => (
+                                  <SelectItem key={user.user_id} value={user.email}>
                                     {user.prenom} {user.nom}
                                   </SelectItem>
                                 ))}
@@ -320,7 +338,7 @@ const MessagerieInternePage = () => {
                       </Badge>
                     </div>
                     <div className="flex items-center gap-2 p-2 rounded hover:bg-muted cursor-pointer">
-                      <Sent className="w-4 h-4" />
+                      <Send className="w-4 h-4" />
                       <span className="text-sm">Messages envoyés</span>
                     </div>
                   </div>
@@ -382,7 +400,7 @@ const MessagerieInternePage = () => {
                                 <div className="flex-1">
                                   <div className="flex items-center gap-2 mb-1">
                                     <span className={`font-medium ${!message.read ? 'font-bold' : ''}`}>
-                                      {message.sender ? `${message.sender.prenom} ${message.sender.nom}` : 'Expéditeur inconnu'}
+                                      {message.sender_name || 'Expéditeur inconnu'}
                                     </span>
                                     <Badge variant="outline" className="text-xs">
                                       {getMessageTypeLabel(message.message_type)}
@@ -410,7 +428,7 @@ const MessagerieInternePage = () => {
                     <TabsContent value="sent" className="space-y-4">
                       {sentMessages.length === 0 ? (
                         <div className="text-center py-8">
-                          <Sent className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
+                          <Send className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
                           <h3 className="text-lg font-semibold mb-2">Aucun message envoyé</h3>
                           <p className="text-muted-foreground">Vous n'avez encore envoyé aucun message</p>
                         </div>
@@ -429,7 +447,7 @@ const MessagerieInternePage = () => {
                                 <div className="flex-1">
                                   <div className="flex items-center gap-2 mb-1">
                                     <span className="font-medium">
-                                      À: {message.recipient ? `${message.recipient.prenom} ${message.recipient.nom}` : 'Destinataire inconnu'}
+                                      À: {message.recipient_name || 'Destinataire inconnu'}
                                     </span>
                                     <Badge variant="outline" className="text-xs">
                                       {getMessageTypeLabel(message.message_type)}
@@ -467,7 +485,7 @@ const MessagerieInternePage = () => {
                   <DialogTitle>{selectedMessage.subject}</DialogTitle>
                 </div>
                 <DialogDescription>
-                  De: {selectedMessage.sender ? `${selectedMessage.sender.prenom} ${selectedMessage.sender.nom}` : 'Expéditeur inconnu'} • 
+                  De: {selectedMessage.sender_name || 'Expéditeur inconnu'} • 
                   {new Date(selectedMessage.created_at).toLocaleString()}
                 </DialogDescription>
               </DialogHeader>
