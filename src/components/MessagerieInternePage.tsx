@@ -70,7 +70,7 @@ const MessagerieInternePage = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Simuler des messages pour l'interface
+      // Messages simulés pour l'interface (en attendant la création de la table)
       const mockReceivedMessages: InternalMessage[] = [
         {
           id: '1',
@@ -136,7 +136,8 @@ const MessagerieInternePage = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Simuler l'envoi du message
+      // Simuler l'envoi du message (en attendant la création de la table)
+      const recipient = users.find(u => u.email === newMessage.recipient_email);
       const newMsg: InternalMessage = {
         id: Date.now().toString(),
         subject: newMessage.subject,
@@ -146,8 +147,7 @@ const MessagerieInternePage = () => {
         message_type: newMessage.message_type,
         read: false,
         created_at: new Date().toISOString(),
-        recipient_name: users.find(u => u.email === newMessage.recipient_email)?.prenom + ' ' + 
-                       users.find(u => u.email === newMessage.recipient_email)?.nom
+        recipient_name: recipient ? `${recipient.prenom} ${recipient.nom}` : 'Destinataire inconnu'
       };
 
       setSentMessages(prev => [newMsg, ...prev]);
@@ -175,6 +175,7 @@ const MessagerieInternePage = () => {
   };
 
   const markAsRead = (messageId: string) => {
+    // Simuler la mise à jour (en attendant la création de la table)
     setMessages(prev => 
       prev.map(msg => 
         msg.id === messageId ? { ...msg, read: true } : msg
