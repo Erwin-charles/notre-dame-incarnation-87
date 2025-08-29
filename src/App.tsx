@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AuthPage from "./components/AuthPage";
 import PasswordResetPage from "./components/PasswordResetPage";
+import PageParticles from "./components/PageParticles";
 
 const queryClient = new QueryClient();
 
@@ -62,7 +63,12 @@ const App = () => {
           <Routes>
             {!user && <Route path="/auth" element={<AuthPage onAuthSuccess={() => {}} />} />}
             <Route path="/reset-password" element={<PasswordResetPage />} />
-            <Route path="/" element={user ? <Index user={user} onLogout={handleLogout} /> : <AuthPage onAuthSuccess={() => {}} />} />
+            <Route path="/" element={user ? <Index user={user} onLogout={handleLogout} /> : (
+              <div className="relative min-h-screen">
+                <PageParticles />
+                <AuthPage onAuthSuccess={() => {}} />
+              </div>
+            )} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
