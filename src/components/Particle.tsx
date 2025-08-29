@@ -40,7 +40,7 @@ const Particle = () => {
 
   return (
     <div
-      className="absolute rounded-full bg-church-blue animate-pulse"
+      className="absolute rounded-full bg-church-blue animate-pulse hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 transition-all duration-500 hover:scale-125 hover:shadow-lg hover:shadow-purple-500/50"
       style={{
         left: position.x,
         top: position.y,
