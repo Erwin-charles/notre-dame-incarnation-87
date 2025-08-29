@@ -68,9 +68,12 @@ const MessagerieInternePage = () => {
   const loadData = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) {
+        setLoading(false);
+        return;
+      }
 
-      // Messages simulés pour l'interface (en attendant la création de la table)
+      // Données de démonstration (en attendant la création des tables)
       const mockReceivedMessages: InternalMessage[] = [
         {
           id: '1',
@@ -110,15 +113,46 @@ const MessagerieInternePage = () => {
         }
       ];
 
-      // Charger la liste des utilisateurs depuis les profils
-      const { data: usersData } = await supabase
-        .from('profiles')
-        .select('user_id, nom, prenom, email')
-        .neq('user_id', user.id);
+      const mockUsers: Profile[] = [
+        {
+          user_id: '1',
+          nom: 'Martin',
+          prenom: 'Père',
+          email: 'cure@paroisse.com'
+        },
+        {
+          user_id: '2',
+          nom: 'Dubois',
+          prenom: 'Marie',
+          email: 'catechiste@paroisse.com'
+        },
+        {
+          user_id: '3',
+          nom: 'Lefebvre',
+          prenom: 'Jean',
+          email: 'secretaire@paroisse.com'
+        }
+      ];
+
+      // Tentative de charger les utilisateurs réels si la table profiles existe
+      try {
+        const { data: profilesData, error: profilesError } = await supabase
+          .from('profiles')
+          .select('user_id, nom, prenom, email')
+          .neq('user_id', user.id);
+
+        if (!profilesError && profilesData && profilesData.length > 0) {
+          setUsers(profilesData);
+        } else {
+          setUsers(mockUsers);
+        }
+      } catch (error) {
+        console.log('Table profiles non disponible, utilisation des utilisateurs de démonstration');
+        setUsers(mockUsers);
+      }
 
       setMessages(mockReceivedMessages);
       setSentMessages(mockSentMessages);
-      setUsers(usersData || []);
     } catch (error) {
       console.error('Erreur lors du chargement:', error);
       toast({
