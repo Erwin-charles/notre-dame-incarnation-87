@@ -67,10 +67,18 @@ const MessagerieInternePage = () => {
 
   const loadData = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        setLoading(false);
-        return;
+      setLoading(true);
+      
+      // Utiliser un email par défaut si pas d'utilisateur connecté
+      let userEmail = 'demo@paroisse.com';
+      
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user?.email) {
+          userEmail = user.email;
+        }
+      } catch (authError) {
+        console.log('Pas d\'utilisateur connecté, utilisation du mode démonstration');
       }
 
       // Données de démonstration (en attendant la création des tables)
@@ -80,7 +88,7 @@ const MessagerieInternePage = () => {
           subject: 'Réunion de préparation',
           content: 'Nous devons organiser une réunion pour préparer les activités du mois prochain.',
           sender_email: 'cure@paroisse.com',
-          recipient_email: user.email || '',
+          recipient_email: userEmail,
           message_type: 'meeting',
           read: false,
           created_at: new Date().toISOString(),
@@ -91,7 +99,7 @@ const MessagerieInternePage = () => {
           subject: 'Planning des catéchèses',
           content: 'Voici le planning mis à jour pour les catéchèses de cette semaine.',
           sender_email: 'catechiste@paroisse.com',
-          recipient_email: user.email || '',
+          recipient_email: userEmail,
           message_type: 'planning',
           read: true,
           created_at: new Date(Date.now() - 86400000).toISOString(),
@@ -104,7 +112,7 @@ const MessagerieInternePage = () => {
           id: '3',
           subject: 'Confirmation des présences',
           content: 'Pouvez-vous confirmer votre présence pour la messe de dimanche ?',
-          sender_email: user.email || '',
+          sender_email: userEmail,
           recipient_email: 'cure@paroisse.com',
           message_type: 'individual',
           read: true,
@@ -134,22 +142,8 @@ const MessagerieInternePage = () => {
         }
       ];
 
-      // Tentative de charger les utilisateurs réels si la table profiles existe
-      try {
-        const { data: profilesData, error: profilesError } = await supabase
-          .from('profiles')
-          .select('user_id, nom, prenom, email')
-          .neq('user_id', user.id);
-
-        if (!profilesError && profilesData && profilesData.length > 0) {
-          setUsers(profilesData);
-        } else {
-          setUsers(mockUsers);
-        }
-      } catch (error) {
-        console.log('Table profiles non disponible, utilisation des utilisateurs de démonstration');
-        setUsers(mockUsers);
-      }
+      // Utiliser les données de démonstration pour les utilisateurs
+      setUsers(mockUsers);
 
       setMessages(mockReceivedMessages);
       setSentMessages(mockSentMessages);
@@ -167,8 +161,17 @@ const MessagerieInternePage = () => {
 
   const handleSendMessage = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      // Utiliser un email par défaut si pas d'utilisateur connecté
+      let userEmail = 'demo@paroisse.com';
+      
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user?.email) {
+          userEmail = user.email;
+        }
+      } catch (authError) {
+        console.log('Pas d\'utilisateur connecté, utilisation du mode démonstration');
+      }
 
       // Simuler l'envoi du message (en attendant la création de la table)
       const recipient = users.find(u => u.email === newMessage.recipient_email);
@@ -176,7 +179,7 @@ const MessagerieInternePage = () => {
         id: Date.now().toString(),
         subject: newMessage.subject,
         content: newMessage.content,
-        sender_email: user.email || '',
+        sender_email: userEmail,
         recipient_email: newMessage.recipient_email,
         message_type: newMessage.message_type,
         read: false,
