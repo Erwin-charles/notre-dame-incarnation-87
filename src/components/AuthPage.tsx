@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { InputPassword } from '@/components/ui/input-password';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AlertCircle, LogIn, UserPlus, Church, KeyRound } from 'lucide-react';
@@ -340,12 +341,12 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
                   </div>
                   <div>
                     <Label htmlFor="password">Mot de passe</Label>
-                    <Input
+                    <InputPassword
                       id="password"
-                      type="password"
                       value={loginData.password}
                       onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
                       required
+                      placeholder="Votre mot de passe"
                     />
                   </div>
                   <Button 
@@ -413,22 +414,22 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
                   </div>
                   <div>
                     <Label htmlFor="signup-password">Mot de passe</Label>
-                    <Input
+                    <InputPassword
                       id="signup-password"
-                      type="password"
                       value={signupData.password}
                       onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}
                       required
+                      placeholder="Minimum 6 caractères"
                     />
                   </div>
                   <div>
                     <Label htmlFor="confirm-password">Confirmer le mot de passe</Label>
-                    <Input
+                    <InputPassword
                       id="confirm-password"
-                      type="password"
                       value={signupData.confirmPassword}
                       onChange={(e) => setSignupData({ ...signupData, confirmPassword: e.target.value })}
                       required
+                      placeholder="Répétez votre mot de passe"
                     />
                   </div>
                   <Button 
