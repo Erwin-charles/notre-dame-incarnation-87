@@ -4,7 +4,7 @@ import { User } from '@supabase/supabase-js';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Moon, Sun, LogOut, User as UserIcon, Settings } from 'lucide-react';
+import { Moon, Sun, LogOut, User as UserIcon, Settings, Activity } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import NavigationLogo from './navigation/NavigationLogo';
 import NavigationMenuItem from './navigation/NavigationMenuItem';
@@ -91,6 +91,10 @@ const Navigation = ({ onNavigate, currentPage, user, onLogout }: NavigationProps
                 <DropdownMenuItem onClick={() => onNavigate('parametres')}>
                   <Settings className="mr-2 h-4 w-4" />
                   <span>Paramètres</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => onNavigate('diagnostic')}>
+                  <Activity className="mr-2 h-4 w-4" />
+                  <span>Diagnostic DB</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={onLogout}>

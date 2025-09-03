@@ -26,6 +26,7 @@ import CalendrierLiturgiquePage from '../components/CalendrierLiturgiquePage';
 import DocumentsTelechargementPage from '../components/DocumentsTelechargementPage';
 import DocumentsCoursPage from '../components/DocumentsCoursPage';
 import ParametresPage from '../components/ParametresPage';
+import DiagnosticPage from '../components/DiagnosticPage';
 import Footer from '../components/Footer';
 import Chatbot from '../components/Chatbot';
 import ParishPreloader from '../components/ParishPreloader';
@@ -102,6 +103,8 @@ const Index = ({ user, onLogout }: IndexProps) => {
         return <DocumentsCoursPage />;
       case 'parametres':
         return <ParametresPage />;
+      case 'diagnostic':
+        return <DiagnosticPage />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }

@@ -40,24 +40,76 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
     setIsLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email: loginData.email,
-      password: loginData.password,
-    });
+    try {
+      // Vérifier d'abord la connexion Supabase
+      const { data: healthCheck } = await supabase.from('profiles').select('count', { count: 'exact', head: true });
+      console.log('Supabase connection check:', healthCheck);
 
-    if (error) {
-      setError(error.message);
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: loginData.email.trim().toLowerCase(),
+        password: loginData.password,
+      });
+
+      if (error) {
+        console.error('Login error:', error);
+        let errorMessage = error.message;
+        
+        // Messages d'erreur plus explicites
+        if (error.message.includes('Invalid login credentials')) {
+          errorMessage = 'Email ou mot de passe incorrect. Vérifiez vos identifiants.';
+        } else if (error.message.includes('Email not confirmed')) {
+          errorMessage = 'Veuillez confirmer votre email avant de vous connecter.';
+        } else if (error.message.includes('Too many requests')) {
+          errorMessage = 'Trop de tentatives de connexion. Attendez quelques minutes.';
+        }
+
+        setError(errorMessage);
+        toast({
+          title: "Erreur de connexion",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      } else if (data.user) {
+        console.log('Login successful:', data.user);
+        
+        // Vérifier si le profil existe
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('user_id', data.user.id)
+          .single();
+
+        if (profileError && profileError.code === 'PGRST116') {
+          // Créer le profil s'il n'existe pas
+          const { error: insertError } = await supabase
+            .from('profiles')
+            .insert({
+              user_id: data.user.id,
+              email: data.user.email || '',
+              nom: data.user.user_metadata?.nom || '',
+              prenom: data.user.user_metadata?.prenom || '',
+              telephone: data.user.user_metadata?.telephone || '',
+            });
+
+          if (insertError) {
+            console.error('Profile creation error:', insertError);
+          }
+        }
+
+        toast({
+          title: "Connexion réussie",
+          description: "Bienvenue !",
+        });
+        onAuthSuccess();
+      }
+    } catch (err) {
+      console.error('Unexpected login error:', err);
+      setError('Erreur de connexion inattendue. Vérifiez votre connexion internet.');
       toast({
         title: "Erreur de connexion",
-        description: error.message,
+        description: "Erreur de connexion inattendue. Vérifiez votre connexion internet.",
         variant: "destructive",
       });
-    } else {
-      toast({
-        title: "Connexion réussie",
-        description: "Bienvenue !",
-      });
-      onAuthSuccess();
     }
 
     setIsLoading(false);
@@ -67,6 +119,13 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
+
+    // Validations
+    if (!signupData.nom.trim() || !signupData.prenom.trim()) {
+      setError('Le nom et le prénom sont obligatoires');
+      setIsLoading(false);
+      return;
+    }
 
     if (signupData.password !== signupData.confirmPassword) {
       setError('Les mots de passe ne correspondent pas');
@@ -80,32 +139,70 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
       return;
     }
 
-    const redirectUrl = `${window.location.origin}/`;
+    // Validation email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(signupData.email)) {
+      setError('Format d\'email invalide');
+      setIsLoading(false);
+      return;
+    }
 
-    const { error } = await supabase.auth.signUp({
-      email: signupData.email,
-      password: signupData.password,
-      options: {
-        emailRedirectTo: redirectUrl,
-        data: {
-          nom: signupData.nom,
-          prenom: signupData.prenom,
-          telephone: signupData.telephone
+    try {
+      const redirectUrl = `${window.location.origin}/`;
+
+      const { data, error } = await supabase.auth.signUp({
+        email: signupData.email.trim().toLowerCase(),
+        password: signupData.password,
+        options: {
+          emailRedirectTo: redirectUrl,
+          data: {
+            nom: signupData.nom.trim(),
+            prenom: signupData.prenom.trim(),
+            telephone: signupData.telephone.trim()
+          }
         }
-      }
-    });
+      });
 
-    if (error) {
-      setError(error.message);
+      if (error) {
+        console.error('Signup error:', error);
+        let errorMessage = error.message;
+        
+        if (error.message.includes('User already registered')) {
+          errorMessage = 'Un compte existe déjà avec cet email.';
+        } else if (error.message.includes('Password should be at least 6 characters')) {
+          errorMessage = 'Le mot de passe doit contenir au moins 6 caractères.';
+        }
+
+        setError(errorMessage);
+        toast({
+          title: "Erreur d'inscription",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      } else if (data.user) {
+        console.log('Signup successful:', data.user);
+        toast({
+          title: "Inscription réussie",
+          description: "Vérifiez votre email pour confirmer votre compte.",
+        });
+
+        // Réinitialiser le formulaire
+        setSignupData({
+          email: '',
+          password: '',
+          confirmPassword: '',
+          nom: '',
+          prenom: '',
+          telephone: ''
+        });
+      }
+    } catch (err) {
+      console.error('Unexpected signup error:', err);
+      setError('Erreur d\'inscription inattendue. Réessayez plus tard.');
       toast({
         title: "Erreur d'inscription",
-        description: error.message,
+        description: "Erreur d'inscription inattendue. Réessayez plus tard.",
         variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Inscription réussie",
-        description: "Vérifiez votre email pour confirmer votre compte.",
       });
     }
 
