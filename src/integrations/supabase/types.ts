@@ -14,7 +14,462 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activites: {
+        Row: {
+          created_at: string
+          date_activite: string
+          description: string | null
+          heure_debut: string | null
+          heure_fin: string | null
+          id: string
+          lieu: string | null
+          places_disponibles: number | null
+          responsable_id: string | null
+          titre: string
+        }
+        Insert: {
+          created_at?: string
+          date_activite: string
+          description?: string | null
+          heure_debut?: string | null
+          heure_fin?: string | null
+          id?: string
+          lieu?: string | null
+          places_disponibles?: number | null
+          responsable_id?: string | null
+          titre: string
+        }
+        Update: {
+          created_at?: string
+          date_activite?: string
+          description?: string | null
+          heure_debut?: string | null
+          heure_fin?: string | null
+          id?: string
+          lieu?: string | null
+          places_disponibles?: number | null
+          responsable_id?: string | null
+          titre?: string
+        }
+        Relationships: []
+      }
+      catechistes: {
+        Row: {
+          created_at: string
+          email: string
+          experience: number | null
+          id: string
+          nom: string
+          prenom: string
+          specialite: string | null
+          telephone: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          experience?: number | null
+          id?: string
+          nom: string
+          prenom: string
+          specialite?: string | null
+          telephone?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          experience?: number | null
+          id?: string
+          nom?: string
+          prenom?: string
+          specialite?: string | null
+          telephone?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      catechumenes: {
+        Row: {
+          created_at: string
+          date_naissance: string | null
+          email: string | null
+          id: string
+          niveau: string | null
+          nom: string
+          parent_email: string | null
+          parent_nom: string | null
+          parent_telephone: string | null
+          prenom: string
+          statut: string | null
+          telephone: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date_naissance?: string | null
+          email?: string | null
+          id?: string
+          niveau?: string | null
+          nom: string
+          parent_email?: string | null
+          parent_nom?: string | null
+          parent_telephone?: string | null
+          prenom: string
+          statut?: string | null
+          telephone?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date_naissance?: string | null
+          email?: string | null
+          id?: string
+          niveau?: string | null
+          nom?: string
+          parent_email?: string | null
+          parent_nom?: string | null
+          parent_telephone?: string | null
+          prenom?: string
+          statut?: string | null
+          telephone?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      documents: {
+        Row: {
+          categorie: string | null
+          created_at: string
+          description: string | null
+          fichier_url: string | null
+          id: string
+          titre: string
+          type_document: string | null
+          uploaded_by: string | null
+        }
+        Insert: {
+          categorie?: string | null
+          created_at?: string
+          description?: string | null
+          fichier_url?: string | null
+          id?: string
+          titre: string
+          type_document?: string | null
+          uploaded_by?: string | null
+        }
+        Update: {
+          categorie?: string | null
+          created_at?: string
+          description?: string | null
+          fichier_url?: string | null
+          id?: string
+          titre?: string
+          type_document?: string | null
+          uploaded_by?: string | null
+        }
+        Relationships: []
+      }
+      evaluations: {
+        Row: {
+          catechumene_id: string
+          commentaire: string | null
+          created_at: string
+          date_evaluation: string
+          id: string
+          niveau: string
+          note: number | null
+        }
+        Insert: {
+          catechumene_id: string
+          commentaire?: string | null
+          created_at?: string
+          date_evaluation?: string
+          id?: string
+          niveau: string
+          note?: number | null
+        }
+        Update: {
+          catechumene_id?: string
+          commentaire?: string | null
+          created_at?: string
+          date_evaluation?: string
+          id?: string
+          niveau?: string
+          note?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "evaluations_catechumene_id_fkey"
+            columns: ["catechumene_id"]
+            isOneToOne: false
+            referencedRelation: "catechumenes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      evenements_liturgiques: {
+        Row: {
+          created_at: string
+          date_evenement: string
+          description: string | null
+          heure_debut: string | null
+          heure_fin: string | null
+          id: string
+          lieu: string | null
+          titre: string
+          type_evenement: string | null
+        }
+        Insert: {
+          created_at?: string
+          date_evenement: string
+          description?: string | null
+          heure_debut?: string | null
+          heure_fin?: string | null
+          id?: string
+          lieu?: string | null
+          titre: string
+          type_evenement?: string | null
+        }
+        Update: {
+          created_at?: string
+          date_evenement?: string
+          description?: string | null
+          heure_debut?: string | null
+          heure_fin?: string | null
+          id?: string
+          lieu?: string | null
+          titre?: string
+          type_evenement?: string | null
+        }
+        Relationships: []
+      }
+      inscriptions_activites: {
+        Row: {
+          activite_id: string
+          created_at: string
+          id: string
+          statut: string | null
+          user_id: string
+        }
+        Insert: {
+          activite_id: string
+          created_at?: string
+          id?: string
+          statut?: string | null
+          user_id: string
+        }
+        Update: {
+          activite_id?: string
+          created_at?: string
+          id?: string
+          statut?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inscriptions_activites_activite_id_fkey"
+            columns: ["activite_id"]
+            isOneToOne: false
+            referencedRelation: "activites"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      intentions_messe: {
+        Row: {
+          created_at: string
+          date_messe: string | null
+          email_demandeur: string | null
+          id: string
+          intention: string
+          montant_don: number | null
+          nom_demandeur: string | null
+          statut: string | null
+          telephone_demandeur: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date_messe?: string | null
+          email_demandeur?: string | null
+          id?: string
+          intention: string
+          montant_don?: number | null
+          nom_demandeur?: string | null
+          statut?: string | null
+          telephone_demandeur?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date_messe?: string | null
+          email_demandeur?: string | null
+          id?: string
+          intention?: string
+          montant_don?: number | null
+          nom_demandeur?: string | null
+          statut?: string | null
+          telephone_demandeur?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          contenu: string
+          created_at: string
+          destinataire_id: string | null
+          expediteur_id: string
+          id: string
+          lu: boolean | null
+          sujet: string
+        }
+        Insert: {
+          contenu: string
+          created_at?: string
+          destinataire_id?: string | null
+          expediteur_id: string
+          id?: string
+          lu?: boolean | null
+          sujet: string
+        }
+        Update: {
+          contenu?: string
+          created_at?: string
+          destinataire_id?: string | null
+          expediteur_id?: string
+          id?: string
+          lu?: boolean | null
+          sujet?: string
+        }
+        Relationships: []
+      }
+      newsletter_abonnes: {
+        Row: {
+          actif: boolean | null
+          created_at: string
+          email: string
+          id: string
+          nom: string | null
+          prenom: string | null
+        }
+        Insert: {
+          actif?: boolean | null
+          created_at?: string
+          email: string
+          id?: string
+          nom?: string | null
+          prenom?: string | null
+        }
+        Update: {
+          actif?: boolean | null
+          created_at?: string
+          email?: string
+          id?: string
+          nom?: string | null
+          prenom?: string | null
+        }
+        Relationships: []
+      }
+      paiements: {
+        Row: {
+          created_at: string
+          id: string
+          montant: number
+          reference_transaction: string | null
+          statut: string | null
+          type_paiement: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          montant: number
+          reference_transaction?: string | null
+          statut?: string | null
+          type_paiement?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          montant?: number
+          reference_transaction?: string | null
+          statut?: string | null
+          type_paiement?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      presences: {
+        Row: {
+          catechumene_id: string
+          created_at: string
+          date_cours: string
+          id: string
+          present: boolean
+        }
+        Insert: {
+          catechumene_id: string
+          created_at?: string
+          date_cours: string
+          id?: string
+          present?: boolean
+        }
+        Update: {
+          catechumene_id?: string
+          created_at?: string
+          date_cours?: string
+          id?: string
+          present?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "presences_catechumene_id_fkey"
+            columns: ["catechumene_id"]
+            isOneToOne: false
+            referencedRelation: "catechumenes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          nom: string | null
+          prenom: string | null
+          role: string | null
+          telephone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          nom?: string | null
+          prenom?: string | null
+          role?: string | null
+          telephone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          nom?: string | null
+          prenom?: string | null
+          role?: string | null
+          telephone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
