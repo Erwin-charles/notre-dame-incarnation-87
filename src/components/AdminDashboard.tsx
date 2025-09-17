@@ -63,11 +63,11 @@ const AdminDashboard = () => {
         messagesCount
       ] = await Promise.all([
         supabase.from('profiles').select('id', { count: 'exact' }),
-        supabase.from('catechistes').select('id', { count: 'exact' }).eq('actif', true),
+        supabase.from('catechistes').select('id', { count: 'exact' }),
         supabase.from('catechumenes').select('id', { count: 'exact' }),
-        supabase.from('catechumenes').select('id', { count: 'exact' }).eq('status', 'pending'),
-        supabase.from('payments').select('montant').eq('status', 'completed'),
-        supabase.from('contact_messages').select('id', { count: 'exact' }).eq('traite', false)
+        supabase.from('catechumenes').select('id', { count: 'exact' }).eq('statut', 'pending'),
+        supabase.from('paiements').select('montant').eq('statut', 'complete'),
+        supabase.from('messages').select('id', { count: 'exact' }).eq('lu', false)
       ]);
 
       const totalPayments = paymentsSum.data?.reduce((sum, payment) => sum + Number(payment.montant), 0) || 0;
@@ -108,11 +108,11 @@ const AdminDashboard = () => {
 
       // Charger les évaluations avec les détails des catéchumènes
       const { data: evaluations } = await supabase
-        .from('evaluations_catechumenes')
+        .from('evaluations')
         .select(`
           *,
           catechumenes:catechumene_id (
-            numero_ndi,
+            id,
             niveau,
             profiles:user_id (nom, prenom)
           )
@@ -120,7 +120,7 @@ const AdminDashboard = () => {
 
       // Charger les présences
       const { data: presences } = await supabase
-        .from('presences_cours')
+        .from('presences')
         .select(`
           *,
           catechumenes:catechumene_id (

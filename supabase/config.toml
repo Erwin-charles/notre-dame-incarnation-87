@@ -1,1 +1,7 @@
 project_id = "selqetkcyvcynyvnfpkc"
+
+[functions.send-welcome-email]
+verify_jwt = false
+
+[functions.enable-mfa]
+verify_jwt = true

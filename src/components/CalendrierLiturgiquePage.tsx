@@ -48,12 +48,27 @@ const CalendrierLiturgiquePage = () => {
   const fetchCelebrations = async () => {
     try {
       const { data, error } = await supabase
-        .from('calendrier_liturgique')
+        .from('evenements_liturgiques')
         .select('*')
-        .order('date_celebration', { ascending: true });
+        .order('date_evenement', { ascending: true });
 
       if (error) throw error;
-      setCelebrations(data || []);
+      
+      // Map the database structure to match the component's expected format
+      const mappedData = data?.map(item => ({
+        id: item.id,
+        date_celebration: item.date_evenement,
+        nom_celebration: item.titre,
+        type_celebration: item.type_evenement || 'ordinaire',
+        couleur_liturgique: 'verte',
+        description: item.description,
+        lieu: item.lieu,
+        heure_debut: item.heure_debut,
+        heure_fin: item.heure_fin,
+        readings: []
+      })) || [];
+      
+      setCelebrations(mappedData);
     } catch (error) {
       console.error('Erreur lors du chargement du calendrier:', error);
       toast({
@@ -110,10 +125,15 @@ const CalendrierLiturgiquePage = () => {
 
     try {
       const { error } = await supabase
-        .from('calendrier_liturgique')
+        .from('evenements_liturgiques')
         .insert({
-          date_celebration: format(selectedDate, 'yyyy-MM-dd'),
-          ...newCelebration
+          date_evenement: format(selectedDate, 'yyyy-MM-dd'),
+          titre: newCelebration.nom_celebration,
+          description: newCelebration.description,
+          type_evenement: newCelebration.type_celebration,
+          lieu: newCelebration.lieu,
+          heure_debut: newCelebration.heure_debut,
+          heure_fin: newCelebration.heure_fin
         });
 
       if (error) throw error;

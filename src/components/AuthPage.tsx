@@ -180,12 +180,22 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
           description: errorMessage,
           variant: "destructive",
         });
-      } else if (data.user) {
-        console.log('Signup successful:', data.user);
-        toast({
-          title: "Inscription réussie",
-          description: "Vérifiez votre email pour confirmer votre compte.",
+    // Send welcome email
+    if (data.user) {
+      try {
+        await supabase.functions.invoke('send-welcome-email', {
+          body: {
+            email: signupData.email,
+            nom: signupData.nom,
+            prenom: signupData.prenom,
+          }
         });
+        console.log('Welcome email sent successfully');
+      } catch (emailError) {
+        console.error('Error sending welcome email:', emailError);
+        // Don't throw error here - signup should still succeed even if email fails
+      }
+    }
 
         // Réinitialiser le formulaire
         setSignupData({
