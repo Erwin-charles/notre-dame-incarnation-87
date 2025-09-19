@@ -51,29 +51,56 @@ const Footer = () => {
           {/* Horaires */}
           <div>
             <h4 className="text-lg font-semibold text-church-gold mb-4">Horaires</h4>
-            <div className="space-y-2 text-sm text-gray-300">
+            <div className="space-y-3 text-sm text-gray-300">
               <div>
-                <div className="font-semibold text-church-gold mb-1">En Semaine</div>
-                <div className="text-xs text-gray-400">Lundi - Vendredi</div>
-                <div>6h30 & 19h</div>
+                <div className="font-semibold text-church-gold mb-1">Lundi au Vendredi</div>
+                <div>06h15 - 12h15 - 19h00</div>
               </div>
               <div>
                 <div className="font-semibold text-church-gold mb-1">Samedi</div>
-                <div className="text-xs text-gray-400">Messe du soir</div>
-                <div>6h30 & 19h</div>
+                <div>07h00</div>
+              </div>
+              <div>
+                <div className="font-semibold text-church-gold mb-1">Anticipée Samedi</div>
+                <div>19h00</div>
               </div>
               <div>
                 <div className="font-semibold text-church-gold mb-1">Dimanche</div>
-                <div className="text-xs text-gray-400">Messes dominicales</div>
-                <div>6h30, 8h, 9h30, 11h & 19h</div>
+                <div>06h30 - 08h15 - 09h45 - 11h15 - 19h00</div>
+              </div>
+              <div>
+                <div className="font-semibold text-church-gold mb-1">Jour férié</div>
+                <div>Messe unique à 08h00</div>
+              </div>
+              <div>
+                <div className="font-semibold text-church-gold mb-1">Messe pour les Défunts</div>
+                <div className="text-xs text-gray-400">2ème Vendredi du mois</div>
+                <div>19h00</div>
+              </div>
+              <div className="mt-4 p-3 bg-gray-800 rounded-lg">
+                <div className="font-semibold text-church-gold mb-2">Comment faire une demande de messe ?</div>
+                <p className="text-xs text-gray-400 mb-2">
+                  Il est désormais possible d'envoyer une demande de messe depuis votre position sans vous déplacer.
+                </p>
+                <a 
+                  href="https://bit.ly/demande-ndi" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-church-gold hover:text-yellow-300 transition-colors text-xs underline"
+                >
+                  bit.ly/demande-ndi
+                </a>
               </div>
             </div>
           </div>
         </div>
 
         <div className="border-t border-gray-700 mt-8 pt-6 text-center">
-          <p className="text-sm text-gray-400">
+          <p className="text-sm text-gray-400 mb-2">
             © 2025 Notre Dame de l'Incarnation - Cocody. Tous droits réservés.
+          </p>
+          <p className="text-xs text-gray-500">
+            Paroisse Notre-Dame de l'Incarnation, érigée par Son Éminence Jean-Pierre Cardinal KUTWA, alors Archevêque d'Abidjan.
           </p>
         </div>
       </div>

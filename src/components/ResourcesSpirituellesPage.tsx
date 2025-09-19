@@ -12,19 +12,12 @@ import PageParticles from './PageParticles';
 interface Resource {
   id: string;
   titre: string;
-  type: string;
-  contenu: string;
-  date_publication: string;
-  tags: string[];
-  description?: string;
-  type_document?: string;
-  categorie?: string;
+  type_document: string;
+  description: string;
+  categorie: string;
   fichier_url?: string;
-  uploaded_by?: string;
-  image_url?: string;
-  audio_url?: string;
-  video_url?: string;
   created_at: string;
+  uploaded_by?: string;
 }
 
 const ResourcesSpirituellesPage = () => {
@@ -76,14 +69,13 @@ const ResourcesSpirituellesPage = () => {
     let filtered = resources;
 
     if (selectedType !== 'all') {
-      filtered = filtered.filter(resource => resource.type === selectedType);
+      filtered = filtered.filter(resource => resource.type_document === selectedType);
     }
 
     if (searchTerm) {
       filtered = filtered.filter(resource => 
         resource.titre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        resource.contenu.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        resource.tags?.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+        resource.description?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
@@ -111,63 +103,60 @@ const ResourcesSpirituellesPage = () => {
     return content.substring(0, maxLength) + '...';
   };
 
-  // Données d'exemple pour les ressources spirituelles
-  const exampleResources: Resource[] = [
+  // Mock data pour la démonstration
+  const mockResources: Resource[] = [
     {
       id: '1',
-      titre: 'Homélie du 3ème Dimanche de l\'Avent',
-      type: 'homelie',
-      contenu: 'Mes frères et sœurs, en ce troisième dimanche de l\'Avent, nous sommes invités à la joie. Cette joie n\'est pas une émotion passagère, mais une attitude profonde de l\'âme qui trouve sa source en Dieu...',
-      date_publication: '2024-12-15',
-      tags: ['avent', 'joie', 'espérance'],
-      audio_url: '#',
-      image_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop'
+      titre: 'Prière du Rosaire - Guide complet',
+      type_document: 'Prière',
+      description: 'Guide complet pour la récitation du Rosaire avec méditations sur les mystères joyeux, douloureux, glorieux et lumineux.',
+      categorie: 'Prières',
+      fichier_url: '/docs/rosaire.pdf',
+      created_at: '2024-01-15T00:00:00Z'
     },
     {
       id: '2',
-      titre: 'Lecture du jour - Isaïe 61, 1-11',
-      type: 'lecture',
-      contenu: 'L\'Esprit du Seigneur Dieu est sur moi parce que le Seigneur m\'a consacré par l\'onction. Il m\'a envoyé annoncer la bonne nouvelle aux humbles, guérir ceux qui ont le cœur brisé...',
-      date_publication: '2024-12-15',
-      tags: ['isaie', 'esperance', 'liberation'],
-      image_url: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop'
+      titre: 'Catéchisme de l\'Église Catholique - Résumé',
+      type_document: 'Formation',
+      description: 'Résumé des principaux enseignements du Catéchisme de l\'Église Catholique pour approfondir sa foi.',
+      categorie: 'Formation',
+      fichier_url: '/docs/catechisme.pdf',
+      created_at: '2024-01-10T00:00:00Z'
     },
     {
       id: '3',
-      titre: 'Prière de l\'Avent',
-      type: 'priere',
-      contenu: 'Seigneur Jésus, en ce temps de l\'Avent, nous préparons nos cœurs à ta venue. Aide-nous à faire silence pour t\'accueillir, à faire place à ta lumière dans nos vies...',
-      date_publication: '2024-12-10',
-      tags: ['avent', 'preparation', 'accueil'],
-      image_url: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop'
+      titre: 'Chemin de Croix - Méditations',
+      type_document: 'Prière',
+      description: 'Méditations pour accompagner le chemin de croix, particulièrement appropriées pour le temps du Carême.',
+      categorie: 'Prières',
+      fichier_url: '/docs/chemin-croix.pdf',
+      created_at: '2024-01-05T00:00:00Z'
     },
     {
       id: '4',
-      titre: 'Le Chapelet - Mystères Joyeux',
-      type: 'chapelet',
-      contenu: 'Méditation sur les mystères joyeux du Rosaire : L\'Annonciation, la Visitation, la Nativité, la Présentation au Temple, le Recouvrement au Temple...',
-      date_publication: '2024-12-08',
-      tags: ['chapelet', 'marie', 'mysteres'],
-      audio_url: '#',
-      image_url: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop'
+      titre: 'Homélie du Dimanche - Liturgie',
+      type_document: 'Liturgie',
+      description: 'Réflexions et commentaires sur les lectures dominicales pour nourrir la prière personnelle.',
+      categorie: 'Liturgie',
+      fichier_url: '/docs/homelie.pdf',
+      created_at: '2024-01-01T00:00:00Z'
     },
     {
       id: '5',
-      titre: 'Catéchèse sur l\'Eucharistie',
-      type: 'catechese',
-      contenu: 'L\'Eucharistie est le sommet et la source de la vie chrétienne. Dans ce sacrement, le Christ se donne à nous sous les espèces du pain et du vin...',
-      date_publication: '2024-12-05',
-      tags: ['eucharistie', 'sacrement', 'communion'],
-      video_url: '#',
-      image_url: 'https://images.unsplash.com/photo-1551803091-e20673f15770?w=400&h=300&fit=crop'
+      titre: 'Cantiques et Chants Liturgiques',
+      type_document: 'Musique',
+      description: 'Collection de chants liturgiques pour accompagner la prière communautaire et personnelle.',
+      categorie: 'Chants',
+      fichier_url: '/docs/cantiques.pdf',
+      created_at: '2023-12-25T00:00:00Z'
     }
   ];
 
-  const displayResources = filteredResources.length > 0 ? filteredResources : exampleResources.filter(r => 
-    selectedType === 'all' || r.type === selectedType
+  const displayResources = filteredResources.length > 0 ? filteredResources : mockResources.filter(r => 
+    selectedType === 'all' || r.type_document === selectedType
   ).filter(r => 
     !searchTerm || r.titre.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    r.contenu.toLowerCase().includes(searchTerm.toLowerCase())
+    r.description?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -233,50 +222,31 @@ const ResourcesSpirituellesPage = () => {
                 )}
                 <CardHeader>
                   <div className="flex items-start justify-between mb-2">
-                    <Badge className={getTypeColor(resource.type)}>
-                      {getTypeLabel(resource.type)}
+                    <Badge className={getTypeColor(resource.type_document)}>
+                      {getTypeLabel(resource.type_document)}
                     </Badge>
                     <div className="flex items-center text-sm text-gray-500">
                       <Calendar className="w-4 h-4 mr-1" />
-                      {new Date(resource.date_publication).toLocaleDateString('fr-FR')}
+                      {new Date(resource.created_at).toLocaleDateString('fr-FR')}
                     </div>
                   </div>
                   <CardTitle className="text-lg leading-tight">{resource.titre}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 text-sm mb-4">
-                    {truncateContent(resource.contenu)}
+                    {truncateContent(resource.description || '')}
                   </p>
-
-                  {resource.tags && resource.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mb-4">
-                      {resource.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          <Tag className="w-3 h-3 mr-1" />
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
 
                   <div className="flex gap-2">
                     <Button size="sm" className="flex-1">
                       <BookOpen className="w-4 h-4 mr-1" />
                       Lire
                     </Button>
-                    {resource.audio_url && (
+                    {resource.fichier_url && (
                       <Button size="sm" variant="outline">
-                        <Volume2 className="w-4 h-4" />
+                        <Download className="w-4 h-4" />
                       </Button>
                     )}
-                    {resource.video_url && (
-                      <Button size="sm" variant="outline">
-                        <Play className="w-4 h-4" />
-                      </Button>
-                    )}
-                    <Button size="sm" variant="outline">
-                      <Download className="w-4 h-4" />
-                    </Button>
                   </div>
                 </CardContent>
               </Card>

@@ -37,7 +37,7 @@ export const menuItems = [
         label: 'Histoire de la Paroisse', 
         icon: BookOpen,
         description: 'L\'histoire de Notre Dame de l\'Incarnation',
-        onClick: (onNavigate: (page: string) => void) => onNavigate('home') 
+        onClick: (onNavigate: (page: string) => void) => onNavigate('histoire') 
       },
       { 
         id: 'home-contact', 
@@ -48,6 +48,25 @@ export const menuItems = [
       },
     ]
   },
+  { 
+    id: 'actualites', 
+    label: 'Actualités', 
+    icon: Calendar,
+    subItems: [
+      { 
+        id: 'actualites-news', 
+        label: 'Actualités Paroissiales', 
+        icon: Calendar,
+        description: 'Dernières nouvelles et annonces de la paroisse',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('actualites') 
+      },
+      { 
+        id: 'actualites-newsletter', 
+        label: 'Newsletter', 
+        icon: BookOpen,
+        description: 'Abonnez-vous à notre newsletter paroissiale',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('newsletter') 
+      },
   { 
     id: 'catechese', 
     label: 'Catéchèse', 
@@ -234,7 +253,7 @@ export const menuItems = [
         icon: Calculator,
         description: 'Carnet informatique - Réservé au clergé',
         onClick: (onNavigate: (page: string) => void) => onNavigate('denier-culte') 
-      },
+      }
     ]
-  },
+  }
 ];

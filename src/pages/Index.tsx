@@ -30,7 +30,8 @@ import DiagnosticPage from '../components/DiagnosticPage';
 import Footer from '../components/Footer';
 import Chatbot from '../components/Chatbot';
 import ParishPreloader from '../components/ParishPreloader';
-import PageParticles from '../components/PageParticles';
+import HistoirePage from '../components/HistoirePage';
+import ActualitesPage from '../components/ActualitesPage';
 
 interface IndexProps {
   user: User;
@@ -57,6 +58,10 @@ const Index = ({ user, onLogout }: IndexProps) => {
     switch (currentPage) {
       case 'home':
         return <HomePage onNavigate={handleNavigate} />;
+      case 'histoire':
+        return <HistoirePage />;
+      case 'actualites':
+        return <ActualitesPage />;
       case 'catechese':
         return <CatechesePage />;
       case 'groupes':

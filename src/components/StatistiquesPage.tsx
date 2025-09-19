@@ -63,26 +63,19 @@ const StatistiquesPage = () => {
       // Récupérer les catéchumènes
       const { data: catechumenesData, error: catechumenesError } = await supabase
         .from('catechumenes')
-        .select(`
-          *,
-          profiles:user_id (nom, prenom)
-        `)
-        .eq('annee_suivie', selectedAnnee);
+        .select('*')
+        .eq('statut', 'inscrit');
 
       if (catechumenesError) throw catechumenesError;
+      setCatechumenes(catechumenesData || []);
 
       // Récupérer les évaluations
       const { data: evaluationsData, error: evaluationsError } = await supabase
         .from('evaluations')
-        .select(`
-          *,
-          catechumenes:catechumene_id (
-            nom,
-            prenom
-          )
-        `);
+        .select('note, niveau');
 
       if (evaluationsError) throw evaluationsError;
+      setEvaluations(evaluationsData || []);
 
       // Récupérer les présences
       // Mock data for now
