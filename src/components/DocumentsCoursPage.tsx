@@ -15,14 +15,11 @@ import PageParticles from "./PageParticles";
 interface Document {
   id: string;
   titre: string;
-  description: string;
-  type_document: string;
-  niveau: string;
-  fichier_url: string;
-  taille_fichier: number;
-  type_mime: string;
-  telechargeable: boolean;
-  auteur_id: string;
+  description?: string;
+  type_document?: string;
+  categorie?: string;
+  fichier_url?: string;
+  uploaded_by?: string;
   created_at: string;
 }
 
@@ -57,9 +54,8 @@ const DocumentsCoursPage = () => {
   const fetchDocuments = async () => {
     try {
       const { data, error } = await supabase
-        .from('documents_cours')
+        .from('documents')
         .select('*')
-        .eq('telechargeable', true)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -91,7 +87,7 @@ const DocumentsCoursPage = () => {
     }
 
     if (selectedNiveau !== 'all') {
-      filtered = filtered.filter(doc => doc.niveau === selectedNiveau);
+      filtered = filtered.filter(doc => doc.categorie === selectedNiveau);
     }
 
     setFilteredDocuments(filtered);
@@ -121,13 +117,14 @@ const DocumentsCoursPage = () => {
       if (!user.user) throw new Error("Utilisateur non connecté");
 
       const { error } = await supabase
-        .from('documents_cours')
+        .from('documents')
         .insert({
-          ...newDocument,
+          titre: newDocument.titre,
+          description: newDocument.description,
+          type_document: newDocument.type_document,
+          categorie: newDocument.niveau,
           fichier_url,
-          taille_fichier: uploadFile.size,
-          type_mime: uploadFile.type,
-          auteur_id: user.user.id
+          uploaded_by: user.user.id
         });
 
       if (error) throw error;
@@ -395,15 +392,15 @@ const DocumentsCoursPage = () => {
                   <Badge className={getTypeColor(document.type_document)}>
                     {getTypeLabel(document.type_document)}
                   </Badge>
-                  {document.niveau && (
+                  {document.categorie && (
                     <Badge variant="outline">
-                      {document.niveau.replace('_', ' ')}
+                      {document.categorie.replace('_', ' ')}
                     </Badge>
                   )}
                 </div>
 
                 <div className="text-sm text-muted-foreground">
-                  <p>Taille: {formatFileSize(document.taille_fichier)}</p>
+                  <p>Type: {document.type_document || 'Document'}</p>
                   <p>Ajouté le: {new Date(document.created_at).toLocaleDateString('fr-FR')}</p>
                 </div>
 

@@ -21,13 +21,23 @@ const ContactPage = () => {
     e.preventDefault();
     
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast({
+          title: "Erreur",
+          description: "Vous devez être connecté pour envoyer un message",
+          variant: "destructive"
+        });
+        return;
+      }
+
       const { error } = await supabase
-        .from('contact_messages')
+        .from('messages')
         .insert({
-          nom: name,
-          email,
-          message,
-          sujet: 'Contact depuis le site web'
+          expediteur_id: user.id,
+          destinataire_id: null, // Message général pour l'administration
+          sujet: 'Contact depuis le site web',
+          contenu: `Nom: ${name}\nEmail: ${email}\n\nMessage: ${message}`
         });
 
       if (error) throw error;

@@ -23,12 +23,11 @@ import {
 interface CourseDocument {
   id: string;
   titre: string;
-  type_document: string;
-  niveau?: string;
-  fichier_url: string;
-  type_mime?: string;
-  taille_fichier?: number;
-  telechargeable: boolean;
+  type_document?: string;
+  description?: string;
+  fichier_url?: string;
+  categorie?: string;
+  uploaded_by?: string;
   created_at: string;
 }
 
@@ -51,7 +50,7 @@ const DocumentsTelechargementPage = () => {
   const fetchDocuments = async () => {
     try {
       const { data, error } = await supabase
-        .from('documents_cours')
+        .from('documents')
         .select('*')
         .order('created_at', { ascending: false });
 
@@ -102,17 +101,13 @@ const DocumentsTelechargementPage = () => {
         .getPublicUrl(filePath);
 
       const { error: dbError } = await supabase
-        .from('documents_cours')
+        .from('documents')
         .insert({
           titre: newDocument.titre || file.name,
           type_document: newDocument.type_document,
-          niveau: newDocument.niveau || null,
           description: newDocument.description || null,
           fichier_url: data.publicUrl,
-          type_mime: file.type,
-          taille_fichier: file.size,
-          telechargeable: true,
-          auteur_id: user.id
+          uploaded_by: user.id
         });
 
       if (dbError) throw dbError;
@@ -173,7 +168,7 @@ const DocumentsTelechargementPage = () => {
   const deleteDocument = async (id: string) => {
     try {
       const { error } = await supabase
-        .from('documents_cours')
+        .from('documents')
         .delete()
         .eq('id', id);
 
@@ -195,21 +190,19 @@ const DocumentsTelechargementPage = () => {
     }
   };
 
-  const getFileIcon = (type_mime?: string) => {
-    if (!type_mime) return <File className="h-5 w-5" />;
+  const getFileIcon = (type_document?: string) => {
+    if (!type_document) return <File className="h-5 w-5" />;
     
-    if (type_mime.includes('image')) return <Image className="h-5 w-5" />;
-    if (type_mime.includes('video')) return <Video className="h-5 w-5" />;
-    if (type_mime.includes('pdf') || type_mime.includes('document')) return <FileText className="h-5 w-5" />;
+    if (type_document.includes('image')) return <Image className="h-5 w-5" />;
+    if (type_document.includes('video')) return <Video className="h-5 w-5" />;
+    if (type_document.includes('pdf') || type_document.includes('document')) return <FileText className="h-5 w-5" />;
     
     return <File className="h-5 w-5" />;
   };
 
-  const formatFileSize = (bytes?: number) => {
-    if (!bytes) return 'Taille inconnue';
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(1024));
-    return Math.round(bytes / Math.pow(1024, i) * 100) / 100 + ' ' + sizes[i];
+  const formatFileSize = (document: CourseDocument) => {
+    // Since we don't have file size in the schema, return a placeholder
+    return 'Document';
   };
 
   if (loading) {
@@ -251,16 +244,16 @@ const DocumentsTelechargementPage = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {documents.filter(doc => doc.telechargeable).map((document) => (
+                {documents.map((document) => (
                   <div key={document.id} className="flex items-center justify-between p-4 border rounded-lg">
                     <div className="flex items-center space-x-3">
-                      {getFileIcon(document.type_mime)}
+                      {getFileIcon(document.type_document)}
                       <div>
                         <h4 className="font-medium">{document.titre}</h4>
                         <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                          <Badge variant="outline">{document.type_document}</Badge>
-                          {document.niveau && <Badge variant="secondary">{document.niveau}</Badge>}
-                          <span>{formatFileSize(document.taille_fichier)}</span>
+                          {document.type_document && <Badge variant="outline">{document.type_document}</Badge>}
+                          {document.categorie && <Badge variant="secondary">{document.categorie}</Badge>}
+                          <span>{formatFileSize(document)}</span>
                         </div>
                       </div>
                     </div>
@@ -269,6 +262,7 @@ const DocumentsTelechargementPage = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => handleDownload(document)}
+                        disabled={!document.fichier_url}
                       >
                         <Download className="h-4 w-4 mr-2" />
                         Télécharger
@@ -279,7 +273,7 @@ const DocumentsTelechargementPage = () => {
                     </div>
                   </div>
                 ))}
-                {documents.filter(doc => doc.telechargeable).length === 0 && (
+                {documents.length === 0 && (
                   <div className="text-center py-8 text-muted-foreground">
                     Aucun document disponible pour le moment
                   </div>
@@ -405,12 +399,12 @@ const DocumentsTelechargementPage = () => {
                 {documents.map((document) => (
                   <div key={document.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
                     <div className="flex items-center space-x-3">
-                      {getFileIcon(document.type_mime)}
+                      {getFileIcon(document.type_document)}
                       <div>
                         <span className="font-medium">{document.titre}</span>
                         <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                          <Badge variant="outline">{document.type_document}</Badge>
-                          {document.niveau && <Badge variant="secondary">{document.niveau}</Badge>}
+                          {document.type_document && <Badge variant="outline">{document.type_document}</Badge>}
+                          {document.categorie && <Badge variant="secondary">{document.categorie}</Badge>}
                         </div>
                       </div>
                     </div>

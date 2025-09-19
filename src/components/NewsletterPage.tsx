@@ -24,13 +24,12 @@ const NewsletterPage = () => {
       const { data: { user } } = await supabase.auth.getUser();
       
       const { error } = await supabase
-        .from('newsletter_subscriptions')
+        .from('newsletter_abonnes')
         .insert({
           email,
           nom,
           prenom,
-          user_id: user?.id || null,
-          subscribed: true
+          actif: true
         });
 
       if (error) throw error;

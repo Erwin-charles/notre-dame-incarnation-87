@@ -16,9 +16,15 @@ interface Resource {
   contenu: string;
   date_publication: string;
   tags: string[];
+  description?: string;
+  type_document?: string;
+  categorie?: string;
+  fichier_url?: string;
+  uploaded_by?: string;
   image_url?: string;
   audio_url?: string;
   video_url?: string;
+  created_at: string;
 }
 
 const ResourcesSpirituellesPage = () => {
@@ -49,10 +55,9 @@ const ResourcesSpirituellesPage = () => {
   const fetchResources = async () => {
     try {
       const { data, error } = await supabase
-        .from('resources_spirituelles')
+        .from('documents')
         .select('*')
-        .eq('publie', true)
-        .order('date_publication', { ascending: false });
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
       setResources(data || []);

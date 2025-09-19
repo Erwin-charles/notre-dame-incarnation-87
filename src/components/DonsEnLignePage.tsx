@@ -69,16 +69,12 @@ const DonsEnLignePage = () => {
       const { data: { user } } = await supabase.auth.getUser();
       
       const { error } = await supabase
-        .from('dons_ligne')
+        .from('paiements')
         .insert({
-          donateur_nom: donateurNom,
-          donateur_email: donateurEmail,
-          donateur_telephone: donateurTelephone,
           montant: parseFloat(montant),
-          type_don: typeDon,
-          message_donateur: messageDonateur,
+          type_paiement: typeDon,
           user_id: user?.id || null,
-          status: 'pending'
+          reference_transaction: messageDonateur // Store the message in reference field
         });
 
       if (error) throw error;

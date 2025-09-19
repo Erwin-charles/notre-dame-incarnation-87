@@ -23,6 +23,9 @@ interface Celebration {
   couleur_liturgique: string;
   description: string;
   readings: string[];
+  lieu?: string;
+  heure_debut?: string;
+  heure_fin?: string;
 }
 
 const CalendrierLiturgiquePage = () => {
@@ -131,9 +134,9 @@ const CalendrierLiturgiquePage = () => {
           titre: newCelebration.nom_celebration,
           description: newCelebration.description,
           type_evenement: newCelebration.type_celebration,
-          lieu: newCelebration.lieu,
-          heure_debut: newCelebration.heure_debut,
-          heure_fin: newCelebration.heure_fin
+          lieu: selectedCelebration?.lieu || null,
+          heure_debut: selectedCelebration?.heure_debut || null,
+          heure_fin: selectedCelebration?.heure_fin || null
         });
 
       if (error) throw error;

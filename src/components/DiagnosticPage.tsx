@@ -70,7 +70,7 @@ const DiagnosticPage = () => {
     }
 
     // Test 3: Tables de base
-    const validTables = ['profiles', 'events', 'actualites', 'catechumenes'] as const;
+    const validTables = ['profiles', 'evenements_liturgiques', 'activites', 'catechumenes'] as const;
     
     for (const table of validTables) {
       try {

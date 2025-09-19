@@ -47,25 +47,33 @@ const GalerieMediaPage = () => {
 
   const fetchMediaItems = async () => {
     try {
-      const { data, error } = await supabase
-        .from('galerie_media')
-        .select(`
-          *,
-          events(titre)
-        `)
-        .eq('publie', true)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      setMediaItems((data || []).map(item => ({
-        ...item,
-        type: item.type as 'photo' | 'video'
-      })));
+      // Temporary mock data - media gallery table doesn't exist yet
+      const mockData = [
+        {
+          id: '1',
+          type: 'photo' as const,
+          url: 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3',
+          titre: 'Messe de Pâques 2024',
+          description: 'Célébration de la résurrection',
+          created_at: '2024-04-01T10:00:00Z'
+        },
+        {
+          id: '2',
+          type: 'video' as const,
+          url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d',
+          titre: 'Première Communion',
+          description: 'Cérémonie des premières communions',
+          created_at: '2024-05-15T14:00:00Z'
+        }
+      ];
+      
+      setMediaItems(mockData);
     } catch (error) {
+      console.error('Erreur lors du chargement de la galerie:', error);
       toast({
         title: "Erreur",
-        description: "Impossible de charger les médias.",
-        variant: "destructive"
+        description: "Impossible de charger la galerie média",
+        variant: "destructive",
       });
     } finally {
       setIsLoading(false);

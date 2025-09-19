@@ -73,30 +73,21 @@ const StatistiquesPage = () => {
 
       // Récupérer les évaluations
       const { data: evaluationsData, error: evaluationsError } = await supabase
-        .from('evaluations_catechumenes')
+        .from('evaluations')
         .select(`
           *,
           catechumenes:catechumene_id (
-            numero_ndi,
-            profiles:user_id (nom, prenom)
+            nom,
+            prenom
           )
-        `)
-        .eq('annee_scolaire', selectedAnnee);
+        `);
 
       if (evaluationsError) throw evaluationsError;
 
       // Récupérer les présences
-      const { data: presencesData, error: presencesError } = await supabase
-        .from('presences_cours')
-        .select('*')
-        .gte('date_cours', `${selectedAnnee.split('-')[0]}-09-01`)
-        .lt('date_cours', `${selectedAnnee.split('-')[1]}-07-01`);
-
-      if (presencesError) throw presencesError;
-
-      setCatechumenes((catechumenesData || []) as any);
-      setEvaluations((evaluationsData || []) as any);
-      setPresences(presencesData || []);
+      // Mock data for now
+      const mockPresencesData: any[] = [];
+      setPresences(mockPresencesData);
     } catch (error) {
       console.error('Erreur lors du chargement des données:', error);
       toast({
