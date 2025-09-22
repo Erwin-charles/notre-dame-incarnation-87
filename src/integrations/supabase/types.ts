@@ -53,6 +53,39 @@ export type Database = {
         }
         Relationships: []
       }
+      audit_log: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          new_values: Json | null
+          old_values: Json | null
+          record_id: string | null
+          table_name: string
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name: string
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       catechistes: {
         Row: {
           created_at: string
@@ -147,6 +180,7 @@ export type Database = {
           titre: string
           type_document: string | null
           uploaded_by: string | null
+          visibility_level: string | null
         }
         Insert: {
           categorie?: string | null
@@ -157,6 +191,7 @@ export type Database = {
           titre: string
           type_document?: string | null
           uploaded_by?: string | null
+          visibility_level?: string | null
         }
         Update: {
           categorie?: string | null
@@ -167,6 +202,7 @@ export type Database = {
           titre?: string
           type_document?: string | null
           uploaded_by?: string | null
+          visibility_level?: string | null
         }
         Relationships: []
       }
@@ -470,15 +506,46 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_current_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: Database["public"]["Enums"]["app_role"]
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "catechist" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -605,6 +672,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "catechist", "user"],
+    },
   },
 } as const
