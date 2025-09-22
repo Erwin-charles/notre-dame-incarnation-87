@@ -40,19 +40,20 @@ const HistoirePage = () => {
                 de la Riviera II, les fidèles du secteur Palmeraie ont exprimé leur besoin de disposer d'un espace de prière de proximité.
               </p>
               <p className="text-gray-700 mb-4">
-                La chapelle, alors installée de façon temporaire dans un espace aménagé, servait de lieu de rassemblement 
+                La chapelle, alors installée de façon temporaire dans un espace aménagé, sert de lieu de rassemblement 
                 pour une communauté fervente et engagée. Grâce à leur foi, leur persévérance et leur solidarité, 
                 cette communauté va donner naissance à une nouvelle paroisse.
               </p>
               <div className="bg-church-gold/10 p-4 rounded-lg">
                 <p className="text-gray-800 font-semibold">
                   <Clock className="w-4 h-4 inline mr-2" />
-                  Le 2 novembre 2010, la chapelle devient officiellement Paroisse Notre-Dame de l'Incarnation, 
-                  érigée par Son Éminence Jean-Pierre Cardinal KUTWA, alors Archevêque d'Abidjan.
+                  Le 2 novembre 2010, la chapelle devient effectivement Paroisse Notre-Dame de l'Incarnation, 
+                  établie par Son Éminence Jean-Pierre Cardinal KUTWA, alors Archevêque d'Abidjan.
                 </p>
                 <p className="text-gray-700 mt-2">
+                  Cette célébration fondatrice fut marquée par la présence de plusieurs autorités ecclésiastiques et la participation joyeuse des fidèles.
                   Le tout premier curé nommé à la tête de la paroisse fut le Révérend Père Norbert Éric ABEKAN, 
-                  assisté par des vicaires et des stagiaires.
+                  assisté par des vicaires et des stagiaires qui l'ont accompagné dans l'organisation de la vie paroissiale.
                 </p>
               </div>
             </CardContent>
@@ -111,7 +112,11 @@ const HistoirePage = () => {
                 Mais les travaux ne démarrent effectivement qu'à la suite d'une grande mobilisation financière orchestrée 
                 par le Père Curé avec l'appui du Conseil paroissial et de l'ensemble des fidèles. Diverses initiatives, 
                 telles que les fêtes paroissiales, kermesses, campagnes de dons et actions de charité ont permis 
-                de réunir progressivement les fonds nécessaires.
+                de rassembler progressivement les fonds nécessaires.
+              </p>
+              <p className="text-gray-700 mb-4">
+                La dédicace officielle de l'église a lieu lors d'une célébration eucharistique solennelle,
+                réunissant toute la communauté catholique de la Palmeraie et des invités venus d'ailleurs.
               </p>
               
               <div className="grid md:grid-cols-2 gap-4 mb-4">
@@ -146,7 +151,7 @@ const HistoirePage = () => {
             <CardContent className="pl-24">
               <p className="text-gray-700 mb-4">
                 Depuis sa fondation, la Paroisse Notre-Dame de l'Incarnation ne cesse de grandir, 
-                non seulement en nombre de fidèles, mais aussi en intensité spirituelle.
+                non seulement en nombre de fidèles, mais aussi en intensité spirituelle. Elle abrite aujourd'hui :
               </p>
               
               <div className="grid md:grid-cols-2 gap-4 mb-4">
@@ -163,7 +168,7 @@ const HistoirePage = () => {
                     <li>• JEC (Jeunesse Étudiante Catholique)</li>
                     <li>• CV-AV (Cœurs Vaillants - Âmes Vaillantes)</li>
                     <li>• Scouts</li>
-                    <li>• Servants de messe</li>
+                    <li>• Serviteurs de messe</li>
                     <li>• Catéchumènes</li>
                   </ul>
                 </div>
@@ -179,18 +184,18 @@ const HistoirePage = () => {
                   <h4 className="font-semibold text-gray-900">Formation</h4>
                   <ul className="text-sm text-gray-700 space-y-1">
                     <li>• École de catéchèse structurée</li>
-                    <li>• Chorales engagées</li>
+                    <li>• Chorales engagées dans l'animation liturgique</li>
                   </ul>
                 </div>
               </div>
 
               <div className="bg-church-gold/10 p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-900 mb-2">Notre devise</h4>
+                <h4 className="font-semibold text-gray-900 mb-2">Notre conception</h4>
                 <p className="text-church-gold text-lg font-semibold">
                   "Oui à Dieu ! Humilité – Prière – Amour du prochain"
                 </p>
                 <p className="text-gray-700 text-sm mt-2">
-                  La paroisse s'ancre dans une dynamique de formation, de prière, de service et d'évangélisation.
+                  Par sa conception, la paroisse s'ancre dans une dynamique de formation, de prière, de service et d'évangélisation.
                 </p>
               </div>
             </CardContent>

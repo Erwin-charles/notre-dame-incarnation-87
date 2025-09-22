@@ -100,7 +100,7 @@ const Footer = () => {
             © 2025 Notre Dame de l'Incarnation - Cocody. Tous droits réservés.
           </p>
           <p className="text-xs text-gray-500">
-            Paroisse Notre-Dame de l'Incarnation, érigée par Son Éminence Jean-Pierre Cardinal KUTWA, alors Archevêque d'Abidjan.
+            Paroisse Notre-Dame de l'Incarnation, établie par Son Éminence Jean-Pierre Cardinal KUTWA, alors Archevêque d'Abidjan.
           </p>
         </div>
       </div>

@@ -30,6 +30,7 @@ import DiagnosticPage from '../components/DiagnosticPage';
 import Footer from '../components/Footer';
 import Chatbot from '../components/Chatbot';
 import ParishPreloader from '../components/ParishPreloader';
+import PageParticles from '../components/PageParticles';
 import HistoirePage from '../components/HistoirePage';
 import ActualitesPage from '../components/ActualitesPage';
 

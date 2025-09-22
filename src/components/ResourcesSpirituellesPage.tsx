@@ -16,6 +16,7 @@ interface Resource {
   description: string;
   categorie: string;
   fichier_url?: string;
+  image_url?: string;
   created_at: string;
   uploaded_by?: string;
 }

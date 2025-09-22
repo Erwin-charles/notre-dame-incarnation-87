@@ -66,7 +66,9 @@ export const menuItems = [
         icon: BookOpen,
         description: 'Abonnez-vous à notre newsletter paroissiale',
         onClick: (onNavigate: (page: string) => void) => onNavigate('newsletter') 
-      },
+      }
+    ]
+  },
   { 
     id: 'catechese', 
     label: 'Catéchèse', 
