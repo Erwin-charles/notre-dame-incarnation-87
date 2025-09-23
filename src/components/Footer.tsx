@@ -5,9 +5,9 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
           {/* Logo et Description */}
-          <div className="md:col-span-2">
+          <div>
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-8 h-8 cross-3d">
                 <div className="w-8 h-1 bg-church-gold absolute top-3 left-0 cross-beam"></div>
@@ -18,10 +18,23 @@ const Footer = () => {
                 <p className="text-sm text-gray-300">Paroisse Catholique - Cocody</p>
               </div>
             </div>
-            <p className="text-gray-300 mb-4">
+            <p className="text-gray-300 mb-6">
               Une communauté vivante qui accueille tous ceux qui cherchent Dieu. 
               Venez découvrir la joie de la foi partagée et grandir ensemble dans l'amour du Christ.
             </p>
+            
+            {/* Contact rapide */}
+            <div className="space-y-2 mb-6">
+              <div className="flex items-center space-x-2">
+                <Phone className="w-4 h-4 text-church-gold" />
+                <span className="text-sm text-gray-300">+225 27 22 44 55 66</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Mail className="w-4 h-4 text-church-gold" />
+                <span className="text-sm text-gray-300">contact@ndincarnation-cocody.ci</span>
+              </div>
+            </div>
+
             <div className="flex space-x-4">
               <Facebook className="w-5 h-5 hover:text-church-gold cursor-pointer transition-colors" />
               <Instagram className="w-5 h-5 hover:text-church-gold cursor-pointer transition-colors" />
@@ -29,58 +42,59 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Contact */}
+          {/* Horaires des Messes */}
           <div>
-            <h4 className="text-lg font-semibold text-church-gold mb-4">Contact</h4>
-          <div className="space-y-3">
-            <div className="flex items-center space-x-3">
-              <MapPin className="w-4 h-4 text-church-gold" />
-              <span className="text-sm text-gray-300">Riviera palmeraie non loin du rond point<br />Abidjan, Côte d'Ivoire</span>
-            </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="w-4 h-4 text-church-gold" />
-                <span className="text-sm text-gray-300">+225 27 22 44 55 66</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="w-4 h-4 text-church-gold" />
-                <span className="text-sm text-gray-300">contact@ndincarnation-cocody.ci</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Horaires */}
-          <div>
-            <h4 className="text-lg font-semibold text-church-gold mb-4">Horaires</h4>
+            <h4 className="text-lg font-semibold text-church-gold mb-4">Horaires des Messes</h4>
             <div className="space-y-3 text-sm text-gray-300">
               <div>
                 <div className="font-semibold text-church-gold mb-1">Lundi au Vendredi</div>
-                <div>06h15 - 12h15 - 19h00</div>
+                <div>06h15 • 12h15 • 19h00</div>
               </div>
               <div>
-                <div className="font-semibold text-church-gold mb-1">Samedi</div>
+                <div className="font-semibold text-church-gold mb-1">Samedi Matin</div>
                 <div>07h00</div>
               </div>
               <div>
-                <div className="font-semibold text-church-gold mb-1">Anticipée Samedi</div>
+                <div className="font-semibold text-church-gold mb-1">Samedi Soir (Anticipée)</div>
                 <div>19h00</div>
               </div>
               <div>
                 <div className="font-semibold text-church-gold mb-1">Dimanche</div>
-                <div>06h30 - 08h15 - 09h45 - 11h15 - 19h00</div>
+                <div>06h30 • 08h15 • 09h45 • 11h15 • 19h00</div>
               </div>
               <div>
-                <div className="font-semibold text-church-gold mb-1">Jour férié</div>
-                <div>Messe unique à 08h00</div>
+                <div className="font-semibold text-church-gold mb-1">Jour Férié</div>
+                <div>08h00 (Messe unique)</div>
               </div>
-              <div>
+              <div className="pt-2 border-t border-gray-700">
                 <div className="font-semibold text-church-gold mb-1">Messe pour les Défunts</div>
-                <div className="text-xs text-gray-400">2ème Vendredi du mois</div>
-                <div>19h00</div>
+                <div className="text-xs text-gray-400">2ème Vendredi du mois à 19h00</div>
               </div>
-              <div className="mt-4 p-3 bg-gray-800 rounded-lg">
-                <div className="font-semibold text-church-gold mb-2">Comment faire une demande de messe ?</div>
+            </div>
+          </div>
+
+          {/* Services et Localisation */}
+          <div>
+            <h4 className="text-lg font-semibold text-church-gold mb-4">Nos Services</h4>
+            <div className="space-y-3 text-sm text-gray-300 mb-6">
+              <div>• Catéchèse pour tous âges</div>
+              <div>• Préparation aux sacrements</div>
+              <div>• Groupes de prière et de partage</div>
+              <div>• Activités familiales</div>
+              <div>• Librairie religieuse</div>
+              <div>• Actions caritatives</div>
+            </div>
+
+            <div className="bg-gray-800 rounded-lg p-4">
+              <h5 className="font-semibold text-church-gold mb-3">📍 Notre Localisation</h5>
+              <p className="text-xs text-gray-300 mb-3">
+                Riviera Palmeraie, non loin du rond-point<br />
+                Cocody, Abidjan - Côte d'Ivoire
+              </p>
+              <div className="bg-gray-700 rounded p-3">
+                <div className="font-medium text-church-gold text-xs mb-1">Demandes de Messe en Ligne</div>
                 <p className="text-xs text-gray-400 mb-2">
-                  Il est désormais possible d'envoyer une demande de messe depuis votre position sans vous déplacer.
+                  Faites vos demandes de messe facilement depuis chez vous
                 </p>
                 <a 
                   href="https://bit.ly/demande-ndi" 
@@ -88,7 +102,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="text-church-gold hover:text-yellow-300 transition-colors text-xs underline"
                 >
-                  bit.ly/demande-ndi
+                  → Faire une demande
                 </a>
               </div>
             </div>

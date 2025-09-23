@@ -8,6 +8,7 @@ import GroupesPage from '../components/GroupesPage';
 import ActivitesPage from '../components/ActivitesPage';
 import DashboardPage from '../components/DashboardPage';
 import AdminDashboard from '../components/AdminDashboard';
+import AdminCRUDDashboard from '../components/AdminCRUDDashboard';
 import ContactPage from '../components/ContactPage';
 import CatechistesPage from '../components/CatechistesPage';
 import EvenementsPage from '../components/EvenementsPage';
@@ -73,6 +74,8 @@ const Index = ({ user, onLogout }: IndexProps) => {
         return <DashboardPage />;
       case 'admin':
         return <AdminDashboard />;
+      case 'admin-crud':
+        return <AdminCRUDDashboard />;
       case 'contact':
         return <ContactPage />;
       case 'catechistes':

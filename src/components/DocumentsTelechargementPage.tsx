@@ -87,8 +87,8 @@ const DocumentsTelechargementPage = () => {
       if (!user) throw new Error('Utilisateur non connecté');
 
       const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.random()}.${fileExt}`;
-      const filePath = `documents/${fileName}`;
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filePath = `${user.id}/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
         .from('documents')
@@ -107,7 +107,8 @@ const DocumentsTelechargementPage = () => {
           type_document: newDocument.type_document,
           description: newDocument.description || null,
           fichier_url: data.publicUrl,
-          uploaded_by: user.id
+          uploaded_by: user.id,
+          categorie: newDocument.niveau
         });
 
       if (dbError) throw dbError;
@@ -268,7 +269,7 @@ const DocumentsTelechargementPage = () => {
                         Télécharger
                       </Button>
                       <Button variant="outline" size="sm">
-                        <Eye className="h-4 w-4" />
+                        <Eye className="h-4 w-4" onClick={() => document.fichier_url && window.open(document.fichier_url, '_blank')} />
                       </Button>
                     </div>
                   </div>

@@ -66,6 +66,13 @@ export const menuItems = [
         icon: BookOpen,
         description: 'Abonnez-vous à notre newsletter paroissiale',
         onClick: (onNavigate: (page: string) => void) => onNavigate('newsletter') 
+      },
+      { 
+        id: 'actualites-intentions', 
+        label: 'Demandes de Messe', 
+        icon: Heart,
+        description: 'Faire une demande de messe pour vos intentions',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('intentions-messe') 
       }
     ]
   },
@@ -101,6 +108,20 @@ export const menuItems = [
         icon: Users,
         description: 'Équipe des catéchistes et responsables',
         onClick: (onNavigate: (page: string) => void) => onNavigate('catechistes') 
+      },
+      { 
+        id: 'catechese-documents', 
+        label: 'Documents de Cours', 
+        icon: BookOpen,
+        description: 'Téléchargement et partage de supports pédagogiques',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('documents-cours') 
+      },
+      { 
+        id: 'catechese-telechargements', 
+        label: 'Centre de Téléchargement', 
+        icon: Calculator,
+        description: 'Téléversement et gestion de documents',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('documents-telechargement') 
       },
       { 
         id: 'catechese-programme', 
@@ -193,6 +214,13 @@ export const menuItems = [
         description: 'Calendrier romain et célébrations spéciales',
         onClick: (onNavigate: (page: string) => void) => onNavigate('calendrier-liturgique') 
       },
+      { 
+        id: 'activites-statistiques', 
+        label: 'Statistiques Paroissiales', 
+        icon: Calculator,
+        description: 'Données et analyse de la vie paroissiale',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('statistiques') 
+      },
     ]
   },
   { 
@@ -206,27 +234,6 @@ export const menuItems = [
         icon: GraduationCap,
         description: 'Outils et ressources pour catéchistes',
         onClick: (onNavigate: (page: string) => void) => onNavigate('dashboard') 
-      },
-      { 
-        id: 'dashboard-documents', 
-        label: 'Documents de Cours', 
-        icon: BookOpen,
-        description: 'Téléchargement et téléversement de documents',
-        onClick: (onNavigate: (page: string) => void) => onNavigate('documents-cours') 
-      },
-      { 
-        id: 'dashboard-telechargements', 
-        label: 'Téléchargements', 
-        icon: Calculator,
-        description: 'Centre de téléchargement et téléversement',
-        onClick: (onNavigate: (page: string) => void) => onNavigate('documents-telechargement') 
-      },
-      { 
-        id: 'dashboard-statistiques', 
-        label: 'Statistiques', 
-        icon: Calculator,
-        description: 'Tableau de bord avec statistiques et résultats',
-        onClick: (onNavigate: (page: string) => void) => onNavigate('statistiques') 
       },
       { 
         id: 'dashboard-catechumene', 
