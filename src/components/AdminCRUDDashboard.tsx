@@ -28,7 +28,8 @@ import {
   Eye,
   Church,
   BookOpen,
-  Clock
+  Clock,
+  CheckCircle
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -65,10 +66,20 @@ interface LiturgicalEvent {
   type_evenement?: string;
 }
 
+interface Document {
+  id: string;
+  titre: string;
+  type_document?: string;
+  visibility_level?: string;
+  statut?: string;
+  created_at: string;
+}
+
 const AdminCRUDDashboard = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [liturgicalEvents, setLiturgicalEvents] = useState<LiturgicalEvent[]>([]);
+  const [documents, setDocuments] = useState<Document[]>([]);
   const [loading, setLoading] = useState(true);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -97,15 +108,17 @@ const AdminCRUDDashboard = () => {
 
   const loadData = async () => {
     try {
-      const [usersData, activitiesData, eventsData] = await Promise.all([
+      const [usersData, activitiesData, eventsData, documentsData] = await Promise.all([
         supabase.from('profiles').select('*').order('created_at', { ascending: false }),
         supabase.from('activites').select('*').order('date_activite', { ascending: false }),
-        supabase.from('evenements_liturgiques').select('*').order('date_evenement', { ascending: false })
+        supabase.from('evenements_liturgiques').select('*').order('date_evenement', { ascending: false }),
+        supabase.from('documents').select('*').order('created_at', { ascending: false })
       ]);
 
       if (usersData.data) setUsers(usersData.data);
       if (activitiesData.data) setActivities(activitiesData.data);
       if (eventsData.data) setLiturgicalEvents(eventsData.data);
+      if (documentsData.data) setDocuments(documentsData.data);
     } catch (error) {
       console.error('Erreur lors du chargement:', error);
       toast({
@@ -250,7 +263,30 @@ const AdminCRUDDashboard = () => {
     }
   };
 
-  const handleDeleteItem = async (tableName: 'profiles' | 'activites' | 'evenements_liturgiques', id: string) => {
+  const approveDocument = async (documentId: string) => {
+    try {
+      const { error } = await supabase.rpc('approve_document', {
+        document_id: documentId
+      });
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Succès",
+        description: "Document approuvé avec succès"
+      });
+      loadData();
+    } catch (error) {
+      console.error('Error approving document:', error);
+      toast({
+        title: "Erreur",
+        description: "Erreur lors de l'approbation du document",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleDeleteItem = async (tableName: 'profiles' | 'activites' | 'evenements_liturgiques' | 'documents', id: string) => {
     try {
       const { error } = await supabase
         .from(tableName)
@@ -567,6 +603,11 @@ const AdminCRUDDashboard = () => {
     event.description?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const filteredDocuments = documents.filter(doc => 
+    doc.titre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    doc.type_document?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div className="flex items-center justify-between">
@@ -602,7 +643,7 @@ const AdminCRUDDashboard = () => {
       </Card>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="users">
             <Users className="w-4 h-4 mr-2" />
             Utilisateurs
@@ -615,8 +656,12 @@ const AdminCRUDDashboard = () => {
             <Church className="w-4 h-4 mr-2" />
             Liturgie
           </TabsTrigger>
-          <TabsTrigger value="statistics">
+          <TabsTrigger value="documents">
             <BookOpen className="w-4 h-4 mr-2" />
+            Documents
+          </TabsTrigger>
+          <TabsTrigger value="statistics">
+            <Settings className="w-4 h-4 mr-2" />
             Statistiques
           </TabsTrigger>
         </TabsList>
@@ -868,6 +913,85 @@ const AdminCRUDDashboard = () => {
           </Card>
         </TabsContent>
 
+        <TabsContent value="documents" className="space-y-4">
+          <h2 className="text-2xl font-semibold">Gestion des Documents</h2>
+          
+          <Card>
+            <CardHeader>
+              <CardTitle>Documents en attente d'approbation</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Titre</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Visibilité</TableHead>
+                    <TableHead>Date de création</TableHead>
+                    <TableHead>Statut</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {documents.map((doc) => (
+                    <TableRow key={doc.id}>
+                      <TableCell className="font-medium">{doc.titre}</TableCell>
+                      <TableCell>{doc.type_document}</TableCell>
+                      <TableCell>{doc.visibility_level}</TableCell>
+                      <TableCell>
+                        {new Date(doc.created_at).toLocaleDateString('fr-FR')}
+                      </TableCell>
+                      <TableCell>
+                        <span className={`px-2 py-1 text-xs rounded-full ${
+                          doc.statut === 'approuve' 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {doc.statut === 'approuve' ? 'Approuvé' : 'En attente'}
+                        </span>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          {doc.statut === 'en_attente' && (
+                            <Button
+                              variant="default"
+                              size="sm"
+                              onClick={() => approveDocument(doc.id)}
+                            >
+                              <CheckCircle className="h-4 w-4" />
+                            </Button>
+                          )}
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button variant="destructive" size="sm">
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Supprimer le document</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  Êtes-vous sûr de vouloir supprimer "{doc.titre}" ?
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Annuler</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => handleDeleteItem('documents', doc.id)}>
+                                  Supprimer
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
         <TabsContent value="statistics" className="space-y-4">
           <h2 className="text-2xl font-semibold">Statistiques Générales</h2>
           
@@ -899,6 +1023,16 @@ const AdminCRUDDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{liturgicalEvents.length}</div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Documents</CardTitle>
+                <BookOpen className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{documents.length}</div>
               </CardContent>
             </Card>
 

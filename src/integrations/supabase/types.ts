@@ -172,33 +172,42 @@ export type Database = {
       }
       documents: {
         Row: {
+          approuve_par: string | null
           categorie: string | null
           created_at: string
+          date_approbation: string | null
           description: string | null
           fichier_url: string | null
           id: string
+          statut: string | null
           titre: string
           type_document: string | null
           uploaded_by: string | null
           visibility_level: string | null
         }
         Insert: {
+          approuve_par?: string | null
           categorie?: string | null
           created_at?: string
+          date_approbation?: string | null
           description?: string | null
           fichier_url?: string | null
           id?: string
+          statut?: string | null
           titre: string
           type_document?: string | null
           uploaded_by?: string | null
           visibility_level?: string | null
         }
         Update: {
+          approuve_par?: string | null
           categorie?: string | null
           created_at?: string
+          date_approbation?: string | null
           description?: string | null
           fichier_url?: string | null
           id?: string
+          statut?: string | null
           titre?: string
           type_document?: string | null
           uploaded_by?: string | null
@@ -532,6 +541,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      approve_document: {
+        Args: { document_id: string }
+        Returns: undefined
+      }
       get_current_user_role: {
         Args: Record<PropertyKey, never>
         Returns: Database["public"]["Enums"]["app_role"]
