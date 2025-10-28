@@ -73,6 +73,27 @@ export const menuItems = [
         icon: Heart,
         description: 'Faire une demande de messe pour vos intentions',
         onClick: (onNavigate: (page: string) => void) => onNavigate('intentions-messe') 
+      },
+      { 
+        id: 'actualites-permanences', 
+        label: 'Permanences des Pères', 
+        icon: Clock,
+        description: 'Horaires de disponibilité des Pères',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('permanences') 
+      },
+      { 
+        id: 'actualites-secretariat', 
+        label: 'Secrétariat', 
+        icon: Calendar,
+        description: 'Horaires et services du secrétariat',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('secretariat') 
+      },
+      { 
+        id: 'actualites-sacrements', 
+        label: 'Sacrements', 
+        icon: Heart,
+        description: 'Baptême, Mariage, Funérailles',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('sacrements') 
       }
     ]
   },

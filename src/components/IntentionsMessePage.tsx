@@ -46,13 +46,12 @@ const IntentionsMessePage = () => {
         .from('intentions_messe')
         .insert({
           nom,
+          prenom: '', // Add default value
           email,
           telephone,
           intention,
-          date_messe: dateMesse?.toISOString().split('T')[0],
-          heure_messe: heureMesse,
-          don_montant: donMontant ? parseFloat(donMontant) : 0,
-          user_id: user?.id || null,
+          date_demandee: dateMesse?.toISOString().split('T')[0],
+          montant: donMontant ? parseFloat(donMontant) : 0,
           status: 'pending'
         });
 

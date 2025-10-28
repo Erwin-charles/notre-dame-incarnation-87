@@ -123,8 +123,7 @@ const DocumentsCoursPage = () => {
           description: newDocument.description,
           type_document: newDocument.type_document,
           categorie: newDocument.niveau,
-          fichier_url,
-          uploaded_by: user.user.id
+          url: fichier_url
         });
 
       if (error) throw error;

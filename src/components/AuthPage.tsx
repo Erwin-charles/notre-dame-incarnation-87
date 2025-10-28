@@ -85,7 +85,7 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
           const { error: insertError } = await supabase
             .from('profiles')
             .insert({
-              user_id: data.user.id,
+              id: data.user.id,
               email: data.user.email || '',
               nom: data.user.user_metadata?.nom || '',
               prenom: data.user.user_metadata?.prenom || '',

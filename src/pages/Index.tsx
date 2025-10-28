@@ -34,6 +34,9 @@ import ParishPreloader from '../components/ParishPreloader';
 import PageParticles from '../components/PageParticles';
 import HistoirePage from '../components/HistoirePage';
 import ActualitesPage from '../components/ActualitesPage';
+import PermanencesPage from '../components/PermanencesPage';
+import SecretariatPage from '../components/SecretariatPage';
+import SacrementsPage from '../components/SacrementsPage';
 
 interface IndexProps {
   user: User;
@@ -96,6 +99,12 @@ const Index = ({ user, onLogout }: IndexProps) => {
         return <NewsletterPage />;
       case 'intentions-messe':
         return <IntentionsMessePage />;
+      case 'permanences':
+        return <PermanencesPage />;
+      case 'secretariat':
+        return <SecretariatPage />;
+      case 'sacrements':
+        return <SacrementsPage />;
       case 'dons-en-ligne':
         return <DonsEnLignePage />;
       case 'ressources-spirituelles':

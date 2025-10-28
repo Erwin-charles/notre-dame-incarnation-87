@@ -108,8 +108,7 @@ const DocumentsTelechargementPage = () => {
           titre: newDocument.titre || file.name,
           type_document: newDocument.type_document,
           description: newDocument.description || null,
-          fichier_url: data.publicUrl,
-          uploaded_by: user.id,
+          url: data.publicUrl,
           categorie: newDocument.niveau
         });
 

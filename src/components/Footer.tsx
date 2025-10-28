@@ -110,6 +110,18 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-700 mt-8 pt-6 text-center">
+          {/* Scrolling text */}
+          <div className="mb-4 overflow-hidden py-2 bg-church-gold/10 rounded">
+            <div className="animate-scroll whitespace-nowrap inline-block">
+              <span className="text-church-gold font-medium px-4">
+                NDI, l'humilité et piété ici à NDI, j'aime Dieu et je prends soin de mon prochain !!!
+              </span>
+              <span className="text-church-gold font-medium px-4">
+                NDI, l'humilité et piété ici à NDI, j'aime Dieu et je prends soin de mon prochain !!!
+              </span>
+            </div>
+          </div>
+          
           <p className="text-sm text-gray-400 mb-2">
             © 2025 Notre Dame de l'Incarnation - Cocody. Tous droits réservés.
           </p>

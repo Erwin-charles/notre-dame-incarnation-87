@@ -150,7 +150,7 @@ const AdminCRUDDashboard = () => {
       const { error: profileError } = await supabase
         .from('profiles')
         .insert({
-          user_id: authData.user.id,
+          id: authData.user.id,
           email: newUser.email,
           nom: newUser.nom,
           prenom: newUser.prenom,
@@ -265,8 +265,12 @@ const AdminCRUDDashboard = () => {
 
   const approveDocument = async (documentId: string) => {
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Utilisateur non connecté");
+
       const { error } = await supabase.rpc('approve_document', {
-        document_id: documentId
+        document_id: documentId,
+        approver_id: user.id
       });
       
       if (error) throw error;
