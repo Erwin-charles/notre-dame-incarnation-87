@@ -31,7 +31,7 @@ const ImageCarousel = ({ images, autoPlayInterval = 5000 }: ImageCarouselProps) 
   if (images.length === 0) return null;
 
   return (
-    <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-lg shadow-lg group">
+    <div className="relative w-full h-[250px] md:h-[350px] overflow-hidden rounded-lg shadow-lg group">
       {/* Images */}
       <div 
         className="flex transition-transform duration-500 ease-out h-full"

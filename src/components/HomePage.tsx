@@ -78,11 +78,6 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
     <div className="min-h-screen pt-16 relative">
       <PageParticles count={15} />
       
-      {/* Image Carousel */}
-      <section className="container mx-auto px-4 py-8">
-        <ImageCarousel images={carouselImages} />
-      </section>
-      
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 py-20">
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -109,6 +104,11 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
             Rejoignez-nous
           </Button>
         </div>
+      </section>
+
+      {/* Image Carousel */}
+      <section className="container mx-auto px-4 py-8">
+        <ImageCarousel images={carouselImages} />
       </section>
 
       {/* Services et Missions de la Paroisse */}
