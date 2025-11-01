@@ -6,6 +6,7 @@ import Cross3D from './Cross3D';
 import SaintSacrement from './SaintSacrement';
 import PageParticles from './PageParticles';
 import ImageCarousel from './ImageCarousel';
+import BiblicalVerse from './BiblicalVerse';
 import libraryHero from '@/assets/library-hero.jpg';
 import caritasHero from '@/assets/caritas-hero.jpg';
 
@@ -109,6 +110,11 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
       {/* Image Carousel */}
       <section className="container mx-auto px-4 py-8">
         <ImageCarousel images={carouselImages} />
+      </section>
+
+      {/* Verset du jour */}
+      <section className="container mx-auto px-4 py-8">
+        <BiblicalVerse />
       </section>
 
       {/* Services et Missions de la Paroisse */}
