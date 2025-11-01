@@ -56,7 +56,7 @@ const ParametresPage = () => {
       const { data: profileData, error } = await supabase
         .from('profiles')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('id', user.id)
         .single();
 
       if (error) throw error;
@@ -76,7 +76,7 @@ const ParametresPage = () => {
       const { error } = await supabase
         .from('profiles')
         .update(updates)
-        .eq('user_id', user.id);
+        .eq('id', user.id);
 
       if (error) throw error;
 
@@ -180,7 +180,7 @@ const ParametresPage = () => {
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
-        .eq('user_id', user.id);
+        .eq('id', user.id);
 
       if (error) throw error;
 

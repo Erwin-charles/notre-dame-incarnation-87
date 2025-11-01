@@ -5,6 +5,9 @@ import { Church, Users, Calendar, Book, Heart, Clock, MapPin, Phone, Mail } from
 import Cross3D from './Cross3D';
 import SaintSacrement from './SaintSacrement';
 import PageParticles from './PageParticles';
+import ImageCarousel from './ImageCarousel';
+import libraryHero from '@/assets/library-hero.jpg';
+import caritasHero from '@/assets/caritas-hero.jpg';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
@@ -65,9 +68,20 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
     }
   ];
 
+  const carouselImages = [
+    libraryHero,
+    caritasHero,
+    libraryHero,
+  ];
+
   return (
     <div className="min-h-screen pt-16 relative">
       <PageParticles count={15} />
+      
+      {/* Image Carousel */}
+      <section className="container mx-auto px-4 py-8">
+        <ImageCarousel images={carouselImages} />
+      </section>
       
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 py-20">

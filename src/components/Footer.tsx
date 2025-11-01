@@ -114,10 +114,10 @@ const Footer = () => {
           <div className="mb-4 overflow-hidden py-2 bg-church-gold/10 rounded">
             <div className="animate-scroll whitespace-nowrap inline-block">
               <span className="text-church-gold font-medium px-4">
-                NDI, l'humilité et piété ici à NDI, j'aime Dieu et je prends soin de mon prochain !!!
+                NDI, oui à DIEU, NDI humilité et piété, ici à NDI j'aime DIEU et je prends soin de mon prochain !!!
               </span>
               <span className="text-church-gold font-medium px-4">
-                NDI, l'humilité et piété ici à NDI, j'aime Dieu et je prends soin de mon prochain !!!
+                NDI, oui à DIEU, NDI humilité et piété, ici à NDI j'aime DIEU et je prends soin de mon prochain !!!
               </span>
             </div>
           </div>

@@ -51,9 +51,8 @@ const DocumentsTelechargementPage = () => {
     try {
       const { data, error } = await supabase
         .from('documents')
-        .select('*')
-        .eq('visibility_level', 'public')
-        .eq('statut', 'approuve')
+        .select('id, titre, description, url, type_document, categorie, created_at')
+        .eq('statut', 'public')
         .order('created_at', { ascending: false });
 
       if (error) throw error;

@@ -7,8 +7,10 @@ import {
   Users,
   Book,
   Calendar,
-  Church
+  Church,
+  Database
 } from 'lucide-react';
+import CRMDashboard from './CRMDashboard';
 
 const DashboardPage = () => {
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
@@ -185,53 +187,7 @@ const DashboardPage = () => {
         return (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-gray-800">Tableau de Bord - Curé</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Statistiques</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span>Catéchistes</span>
-                      <span className="font-semibold">12</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Catéchumènes</span>
-                      <span className="font-semibold">45</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Familles inscrites</span>
-                      <span className="font-semibold">120</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Activités à valider</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <Button className="w-full" size="sm" variant="outline">Sortie catéchèse (3)</Button>
-                    <Button className="w-full" size="sm" variant="outline">Demandes baptême (2)</Button>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Gestion</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <Button className="w-full" size="sm">Gérer les catéchistes</Button>
-                    <Button className="w-full" size="sm" variant="outline">Planning global</Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+            <CRMDashboard />
           </div>
         );
         
