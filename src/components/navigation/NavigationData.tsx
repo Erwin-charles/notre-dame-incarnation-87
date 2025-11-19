@@ -16,7 +16,8 @@ import {
   BookOpen,
   Shield,
   Calculator,
-  ShoppingCart
+  ShoppingCart,
+  ListChecks
 } from 'lucide-react';
 
 export const menuItems = [
@@ -276,6 +277,13 @@ export const menuItems = [
         icon: Shield,
         description: 'Administration paroissiale',
         onClick: (onNavigate: (page: string) => void) => onNavigate('dashboard') 
+      },
+      { 
+        id: 'dashboard-admin-inscriptions', 
+        label: 'Gestion des Inscriptions', 
+        icon: ListChecks,
+        description: 'Gérer toutes les inscriptions aux activités',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('admin-inscriptions') 
       },
       { 
         id: 'dashboard-denier', 
