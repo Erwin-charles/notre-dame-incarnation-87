@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
@@ -7,8 +8,28 @@ import {
   Users,
   Book
 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import AuthPage from './AuthPage';
 
 const ActivitesPage = () => {
+  const [user, setUser] = useState(null);
+  const [showAuth, setShowAuth] = useState(false);
+  const [selectedActivity, setSelectedActivity] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    // Vérifier l'état d'authentification
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
   const activites = [
     {
       titre: "Messe Dominicale",
@@ -76,6 +97,38 @@ const ActivitesPage = () => {
     "Événement": "bg-pink-100 text-pink-700 border-pink-200"
   };
 
+  const handleInscription = (activityTitle: string) => {
+    if (!user) {
+      setSelectedActivity(activityTitle);
+      setShowAuth(true);
+      toast({
+        title: "Inscription requise",
+        description: "Veuillez vous connecter ou créer un compte pour vous inscrire à cette activité.",
+      });
+    } else {
+      // L'utilisateur est connecté, procéder à l'inscription
+      toast({
+        title: "Inscription réussie",
+        description: `Vous êtes inscrit à: ${activityTitle}`,
+      });
+    }
+  };
+
+  const handleAuthSuccess = () => {
+    setShowAuth(false);
+    if (selectedActivity) {
+      toast({
+        title: "Inscription réussie",
+        description: `Vous êtes maintenant inscrit à: ${selectedActivity}`,
+      });
+      setSelectedActivity(null);
+    }
+  };
+
+  if (showAuth) {
+    return <AuthPage onAuthSuccess={handleAuthSuccess} />;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-church-light via-white to-blue-50 pt-20">
       <div className="container mx-auto px-4 py-16">
@@ -131,7 +184,12 @@ const ActivitesPage = () => {
                         {activite.lieu}
                       </div>
                     </div>
-                    <Button variant="outline" size="sm" className="w-full">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="w-full"
+                      onClick={() => handleInscription(activite.titre)}
+                    >
                       Plus d'informations
                     </Button>
                   </CardContent>
@@ -180,7 +238,11 @@ const ActivitesPage = () => {
                         {activite.lieu}
                       </div>
                     </div>
-                    <Button size="sm" className="w-full">
+                    <Button 
+                      size="sm" 
+                      className="w-full"
+                      onClick={() => handleInscription(activite.titre)}
+                    >
                       S'inscrire
                     </Button>
                   </CardContent>
