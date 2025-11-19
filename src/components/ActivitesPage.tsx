@@ -97,7 +97,7 @@ const ActivitesPage = () => {
     "Événement": "bg-pink-100 text-pink-700 border-pink-200"
   };
 
-  const handleInscription = (activityTitle: string) => {
+  const handleInscription = async (activityTitle: string) => {
     if (!user) {
       setSelectedActivity(activityTitle);
       setShowAuth(true);
@@ -105,23 +105,67 @@ const ActivitesPage = () => {
         title: "Inscription requise",
         description: "Veuillez vous connecter ou créer un compte pour vous inscrire à cette activité.",
       });
-    } else {
-      // L'utilisateur est connecté, procéder à l'inscription
+      return;
+    }
+
+    // Trouver les détails de l'activité
+    const activite = activites.find(a => a.titre === activityTitle);
+    if (!activite) return;
+
+    try {
+      // Vérifier si l'utilisateur est déjà inscrit
+      const { data: existingInscription } = await supabase
+        .from('inscriptions_activites')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('activite_titre', activityTitle)
+        .maybeSingle();
+
+      if (existingInscription) {
+        toast({
+          title: "Déjà inscrit",
+          description: "Vous êtes déjà inscrit à cette activité.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Créer l'inscription
+      const { error } = await supabase
+        .from('inscriptions_activites')
+        .insert({
+          user_id: user.id,
+          activite_titre: activityTitle,
+          activite_type: activite.type,
+          activite_date: activite.date,
+          activite_lieu: activite.lieu,
+          statut: 'confirme'
+        });
+
+      if (error) throw error;
+
       toast({
         title: "Inscription réussie",
         description: `Vous êtes inscrit à: ${activityTitle}`,
       });
+    } catch (error) {
+      console.error('Erreur lors de l\'inscription:', error);
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'inscription.",
+        variant: "destructive",
+      });
     }
   };
 
-  const handleAuthSuccess = () => {
+  const handleAuthSuccess = async () => {
     setShowAuth(false);
     if (selectedActivity) {
-      toast({
-        title: "Inscription réussie",
-        description: `Vous êtes maintenant inscrit à: ${selectedActivity}`,
-      });
-      setSelectedActivity(null);
+      // Attendre un peu pour que l'état utilisateur soit mis à jour
+      setTimeout(() => {
+        handleInscription(selectedActivity);
+        setSelectedActivity(null);
+      }, 500);
     }
   };
 
