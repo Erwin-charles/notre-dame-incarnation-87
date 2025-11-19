@@ -354,6 +354,56 @@ export type Database = {
         }
         Relationships: []
       }
+      inscriptions_activites: {
+        Row: {
+          activite_date: string | null
+          activite_lieu: string | null
+          activite_titre: string
+          activite_type: string | null
+          created_at: string
+          date_inscription: string
+          id: string
+          notes: string | null
+          statut: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          activite_date?: string | null
+          activite_lieu?: string | null
+          activite_titre: string
+          activite_type?: string | null
+          created_at?: string
+          date_inscription?: string
+          id?: string
+          notes?: string | null
+          statut?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          activite_date?: string | null
+          activite_lieu?: string | null
+          activite_titre?: string
+          activite_type?: string | null
+          created_at?: string
+          date_inscription?: string
+          id?: string
+          notes?: string | null
+          statut?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inscriptions_activites_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       intentions_messe: {
         Row: {
           created_at: string | null
