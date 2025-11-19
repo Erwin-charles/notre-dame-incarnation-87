@@ -7,6 +7,7 @@ import SaintSacrement from './SaintSacrement';
 import PageParticles from './PageParticles';
 import ImageCarousel from './ImageCarousel';
 import BiblicalVerse from './BiblicalVerse';
+import VisitorGuide from './VisitorGuide';
 import libraryHero from '@/assets/library-hero.jpg';
 import caritasHero from '@/assets/caritas-hero.jpg';
 
@@ -78,6 +79,7 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
   return (
     <div className="min-h-screen pt-16 relative">
       <PageParticles count={15} />
+      <VisitorGuide />
       
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 py-20">
