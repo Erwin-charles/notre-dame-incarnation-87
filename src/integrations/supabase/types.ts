@@ -362,8 +362,10 @@ export type Database = {
           activite_type: string | null
           created_at: string
           date_inscription: string
+          date_rappel: string | null
           id: string
           notes: string | null
+          rappel_envoye: boolean | null
           statut: string
           updated_at: string
           user_id: string
@@ -375,8 +377,10 @@ export type Database = {
           activite_type?: string | null
           created_at?: string
           date_inscription?: string
+          date_rappel?: string | null
           id?: string
           notes?: string | null
+          rappel_envoye?: boolean | null
           statut?: string
           updated_at?: string
           user_id: string
@@ -388,8 +392,10 @@ export type Database = {
           activite_type?: string | null
           created_at?: string
           date_inscription?: string
+          date_rappel?: string | null
           id?: string
           notes?: string | null
+          rappel_envoye?: boolean | null
           statut?: string
           updated_at?: string
           user_id?: string
