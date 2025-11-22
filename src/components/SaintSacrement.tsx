@@ -17,10 +17,10 @@ const SaintSacrement = () => {
     }));
     setParticles(newParticles);
   }, []);
-  return <div className="relative w-40 h-40 mx-auto mb-8 animate-float">
+  return <div className="relative w-56 h-56 mx-auto mb-8 animate-float">
       {/* Hostie (pain eucharistique) agrandie */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="relative w-32 h-32 bg-gradient-to-br from-yellow-100 via-white to-yellow-50 dark:from-yellow-200 dark:via-yellow-100 dark:to-yellow-50 rounded-full shadow-2xl animate-glow border-4 border-yellow-200/50">
+        <div className="relative w-48 h-48 bg-gradient-to-br from-yellow-100 via-white to-yellow-50 dark:from-yellow-200 dark:via-yellow-100 dark:to-yellow-50 rounded-full shadow-2xl animate-glow border-4 border-yellow-200/50">
           {/* Croix gravée sur l'hostie */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="relative w-10 h-10">
@@ -31,7 +31,7 @@ const SaintSacrement = () => {
           
           {/* Rayons de lumière agrandis */}
           <div className="absolute inset-0 animate-cross-rotate">
-            {[...Array(12)].map((_, i) => <div key={i} className="absolute top-1/2 left-1/2 w-1 h-24 bg-gradient-to-t from-transparent via-yellow-300/60 to-transparent transform origin-bottom" style={{
+            {[...Array(12)].map((_, i) => <div key={i} className="absolute top-1/2 left-1/2 w-1.5 h-32 bg-gradient-to-t from-transparent via-yellow-300/60 to-transparent transform origin-bottom" style={{
             transform: `translate(-50%, -50%) rotate(${i * 30}deg)`,
             filter: 'blur(1px)'
           }} />)}

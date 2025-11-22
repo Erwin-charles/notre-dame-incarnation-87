@@ -243,6 +243,13 @@ export const menuItems = [
         description: 'Données et analyse de la vie paroissiale',
         onClick: (onNavigate: (page: string) => void) => onNavigate('statistiques') 
       },
+      { 
+        id: 'activites-statistiques-inscriptions', 
+        label: 'Statistiques des Inscriptions', 
+        icon: ListChecks,
+        description: 'Analyse des inscriptions aux activités',
+        onClick: (onNavigate: (page: string) => void) => onNavigate('statistiques-inscriptions') 
+      },
     ]
   },
   { 
