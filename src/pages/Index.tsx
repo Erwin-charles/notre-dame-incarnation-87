@@ -24,6 +24,7 @@ import DonsEnLignePage from '../components/DonsEnLignePage';
 import ResourcesSpirituellesPage from '../components/ResourcesSpirituellesPage';
 import GalerieMediaPage from '../components/GalerieMediaPage';
 import StatistiquesPage from '../components/StatistiquesPage';
+import StatistiquesInscriptionsPage from '../components/StatistiquesInscriptionsPage';
 import CalendrierLiturgiquePage from '../components/CalendrierLiturgiquePage';
 import DocumentsTelechargementPage from '../components/DocumentsTelechargementPage';
 import DocumentsCoursPage from '../components/DocumentsCoursPage';
@@ -116,6 +117,8 @@ const Index = ({ user, onLogout }: IndexProps) => {
         return <GalerieMediaPage />;
       case 'statistiques':
         return <StatistiquesPage />;
+      case 'statistiques-inscriptions':
+        return <StatistiquesInscriptionsPage />;
       case 'calendrier-liturgique':
         return <CalendrierLiturgiquePage />;
       case 'documents-telechargement':
