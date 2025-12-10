@@ -156,7 +156,7 @@ export const menuItems = [
   },
   { 
     id: 'groupes', 
-    label: 'Groupes & Mouvements', 
+    label: 'Groupes', 
     icon: Users,
     subItems: [
       { 
@@ -191,7 +191,7 @@ export const menuItems = [
   },
   { 
     id: 'activites', 
-    label: 'Activités & Services', 
+    label: 'Services', 
     icon: Calendar,
     subItems: [
       { 
@@ -254,7 +254,7 @@ export const menuItems = [
   },
   { 
     id: 'dashboard', 
-    label: 'Mon Espace', 
+    label: 'Espace', 
     icon: User,
     subItems: [
       { 
