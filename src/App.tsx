@@ -61,14 +61,9 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
-            {!user && <Route path="/auth" element={<AuthPage onAuthSuccess={() => {}} />} />}
+            <Route path="/auth" element={<AuthPage onAuthSuccess={() => {}} />} />
             <Route path="/reset-password" element={<PasswordResetPage />} />
-            <Route path="/" element={user ? <Index user={user} onLogout={handleLogout} /> : (
-              <div className="relative min-h-screen">
-                <PageParticles />
-                <AuthPage onAuthSuccess={() => {}} />
-              </div>
-            )} />
+            <Route path="/" element={<Index user={user} onLogout={handleLogout} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

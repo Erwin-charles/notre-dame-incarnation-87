@@ -41,7 +41,7 @@ import SecretariatPage from '../components/SecretariatPage';
 import SacrementsPage from '../components/SacrementsPage';
 
 interface IndexProps {
-  user: User;
+  user: User | null;
   onLogout: () => void;
 }
 
