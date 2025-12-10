@@ -41,15 +41,15 @@ const NavigationMenuItem = ({
         variant="ghost"
         size="sm"
         className={cn(
-          "flex items-center space-x-2 glass-button transition-all duration-200",
+          "flex items-center space-x-1 px-2 py-1 text-sm glass-button transition-all duration-200",
           currentPage === item.id && "bg-primary/20 text-primary border-primary/30"
         )}
         onClick={() => onNavigate(item.id)}
         onMouseEnter={onMouseEnter}
       >
-        <Icon className="w-4 h-4" />
-        <span>{item.label}</span>
-        <ChevronDown className="w-3 h-3" />
+        <Icon className="w-3.5 h-3.5" />
+        <span className="text-xs font-medium">{item.label}</span>
+        <ChevronDown className="w-2.5 h-2.5" />
       </Button>
       
       {/* Dropdown Menu */}
