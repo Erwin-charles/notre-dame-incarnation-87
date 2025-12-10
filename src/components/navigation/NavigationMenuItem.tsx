@@ -55,7 +55,7 @@ const NavigationMenuItem = ({
       {/* Dropdown Menu */}
       <div 
         className={cn(
-          "absolute top-full left-0 mt-1 w-80 glass-card rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0",
+          "absolute top-full left-0 mt-1 w-72 bg-background/95 backdrop-blur-xl border border-border rounded-lg shadow-xl z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0",
           openSubMenu === item.id && "opacity-100 visible translate-y-0"
         )}
         onMouseEnter={onMouseEnter}
