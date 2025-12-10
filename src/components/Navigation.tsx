@@ -53,7 +53,7 @@ const Navigation = ({ onNavigate, currentPage, user, onLogout }: NavigationProps
           <NavigationLogo onNavigate={onNavigate} />
 
           {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="hidden xl:flex items-center space-x-0.5">
             {menuItems.map((item) => (
               <NavigationMenuItem
                 key={item.id}
@@ -111,9 +111,10 @@ const Navigation = ({ onNavigate, currentPage, user, onLogout }: NavigationProps
             ) : (
               <Button 
                 onClick={handleLogin}
-                className="ml-2 bg-primary hover:bg-primary/90 text-primary-foreground"
+                size="sm"
+                className="ml-1 bg-primary hover:bg-primary/90 text-primary-foreground text-xs px-3"
               >
-                <LogIn className="mr-2 h-4 w-4" />
+                <LogIn className="mr-1 h-3.5 w-3.5" />
                 Connexion
               </Button>
             )}
@@ -123,14 +124,14 @@ const Navigation = ({ onNavigate, currentPage, user, onLogout }: NavigationProps
               variant="ghost"
               size="sm"
               onClick={toggleDarkMode}
-              className="ml-4 glass-button"
+              className="ml-1 glass-button p-2"
             >
-              {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              {isDarkMode ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="lg:hidden flex items-center space-x-2">
+          <div className="xl:hidden flex items-center space-x-2">
             {!user && (
               <Button 
                 onClick={handleLogin}
