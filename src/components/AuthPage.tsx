@@ -5,16 +5,17 @@ import { Input } from '@/components/ui/input';
 import { InputPassword } from '@/components/ui/input-password';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AlertCircle, LogIn, UserPlus, Church, KeyRound } from 'lucide-react';
+import { AlertCircle, LogIn, UserPlus, Church, KeyRound, ArrowLeft } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
 interface AuthPageProps {
   onAuthSuccess: () => void;
+  onNavigateHome?: () => void;
 }
 
-const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
+const AuthPage = ({ onAuthSuccess, onNavigateHome }: AuthPageProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showResetForm, setShowResetForm] = useState(false);
@@ -248,11 +249,21 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center px-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-accent/20 dark:from-background dark:to-primary/5 flex items-center justify-center px-4 relative">
+      {onNavigateHome && (
+        <Button
+          variant="ghost"
+          onClick={onNavigateHome}
+          className="absolute top-6 left-6 backdrop-blur-md bg-background/30 border border-border/30 hover:bg-background/50 rounded-full px-4 py-2 shadow-lg"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Accueil
+        </Button>
+      )}
+      <Card className="w-full max-w-md backdrop-blur-xl bg-background/60 border border-border/30 shadow-2xl">
         <CardHeader className="text-center">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center">
-            <Church className="w-8 h-8 text-blue-600" />
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full backdrop-blur-md bg-primary/10 border border-primary/20 flex items-center justify-center">
+            <Church className="w-8 h-8 text-primary" />
           </div>
           <CardTitle className="text-2xl">Paroisse Notre Dame de l'Incarnation</CardTitle>
           <CardDescription>
@@ -270,7 +281,7 @@ const AuthPage = ({ onAuthSuccess }: AuthPageProps) => {
           {showResetForm ? (
             <div className="space-y-4">
               <div className="text-center">
-                <KeyRound className="w-12 h-12 mx-auto mb-4 text-blue-600" />
+                <KeyRound className="w-12 h-12 mx-auto mb-4 text-primary" />
                 <h3 className="text-lg font-semibold">Réinitialiser le mot de passe</h3>
                 <p className="text-sm text-muted-foreground">
                   Entrez votre email pour recevoir un lien de réinitialisation

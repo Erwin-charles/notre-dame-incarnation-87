@@ -61,7 +61,7 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/auth" element={<AuthPage onAuthSuccess={() => {}} />} />
+            <Route path="/auth" element={<AuthPage onAuthSuccess={() => {}} onNavigateHome={() => window.location.href = '/'} />} />
             <Route path="/reset-password" element={<PasswordResetPage />} />
             <Route path="/" element={<Index user={user} onLogout={handleLogout} />} />
             <Route path="*" element={<NotFound />} />
