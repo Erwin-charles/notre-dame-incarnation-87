@@ -8,8 +8,9 @@ import PageParticles from './PageParticles';
 import ImageCarousel from './ImageCarousel';
 import BiblicalVerse from './BiblicalVerse';
 import VisitorGuide from './VisitorGuide';
-import libraryHero from '@/assets/library-hero.jpg';
-import caritasHero from '@/assets/caritas-hero.jpg';
+import carouselChurch from '@/assets/carousel-church.jpg';
+import carouselCommunity from '@/assets/carousel-community.jpg';
+import carouselLiturgy from '@/assets/carousel-liturgy.jpg';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
@@ -71,9 +72,9 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
   ];
 
   const carouselImages = [
-    libraryHero,
-    caritasHero,
-    libraryHero,
+    carouselChurch,
+    carouselCommunity,
+    carouselLiturgy,
   ];
 
   return (
