@@ -1,4 +1,4 @@
-
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Church, Users, Calendar, Book, Heart, Clock, MapPin, Phone, Mail } from 'lucide-react';
@@ -12,39 +12,42 @@ import carouselChurch from '@/assets/carousel-church.jpg';
 import carouselCommunity from '@/assets/carousel-community.jpg';
 import carouselLiturgy from '@/assets/carousel-liturgy.jpg';
 
-interface HomePageProps {
-  onNavigate: (page: string) => void;
-}
+const HomePage = () => {
+  const navigate = useNavigate();
 
-const HomePage = ({ onNavigate }: HomePageProps) => {
+  const goTo = (page: string) => {
+    if (page === 'home') navigate('/');
+    else navigate(`/${page}`);
+  };
+
   const quickActions = [
     {
       title: "Inscriptions Catéchèse",
       description: "Inscrivez-vous aux parcours de catéchèse",
       icon: Book,
-      onClick: () => onNavigate('catechese'),
-      color: "bg-blue-50 hover:bg-blue-100 border-blue-200"
+      onClick: () => goTo('catechese'),
+      color: "bg-primary/5 hover:bg-primary/10 border-primary/20"
     },
     {
       title: "Horaires des Messes",
       description: "Consultez les horaires de célébration",
       icon: Clock,
-      onClick: () => onNavigate('activites'),
-      color: "bg-green-50 hover:bg-green-100 border-green-200"
+      onClick: () => goTo('activites'),
+      color: "bg-accent/30 hover:bg-accent/50 border-accent/40"
     },
     {
       title: "Groupes Paroissiaux",
       description: "Rejoignez nos communautés",
       icon: Users,
-      onClick: () => onNavigate('groupes'),
-      color: "bg-purple-50 hover:bg-purple-100 border-purple-200"
+      onClick: () => goTo('groupes'),
+      color: "bg-secondary hover:bg-secondary/80 border-secondary"
     },
     {
       title: "Événements",
       description: "Découvrez nos prochains événements",
       icon: Calendar,
-      onClick: () => onNavigate('evenements'),
-      color: "bg-orange-50 hover:bg-orange-100 border-orange-200"
+      onClick: () => goTo('evenements'),
+      color: "bg-muted hover:bg-muted/80 border-border"
     }
   ];
 
@@ -52,17 +55,17 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
     {
       icon: MapPin,
       title: "Adresse",
-      content: "Rue des Jardins, Cocody Riviera Golf, Abidjan"
+      content: "Riviera Palmeraie, Cocody, Abidjan"
     },
     {
       icon: Phone,
       title: "Téléphone",
-      content: "+225 22 44 XX XX"
+      content: "+225 27 22 44 55 66"
     },
     {
       icon: Mail,
       title: "Email",
-      content: "contact@paroisse-cocody.ci"
+      content: "contact@ndincarnation-cocody.ci"
     },
     {
       icon: Clock,
@@ -83,26 +86,26 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
       <VisitorGuide />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 py-20">
+      <section className="relative bg-gradient-to-br from-primary/5 to-accent/10 dark:from-background dark:to-primary/5 py-20">
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="flex items-center justify-center mb-8 space-x-8">
             <SaintSacrement />
             <Cross3D />
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-800 dark:text-blue-400 mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
             Bienvenue
           </h1>
-          <h2 className="text-2xl md:text-3xl font-semibold text-church-blue mb-4">
+          <h2 className="text-2xl md:text-3xl font-semibold text-primary mb-4">
             Paroisse Notre Dame de l'Incarnation
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            Une communauté de foi vivante au cœur de Cocody, où chacun est accueilli avec amour et bienveillance.
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Une communauté de foi vivante au cœur de Cocody, Riviera Palmeraie, où chacun est accueilli avec amour et bienveillance.
           </p>
           <Button 
-            onClick={() => onNavigate('contact')} 
+            onClick={() => goTo('contact')} 
             size="lg"
-            className="bg-church-blue hover:bg-church-blue/90 text-white px-8 py-3"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
           >
             <Heart className="w-5 h-5 mr-2" />
             Rejoignez-nous
@@ -120,27 +123,27 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
         <BiblicalVerse />
       </section>
 
-      {/* Services et Missions de la Paroisse */}
+      {/* Services et Missions */}
       <section className="py-16 relative z-10">
         <div className="container mx-auto px-4">
           <Card className="mb-12">
             <CardHeader className="text-center">
               <CardTitle className="text-3xl mb-4 flex items-center justify-center">
-                <Church className="w-8 h-8 mr-3 text-church-blue" />
+                <Church className="w-8 h-8 mr-3 text-primary" />
                 Nos Services et Missions
               </CardTitle>
             </CardHeader>
             <CardContent className="prose prose-lg mx-auto">
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+              <p className="text-muted-foreground leading-relaxed mb-6">
                 La Paroisse Notre Dame de l'Incarnation de Cocody offre une gamme complète de services 
                 spirituels et sociaux pour accompagner nos fidèles dans leur cheminement de foi.
               </p>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+              <p className="text-muted-foreground leading-relaxed mb-6">
                 Nos catéchistes expérimentés dispensent une formation religieuse de qualité à travers 
                 nos programmes de catéchèse adaptés à tous les âges. Notre librairie paroissiale propose 
                 des ouvrages spirituels et notre service Caritas s'engage dans l'aide aux plus démunis.
               </p>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed">
                 Nous organisons également des événements communautaires, des retraites spirituelles 
                 et des activités caritatives pour renforcer les liens fraternels au sein de notre communauté.
               </p>
@@ -150,16 +153,16 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
       </section>
 
       {/* Actions Rapides */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-900 relative z-10">
+      <section className="py-16 bg-muted/50 relative z-10">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-white">
+          <h2 className="text-3xl font-bold text-center mb-12 text-foreground">
             Actions Rapides
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {quickActions.map((action, index) => (
               <Card key={index} className={`cursor-pointer transition-all hover:scale-105 ${action.color}`}>
                 <CardHeader className="text-center pb-2">
-                  <action.icon className="w-12 h-12 mx-auto text-church-blue mb-4" />
+                  <action.icon className="w-12 h-12 mx-auto text-primary mb-4" />
                   <CardTitle className="text-lg">{action.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="text-center">
@@ -182,16 +185,16 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
       {/* Informations Pratiques */}
       <section className="py-16 relative z-10">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800 dark:text-white">
+          <h2 className="text-3xl font-bold text-center mb-12 text-foreground">
             Informations Pratiques
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {parishInfo.map((info, index) => (
               <Card key={index} className="text-center">
                 <CardContent className="pt-6">
-                  <info.icon className="w-8 h-8 mx-auto text-church-blue mb-3" />
+                  <info.icon className="w-8 h-8 mx-auto text-primary mb-3" />
                   <h3 className="font-semibold text-lg mb-2">{info.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300">{info.content}</p>
+                  <p className="text-muted-foreground">{info.content}</p>
                 </CardContent>
               </Card>
             ))}
@@ -200,7 +203,7 @@ const HomePage = ({ onNavigate }: HomePageProps) => {
       </section>
 
       {/* Horaires des Messes */}
-      <section className="py-16 bg-church-blue text-white relative z-10">
+      <section className="py-16 bg-primary text-primary-foreground relative z-10">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-8">Horaires des Célébrations</h2>
           <div className="grid md:grid-cols-3 gap-8">
