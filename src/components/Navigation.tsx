@@ -1,31 +1,34 @@
-
 import { useState } from 'react';
-import { User } from '@supabase/supabase-js';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Moon, Sun, LogOut, User as UserIcon, Settings, Activity, LogIn } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
+import { useTheme } from 'next-themes';
 import NavigationLogo from './navigation/NavigationLogo';
 import NavigationMenuItem from './navigation/NavigationMenuItem';
 import NavigationMobileMenu from './navigation/NavigationMobileMenu';
 import { menuItems } from './navigation/NavigationData';
 
-interface NavigationProps {
-  onNavigate: (page: string) => void;
-  currentPage: string;
-  user: User | null;
-  onLogout: () => void;
-}
-
-const Navigation = ({ onNavigate, currentPage, user, onLogout }: NavigationProps) => {
+const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { user, logout } = useAuth();
+  const { theme, setTheme } = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const currentPage = location.pathname === '/' ? 'home' : location.pathname.slice(1);
+
+  const onNavigate = (page: string) => {
+    if (page === 'home') navigate('/');
+    else navigate(`/${page}`);
+  };
 
   const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle('dark');
+    setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
   const handleSubMenuToggle = (menuId: string) => {
@@ -42,14 +45,13 @@ const Navigation = ({ onNavigate, currentPage, user, onLogout }: NavigationProps
   };
 
   const handleLogin = () => {
-    window.location.href = '/auth';
+    navigate('/auth');
   };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-navigation">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <NavigationLogo onNavigate={onNavigate} />
 
           {/* Desktop Menu */}
@@ -66,7 +68,6 @@ const Navigation = ({ onNavigate, currentPage, user, onLogout }: NavigationProps
               />
             ))}
 
-            {/* User Menu ou Bouton Connexion */}
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -102,14 +103,14 @@ const Navigation = ({ onNavigate, currentPage, user, onLogout }: NavigationProps
                     <span>Diagnostic DB</span>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={onLogout}>
+                  <DropdownMenuItem onClick={logout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Se déconnecter</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button 
+              <Button
                 onClick={handleLogin}
                 size="sm"
                 className="ml-1 bg-primary hover:bg-primary/90 text-primary-foreground text-xs px-3"
@@ -119,21 +120,20 @@ const Navigation = ({ onNavigate, currentPage, user, onLogout }: NavigationProps
               </Button>
             )}
 
-            {/* Dark Mode Toggle */}
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleDarkMode}
               className="ml-1 glass-button p-2"
             >
-              {isDarkMode ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+              {theme === 'dark' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="xl:hidden flex items-center space-x-2">
             {!user && (
-              <Button 
+              <Button
                 onClick={handleLogin}
                 size="sm"
                 className="bg-primary hover:bg-primary/90 text-primary-foreground"
@@ -147,7 +147,7 @@ const Navigation = ({ onNavigate, currentPage, user, onLogout }: NavigationProps
               onClick={toggleDarkMode}
               className="glass-button"
             >
-              {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </Button>
             <Button
               variant="ghost"
@@ -164,7 +164,6 @@ const Navigation = ({ onNavigate, currentPage, user, onLogout }: NavigationProps
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {isOpen && (
           <NavigationMobileMenu
             menuItems={menuItems}
